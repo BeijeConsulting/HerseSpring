@@ -2,6 +2,7 @@ package it.beije.herse.test;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,7 +16,7 @@ public class FormController {
 		return "login";
 	}
 	
-	@RequestMapping(path="/login", method = RequestMethod.POST)
+	@RequestMapping(path="/log", method = RequestMethod.POST)
 	public String login(Model model, @RequestParam String email, @RequestParam String password) {
 		
 		System.out.println("EMAIL: "+email);
@@ -33,7 +34,10 @@ public class FormController {
 	@RequestMapping(path="/retry", method = RequestMethod.POST)
 	public String retry(Model model, @RequestParam String retryAction) {
 		
-		if(retryAction.equalsIgnoreCase("back")) return "login";
+		if(retryAction.equalsIgnoreCase("back")) {
+			model.addAttribute("loginMessage", "EMAIL AND PASSWORD NOT FOUND, RETRY");
+			return "login";
+		}
 		
 		return "insert";
 	}
@@ -47,5 +51,10 @@ public class FormController {
 		}
 		
 		return "result";
+	}
+	
+	@PostMapping(path = "/index")
+	public String backToIndex() {
+		return "login";
 	}
 }

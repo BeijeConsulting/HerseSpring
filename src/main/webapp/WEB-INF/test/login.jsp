@@ -7,8 +7,10 @@
 <title>TEST LOGIN</title>
 </head>
 <body bgcolor="black" text="white">
+	
+	<h1>${loginMessage }</h1>
 
-	<form action="login" method="post">
+	<form action="log" method="post">
 	EMAIL: <input type="email" name="email"><br>
 	PASSWORD: <input type="password" name="password"><br>
 	
