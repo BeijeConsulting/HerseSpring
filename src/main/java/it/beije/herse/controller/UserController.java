@@ -16,10 +16,19 @@ public class UserController {
 	}
 	
 	@RequestMapping(path = "/login", method = RequestMethod.POST)
-	// public String auth(Model model, @RequestParam(required = false) String username, @RequestParam String password) {
-    public String auth(Model model, @RequestParam String user, @RequestParam String pass) {
-		
-		
+
+
+	public String auth(Model model, @RequestParam(required = false) String user, @RequestParam String pass) {
+		System.out.println("sono in login post");
+
+		/* if (username.equals("Pippo")) {
+			model.addAttribute("username", username);
+			return "benvenuti";
+		} else {
+			model.addAttribute("error", "Credenziali errate");
+			return "login";
+		} */
+
 		if (user.equals("sam") && pass.equals("uele")) {
 			model.addAttribute("username", user);
 
@@ -28,6 +37,5 @@ public class UserController {
 			model.addAttribute("error", "credenziali errate!!");
 			return "home";
 		}
-		
 	}
 }
