@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@page import="org.springframework.ui.Model"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,18 +12,10 @@
 </head>
 <body style="margin:1%">
 
-	<%
-	String error = (String) session.getAttribute("error");
-	if (error != null) {
-		%>
-		<span style="color:red"><%=error%></span><br><br>
-		<%
-		session.removeAttribute("error");
-	}
-	%>
+	
 	
 	<h1>Benvenuto, inserisci le tue credenziali</h1>
-	<form action="authUser" method="post">
+	<form action="loginUser" method="post">
 		<div>
 			
 			<label for="email">Email: </label>
