@@ -7,7 +7,8 @@
 <title>Login Page</title>
 </head>
 <body>
-	<form action="auth" method="post">
+${error}<br/>
+	<form action="login" method="post">
 	  <label for="username">username:</label><br>
 	  <input type="text" name="username"><br>
 	  <label for="password">password:</label><br>
