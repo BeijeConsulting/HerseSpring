@@ -8,5 +8,10 @@
 </head>
 <body>
 BENVENUT* ${username}
+
+<ul>
+<li>Prodotto 1</li>
+<li>Prodotto 2</li>
+</ul>
 </body>
 </html>

@@ -15,14 +15,19 @@ public class UserController {
 		return "login"; // /WEB-INF/views/ + login + .jsp
 	}
 	
-	@RequestMapping(path = "/auth", method = RequestMethod.POST)
-	public String auth(Model model, @RequestParam(required = false) String username, @RequestParam String password) {
-		System.out.println("sono in auth(...)");
-		System.out.println("username : " + username);
-		System.out.println("password : " + password);
+	@RequestMapping(path = "/login", method = RequestMethod.POST)
+	// public String auth(Model model, @RequestParam(required = false) String username, @RequestParam String password) {
+    public String auth(Model model, @RequestParam String user, @RequestParam String pass) {
 		
-		model.addAttribute("username", username);
 		
-		return "benvenuti";
+		if (user.equals("sam") && pass.equals("uele")) {
+			model.addAttribute("username", user);
+
+			return "benvenuti";
+		} else {
+			model.addAttribute("error", "credenziali errate!!");
+			return "home";
+		}
+		
 	}
 }
