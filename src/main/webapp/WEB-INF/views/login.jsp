@@ -9,7 +9,7 @@
 <body>
 	<form action="auth" method="post">
 	  <label for="username">username:</label><br>
-	  <input type="text" name="user_name"><br>
+	  <input type="text" name="username"><br>
 	  <label for="password">password:</label><br>
 	  <input type="password" name="password"><br><br>
 	  <input type="submit" value="Submit">
