@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,7 +56,14 @@ public class LoginController {
 	}
 	
 	@RequestMapping(path = "/user/register", method = RequestMethod.GET)
-	public String getInsertPage() {
-		return "user/register";
+	public String getRegisterPage() {
+		return "/user/register";
+	}
+	
+	@RequestMapping(path = "/user/register", method = RequestMethod.POST)
+	public String register(Model model, @Validated User user) {
+		System.out.println("insert user : " + user);
+		
+		return "/user/register"; // /WEB-INF/views/ + user/insert_user + .jsp
 	}
 }
