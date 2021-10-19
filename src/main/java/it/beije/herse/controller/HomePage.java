@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class HomePage {
 
-	@GetMapping(path = "/")
+	@RequestMapping(path = "/home")
 	public String pippoPlutoPaperino() {
 		System.out.println("sono in homepage");
 		return "home"; // /WEB-INF/views/ + home + .jsp

@@ -4,16 +4,13 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>BENVENUTI PAGE</title>
+<title>MY Home Page</title>
 </head>
 <body>
-BENVENUTO ${name} ${surname} 
+Benvenuto: ${name} ${surname}
 
-<form action="">
-</form>
-<form action="">
-</form>
-<form action="">
+<form action="prodotti" method="post">
+<input type="submit" value="Prodotti">
 </form>
 </body>
 </html>
