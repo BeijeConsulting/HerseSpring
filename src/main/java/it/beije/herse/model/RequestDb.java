@@ -9,12 +9,12 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
-
+import it.beije.herse.entity.*;
 
 public class RequestDb {
 	
 	 public List<Product> selectProducts() {
-	    	EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("herse-shop");
+	    	EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("HerseSpring");
 			EntityManager entityManager = entityManagerFactory.createEntityManager();
 
 			List<Product> products = new ArrayList<Product>();

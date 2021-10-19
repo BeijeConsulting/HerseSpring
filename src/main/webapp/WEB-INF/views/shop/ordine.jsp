@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
   <%@page import="java.util.List"%>
- <%@page import="it.beije.herse.model.Product"%>
+ <%@page import="it.beije.herse.entity.Product"%>
 <%@page import="it.beije.herse.model.RequestDb"%>
 <!DOCTYPE html>
 <html>

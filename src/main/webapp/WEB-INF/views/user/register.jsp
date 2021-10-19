@@ -9,6 +9,7 @@
 	
 </head>
 <body style="margin:1%">
+	<h1>Non sei ancora registrato? Registrati</h1>
 	<form action="../user/register" method="post">
 	  <label for="email">Email:</label><br>
 	  <input type="text" name="email"><br>

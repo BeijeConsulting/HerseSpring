@@ -12,6 +12,7 @@
 </head>
 <body style="margin:1%">
 ${error}
+${message }<br>
 	<h1>Benvenuto, inserisci le tue credenziali</h1>
 	<form action="../user/login" method="post">
 		<div>
@@ -29,5 +30,7 @@ ${error}
 			<button type="submit" type="button" class="btn btn-primary">Login</button>
 		</div>
 	</form>
+	<br>
+	<a href="../user/register" style="text-decoration: none; color:blue;"><button type="button" class="btn btn-secondary">Registrati</button></a>
 </body>
 </html>

@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@page import="org.springframework.ui.Model"%>
-<%@page import="it.beije.herse.model.User"%>
+<%@page import="it.beije.herse.entity.User"%>
 <!DOCTYPE html>
 <html>
 <head>
