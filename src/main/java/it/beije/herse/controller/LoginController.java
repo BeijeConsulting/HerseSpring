@@ -26,6 +26,7 @@ public class LoginController {
 	}
 	
 	@PostMapping(path = "/loginUser")
+	//con request param ottengo direttmente da spring i parametri
 	public String authUser(HttpSession session, Model model, @RequestParam String email, @RequestParam String password) {
 		System.out.println("sono in autenticazione post");
 		
