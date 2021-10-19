@@ -11,9 +11,7 @@
 	
 </head>
 <body style="margin:1%">
-
-	
-	
+${error}<br/>
 	<h1>Benvenuto, inserisci le tue credenziali</h1>
 	<form action="loginUser" method="post">
 		<div>

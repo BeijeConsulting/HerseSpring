@@ -5,6 +5,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,13 +26,12 @@ public class LoginController {
 	}
 	
 	@PostMapping(path = "/loginUser")
-	public String authUser(Model model, @RequestParam String email, @RequestParam String password) {
+	public String authUser(HttpSession session, Model model, @RequestParam String email, @RequestParam String password) {
 		System.out.println("sono in autenticazione post");
 		
 		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("herse-shop");
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		
-		String reply = "";
 		User user = new User();
 
 		try {
@@ -40,15 +40,14 @@ public class LoginController {
 			user = (User) query.getSingleResult();
 			
 			model.addAttribute("user", user);
-			
-			reply= "menuUser";
+			session.setAttribute("user", user);
+			return "menu";
 			
 		} catch (PersistenceException e) {
 			model.addAttribute("error", "Credenziali Errate");
-			reply = "loginUser";
+			return "loginUser";
+		} finally {
+			entityManager.close();
 		}
-
-		entityManager.close();
-		return reply;
 	}
 }
