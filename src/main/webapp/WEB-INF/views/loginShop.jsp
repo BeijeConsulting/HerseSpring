@@ -17,6 +17,8 @@
 
 <p style="color:red"><strong> ${credenziali} </strong></p>
 
+<p style="color:green"><strong> ${faiLogin} </strong></p>
+
 <div align="center">
 <form action="catalogo" method="post">
 	  Email: <br>

@@ -1,8 +1,10 @@
 package it.beije.herse.Ecommerce;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -27,6 +29,13 @@ public class Shop {
 		return 0;
 	}
 	
+	public void insertUser(User user) {
+		EntityTransaction transaction = manager.getTransaction();
+		transaction.begin();
+		manager.persist(user);
+		transaction.commit();
+	}
+	
 	public List<Product> findProducts(){
 		CriteriaBuilder criteriaBuilder = manager.getCriteriaBuilder();
 
@@ -39,4 +48,45 @@ public class Shop {
 		
 		return query.getResultList();
 	}
+
+	public List<Product> findProductsById(int productId) {
+		String select = "SELECT p FROM Product as p WHERE id=" + productId;
+		Query query = manager.createQuery(select);
+		List<Product> products = query.getResultList();
+		
+		return products;
+	}
+	
+	public boolean productExists(int productId) {
+		Product product = manager.find(Product.class, productId);
+		if(product != null) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public Boolean checkQuantity(int productId, int quantity, int userId) {
+		Product product = manager.find(Product.class, productId);
+
+		if(product.getQuantity() < quantity) {
+			System.out.println("Quantità maggiore rispetto a quella disponibile");
+			return false;
+		} else {
+
+			System.out.println(product);
+
+			EntityTransaction transaction = manager.getTransaction();
+			transaction.begin();
+			product.setQuantity(product.getQuantity()-quantity); //settatto la quantità nuova di product
+			transaction.commit();
+
+			return true;
+		}
+	}
+	
+	public void addCart(HashMap<Integer, Object> map) {
+		
+	}
+
 }

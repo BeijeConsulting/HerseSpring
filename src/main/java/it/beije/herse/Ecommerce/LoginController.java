@@ -20,6 +20,12 @@ public class LoginController {
 		System.out.println("sono in loginShop");
 		return "loginShop"; 
 	}
+	
+	@RequestMapping(path = "/loginShop", method = RequestMethod.POST)
+	public String loginShopPost() {
+		System.out.println("sono in loginShop");
+		return "loginShop"; 
+	}
 
 	@RequestMapping(path = "/catalogo", method = RequestMethod.POST)
 	public String login(HttpSession session, Model model, @RequestParam String email, @RequestParam String password) {
@@ -36,10 +42,12 @@ public class LoginController {
 			List<Product> products = new Shop().findProducts();
 			HashMap<Integer, Object> map = new HashMap<Integer, Object>();
 			Integer cont = 1;
-			session.setAttribute("products", products);
-			session.setAttribute("map", map);
-			session.setAttribute("cont", cont);
-			session.setAttribute("userID", userId);
+			model.addAttribute("products", products);
+			model.addAttribute("map", map);
+//			session.setAttribute("products", products);
+//			session.setAttribute("map", map);
+//			session.setAttribute("cont", cont);
+//			session.setAttribute("userID", userId);
 			return "catalogo";
 		}
 

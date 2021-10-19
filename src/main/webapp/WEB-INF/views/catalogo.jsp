@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ page import="it.beije.herse.Ecommerce.Product, java.util.*"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,36 +31,42 @@
 				<th>Prezzo</th>
 				<th>Quantità</th>
 			</tr>
-			<%
-			for (Product p : products) {
-				out.print("<tr>");
-				out.print("<td>" + p.getId() + "</td>");
-				out.print("<td>" + p.getName() + "</td>");
-				out.print("<td>" + p.getPrice() + "</td>");
-				out.print("<td>" + p.getQuantity() + "</td>");
-				out.print("</tr>");
-			}
-			%>
+			<c:forEach items="${products}" var="products">
+				<tr>
+					<td>${products.id}</td>
+					<td>${products.name}</td>
+					<td>${products.price}</td>
+					<td>${products.quantity}</td>
+				</tr>
+			</c:forEach>
 		</table>
-
-		<form Style="border: 1px solid" action="#" method="post">
-			<p>Di quale prodotto vuoi vedere i dettagli? (scegli in base
-				all'id)</p>
-			<%
-			for (Product p : products) {
-			%>
-			<input type="checkbox" id=<%=p.getId()%> name=<%=p.getId()%>><label
-				for="yes"><%=p.getId()%> </label>
-
-			<%
-			}
-			%>
-			<p>
-				<input type="submit" value="vedi">
-			</p>
-		</form>
-
 	</div>
+	
+	<h3>Cosa vuoi comprare?</h3>
+	
+	<form action='carrello/crea' method='post'>
+
+		<p>
+			Id Prodotto : <br>
+			<input type="text" name="productId" placeholder= "Product Id" required>
+		</p>
+
+		<p>
+			Quantità : <br>
+			<input type="text" name="quantity" placeholder= "Quantity" required>
+		</p>
+		<p>
+			<input type="submit" value="Conferma">
+		</p>
+	</form>
+	
+	<form action='carello/riepilogo' method='post'>
+	
+		<p>
+			<input type="submit" value="Riepilogo Carrello">
+		</p>
+	
+	</form>
 
 </body>
 </html>
