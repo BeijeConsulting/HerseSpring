@@ -6,6 +6,6 @@
 <title>BENVENUTI PAGE</title>
 </head>
 <body>
-BENVENUTO ${name}
+BENVENUTO ${user.getName().toUpperCase()}
 </body>
 </html>
