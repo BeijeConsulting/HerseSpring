@@ -5,10 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import it.beije.herse.entity.ManagerCRUD;
 import it.beije.herse.entity.User;
-
-import static it.beije.herse.entity.MyShop.getUser;
 
 import javax.servlet.http.HttpSession;
 
@@ -34,14 +31,6 @@ public class UserController {
 	public String auth(HttpSession session, @RequestParam String email, @RequestParam String password) {
 		
 		String redirect = "";
-		ManagerCRUD m = new ManagerCRUD();
-		User user = getUser(email,password,m);
-		
-		if(user != null) {
-			redirect = "home";
-			session.setAttribute("managerCRUD", m);
-			session.setAttribute("user", user);
-		}
 		
 		return redirect;
 		
