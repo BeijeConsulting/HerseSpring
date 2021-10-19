@@ -12,12 +12,12 @@ import it.beije.herse.bean.Products;
 import it.beije.herse.model.ProductsModel;
 
 @Controller
-public class MyProductController {
+public class MyHomeController {
 
-	@RequestMapping(path = "/prodotti", method = RequestMethod.GET)
+	@RequestMapping(path = "/home", method = RequestMethod.GET)
 	public String prodottiGet() {
 		System.out.println("sono in prodotti GET");
-		return "prodotti";
+		return "myview/myhome";
 	}
 
 	@RequestMapping(path = "/prodotti", method = RequestMethod.POST)
@@ -35,6 +35,6 @@ public class MyProductController {
 		}
 		
 		model.addAttribute("products", products);
-		return "prodotti";
+		return "myview/prodotti";
 	}
 }
