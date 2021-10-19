@@ -21,12 +21,10 @@ public class OrderItem {
 	
 	@Column(name="product_id")
 	private Integer productId;
-	
-	@Column(name="quantity")
-	private Integer quantity;
 
 	@Column(name="sell_price")
 	private Double sellPrice;
+
 	
 	public Integer getId() {
 		return id;
@@ -35,6 +33,7 @@ public class OrderItem {
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
 	
 	public Integer getOrderId() {
 		return orderId;
@@ -43,6 +42,7 @@ public class OrderItem {
 	public void setOrderId(Integer orderId) {
 		this.orderId = orderId;
 	}
+
 	
 	public Integer getProductId() {
 		return productId;
@@ -51,6 +51,7 @@ public class OrderItem {
 	public void setProductId(Integer productId) {
 		this.productId = productId;
 	}
+
 	
 	public Double getSellPrice() {
 		return sellPrice;
@@ -59,20 +60,12 @@ public class OrderItem {
 	public void setSellPrice(Double sellPrice) {
 		this.sellPrice = sellPrice;
 	}
+
 	
-	public Integer getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
-	}
-
 	public String toString() {
 		StringBuilder builder = new StringBuilder("{id: ").append(id)
 				.append(", orderId: ").append(orderId)
 				.append(", productId: ").append(productId)
-				.append(", quantity: ").append(quantity)
 				.append(", sellPrice: ").append(sellPrice)
 				.append("}");
 		

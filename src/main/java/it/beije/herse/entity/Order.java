@@ -36,6 +36,7 @@ public class Order {
 		this.id = id;
 	}
 
+	
 	public Integer getUserId() {
 		return userId;
 	}
@@ -43,6 +44,7 @@ public class Order {
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
+
 	
 	public Double getAmount() {
 		return amount;
@@ -51,6 +53,7 @@ public class Order {
 	public void setAmount(Double amount) {
 		this.amount = amount;
 	}
+
 	
 	public LocalDateTime getDateTime() {
 		return dateTime;
