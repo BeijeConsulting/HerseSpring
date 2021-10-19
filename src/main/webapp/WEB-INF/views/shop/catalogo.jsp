@@ -22,6 +22,6 @@
 		<% }%>
 	
 	<br>
-	<a href="menu.jsp" ><button type="button" class="btn btn-secondary">Torna al menu</button></a>
+	<a href="../shop/menu" ><button type="button" class="btn btn-secondary">Torna al menu</button></a>
 </body>
 </html>

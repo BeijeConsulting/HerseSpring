@@ -23,11 +23,11 @@
 			<%
 		} else {
 			%>
-			<h1>Benvenuto <%=user.getName() %>!</h1>
+			<h1>Benvenuto <%=user.getName() %> allo shop BFC!</h1>
 			
 		<ul class="list-group list-group-flush">
-			<li class="list-group-item"><a href="nuovo_ordine" style="text-decoration: none; color:black;">Effettua un nuovo ordine</a></li>
-			<li class="list-group-item"><a href="catalogo" style="text-decoration: none; color:black;">Catalogo prodotti</a></li>
+			<li class="list-group-item"><a href="../shop/ordine" style="text-decoration: none; color:black;">Effettua un nuovo ordine</a></li>
+			<li class="list-group-item"><a href="../shop/catalogo" style="text-decoration: none; color:black;">Catalogo prodotti</a></li>
 		</ul>
 		
 		<br>
