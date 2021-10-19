@@ -8,9 +8,9 @@
 </head>
 <body>
 	<form action="auth" method="post">
-	  <label for="username">username:</label><br>
-	  <input type="text" name="user_name"><br>
-	  <label for="password">password:</label><br>
+	  <label for="email">E-mail:</label><br>
+	  <input type="text" name="email"><br>
+	  <label for="password">Password:</label><br>
 	  <input type="password" name="password"><br><br>
 	  <input type="submit" value="Submit">
 	</form> 

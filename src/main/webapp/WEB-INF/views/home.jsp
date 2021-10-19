@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,6 +7,7 @@
 <title>HOME PAGE</title>
 </head>
 <body>
-CIAO HERSE
+	<jsp:include page="navbar.jsp"></jsp:include>
+	${errorQta}
 </body>
 </html>

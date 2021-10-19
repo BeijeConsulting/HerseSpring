@@ -7,6 +7,6 @@
 <title>BENVENUTI PAGE</title>
 </head>
 <body>
-BENVENUT* ${username}
+BENVENUTO ${name}
 </body>
 </html>

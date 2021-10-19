@@ -9,15 +9,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class HomePage {
 
-	@GetMapping(path = "/")
-	public String pippoPlutoPaperino() {
-		System.out.println("sono in homepage");
+	@GetMapping(path = "/home")
+	public String home() {
 		return "home"; // /WEB-INF/views/ + home + .jsp
 	}
 	
 	@RequestMapping(path = "/benvenuti", method = RequestMethod.GET)
 	public String benvenuti() {
-		System.out.println("sono in benvenuti");
 		return "benvenuti";
 	}
 }
