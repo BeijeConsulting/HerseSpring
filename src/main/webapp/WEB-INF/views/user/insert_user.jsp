@@ -7,15 +7,16 @@
 <title>INSERT USER</title>
 </head>
 <body>
+${message}<br/>
 	<form action="../user/insert" method="post">
-	  <label for="username">username:</label><br>
-	  <input type="text" name="username"><br>
+	  <label for="email">email:</label><br>
+	  <input type="text" name="email"><br>
 	  <label for="password">password:</label><br>
 	  <input type="text" name="password"><br>
-	  <label for="firstName">first name:</label><br>
-	  <input type="text" name="firstName"><br>
-	  <label for="lastName">last name:</label><br>
-	  <input type="text" name="lastName"><br><br>
+	  <label for="name">name:</label><br>
+	  <input type="text" name="name"><br>
+	  <label for="surname">surname:</label><br>
+	  <input type="text" name="surname"><br><br>
 	  <input type="submit" value="Submit">
 	</form> 
 </body>
