@@ -60,7 +60,18 @@ public class UserController {
 //			@RequestParam String email, @RequestParam String password,
 //			@RequestParam String surname, @RequestParam String name
 			) {
-		System.out.println("insert user : " + user);
+		
+		
+	 	User u = userRepository.findByEmail(user.getEmail());
+		
+	 	if(u!=null) {
+	 		
+	 		model.addAttribute("already", "already exists");
+	 		
+	 		return "user/insert_user";
+	 	} else {
+				
+	    System.out.println("insert user : " + user);
 		
 		userRepository.save(user);
 		
@@ -69,6 +80,7 @@ public class UserController {
 		model.addAttribute("message", "User " + user.getEmail() + " added");
 		
 		return "user/insert_user"; // /WEB-INF/views/ + user/insert_user + .jsp
+	 	}
 	}
 
 	@RequestMapping(path = "/user/list", method = RequestMethod.GET)

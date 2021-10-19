@@ -16,7 +16,8 @@
 <input type="text" name="user" placeholder="mi chiamo.."><br>
 <label for="pass">Password: </label><br>
 <input type="password" name="pass" placeholder="sssh.."><br>
-<input type="submit" value="login">
+<input type="submit" value="login"><br><br> <p style="font-size:13px">oppure
+<a href="views/user/insert_user.jsp">Registrati</a></p>
 </form>
 </body>
 </html>
