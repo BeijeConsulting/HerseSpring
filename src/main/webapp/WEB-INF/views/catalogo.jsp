@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@ page import="it.beije.herse.Ecommerce.Product, java.util.*"%>
+<%@ page import="it.beije.herse.entity.Product, java.util.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
@@ -21,9 +21,6 @@
 	<div align="center">
 		<h3>I nostri Prodotti</h3>
 
-		<%
-		List<Product> products = (List<Product>) session.getAttribute("products");
-		%>
 		<table Style="border: 1px solid">
 			<tr>
 				<th>Id</th>

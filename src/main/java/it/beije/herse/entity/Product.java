@@ -15,20 +15,23 @@ public class Product {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
 	private Integer id;
-	
+
 	@Column(name="name")
 	private String name;
-	
+
 	@Column(name="description")
 	private String description;
-	
+
 	@Column(name="price")
 	private Double price;
-	
+
 	@Column(name="quantity")
 	private Integer quantity;
-
 	
+	@Column(name="images")
+	private String img;
+	
+
 	public Integer getId() {
 		return id;
 	}
@@ -37,7 +40,7 @@ public class Product {
 		this.id = id;
 	}
 
-	
+
 	public String getName() {
 		return name;
 	}
@@ -46,7 +49,7 @@ public class Product {
 		this.name = name;
 	}
 
-	
+
 	public String getDescription() {
 		return description;
 	}
@@ -55,7 +58,7 @@ public class Product {
 		this.description = description;
 	}
 
-	
+
 	public Double getPrice() {
 		return price;
 	}
@@ -64,7 +67,7 @@ public class Product {
 		this.price = price;
 	}
 
-	
+
 	public Integer getQuantity() {
 		return quantity;
 	}
@@ -72,17 +75,27 @@ public class Product {
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
-
 	
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
+	}
+
+
 	public String toString() {
 		StringBuilder builder = new StringBuilder("{id: ").append(id)
 				.append(", name: ").append(name)
 				.append(", description: ").append(description)
 				.append(", price: ").append(price)
 				.append(", quantity: ").append(quantity)
+				.append(", image: ").append(img)
 				.append("}");
-		
+
 		return builder.toString();
 	}
-	
+
 }
+
