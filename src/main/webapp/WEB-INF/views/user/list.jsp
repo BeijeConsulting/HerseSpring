@@ -11,9 +11,9 @@
 
 <c:forEach items="${users}" var="user"><%-- for (User user : users)  --%>
 <p>
-username : ${user.username}<br/>
-firstName : ${user.firstName}<br/>
-lastName : ${user.lastName}
+email : ${user.email}<br/>
+name : ${user.name}<br/>
+surname : ${user.surname}
 </p>
 </c:forEach>
 
