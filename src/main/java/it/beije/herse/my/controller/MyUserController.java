@@ -22,13 +22,13 @@ public class MyUserController {
 	}
 
 	@RequestMapping(path = "/acess", method = RequestMethod.POST)
-	public String acess(Model model, @RequestParam(required = true) String user_name, @RequestParam String password) {
+	public String acess(Model model, @RequestParam(required = true) String username, @RequestParam String password) {
 		System.out.println("sono in login POST");
 
 		UserModel userModel = new UserModel();
 		List<Users> users = userModel.getUsers();
 		for (Users u : users) {
-			if (u.getEmail().equalsIgnoreCase(user_name) && u.getPassword().equals(password)) {
+			if (u.getEmail().equalsIgnoreCase(username) && u.getPassword().equals(password)) {
 				model.addAttribute("authError", "");
 				model.addAttribute("name", u.getName());
 				model.addAttribute("surname", u.getSurname());
