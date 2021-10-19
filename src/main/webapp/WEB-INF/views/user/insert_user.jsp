@@ -7,6 +7,7 @@
 <title>Registrati</title>
 </head>
 <body>
+
 <h2 align="center">Registrati</h2>
 <style> input{background-color:pink;}</style>
 	<form style="text-align: center;" action="../user/insert" method="post">
