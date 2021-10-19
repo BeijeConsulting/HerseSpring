@@ -1,18 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>INSERT USER</title>
+<title>Insert title here</title>
 </head>
 <body>
-
-
-${message}<br/>
-
-	<form action="../user/insert" method="post">
+<h3>Completa il form per iscriverti </h3>
+	<form action="../shop/iscriviti" method="post">
 	  <label for="email">email:</label><br>
 	  <input type="text" name="email"><br>
 	  <label for="password">password:</label><br>
@@ -21,7 +17,7 @@ ${message}<br/>
 	  <input type="text" name="name"><br>
 	  <label for="surname">surname:</label><br>
 	  <input type="text" name="surname"><br><br>
-	  <input type="submit" value="Submit">
+	  <input type="submit" value="Iscriviti">
 	</form> 
 </body>
 </html>

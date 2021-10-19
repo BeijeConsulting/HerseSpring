@@ -70,15 +70,7 @@ public class UserController {
 
 
 
-	@RequestMapping(path="/carrellos", method=RequestMethod.POST)
-	public String carrellos(Model model, HttpServletRequest request,  HttpSession session) {
-		//		String username = (String) model.getAttribute("username");
-		String username = (String)session.getAttribute("username");
-		model.addAttribute("username", username);
-		System.out.println("username "+ username);
-		return "carrello";
 
-	}
 
 
 
