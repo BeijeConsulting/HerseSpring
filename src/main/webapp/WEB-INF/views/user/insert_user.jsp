@@ -4,18 +4,20 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>INSERT USER</title>
+<title>Registrati</title>
 </head>
 <body>
-	<form action="../user/insert" method="post">
-	  <label for="username">username:</label><br>
-	  <input type="text" name="username"><br>
-	  <label for="password">password:</label><br>
-	  <input type="text" name="password"><br>
-	  <label for="firstName">first name:</label><br>
-	  <input type="text" name="firstName"><br>
-	  <label for="lastName">last name:</label><br>
-	  <input type="text" name="lastName"><br><br>
+<h2 align="center">Registrati</h2>
+<style> input{background-color:pink;}</style>
+	<form style="text-align: center;" action="../user/insert" method="post">
+	  <label for="name">Nome:</label><br>
+	  <input type="text" name="name"><br>
+	  <label for="surname">Cognome:</label><br>
+	  <input type="text" name="surname"><br><br>
+	  <label for="email">Email:</label><br>
+	  <input type="text" name="email"><br>
+	  <label for="password">Password:</label><br>
+	  <input type="password" name="password"><br>
 	  <input type="submit" value="Submit">
 	</form> 
 </body>

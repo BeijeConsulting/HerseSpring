@@ -52,8 +52,8 @@ public class UserController {
 	
 	@RequestMapping(path = "/user/insert", method = RequestMethod.POST)
 	public String insert(Model model, @Validated User user
-//			@RequestParam String username, @RequestParam String password,
-//			@RequestParam String firstName, @RequestParam String lastName
+//			@RequestParam String email, @RequestParam String password,
+//			@RequestParam String surname, @RequestParam String name
 			) {
 		System.out.println("insert user : " + user);
 		
