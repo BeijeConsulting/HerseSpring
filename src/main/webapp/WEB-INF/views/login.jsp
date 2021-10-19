@@ -8,12 +8,15 @@
 </head>
 <body>
 ${error}<br/>
-	<form action="login" method="post">
-	  <label for="username">username:</label><br>
-	  <input type="text" name="username"><br>
-	  <label for="password">password:</label><br>
-	  <input type="password" name="password"><br><br>
-	  <input type="submit" value="Submit">
-	</form> 
+	<form action='login' method='post' >
+		<label for="username">Username:</label><br>
+		<input type='text' name='username'><br>
+		<label for="password">Password:</label><br>
+		<input type='text' name='password'><br>
+		<button type='submit'>Login</button>
+	</form>
+	<form action='signup' method='get'>
+	<button type='submit'>Registrati</button>
+	</form>
 </body>
 </html>

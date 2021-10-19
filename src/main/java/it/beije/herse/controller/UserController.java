@@ -36,22 +36,21 @@ public class UserController {
 		}
 		
 	}
-	
-	@RequestMapping(path = "/user/insert", method = RequestMethod.GET)
+/*----------------------------------------------------------------------------------------------------*/
+	@RequestMapping(path = "signup", method = RequestMethod.GET)
 	public String getInsertPage() {
-		return "user/insert_user";
+		return "signup";
 	}
 	
-	@RequestMapping(path = "/user/insert", method = RequestMethod.POST)
-	public String insert(Model model, @Validated User user
-//			@RequestParam String username, @RequestParam String password,
-//			@RequestParam String firstName, @RequestParam String lastName
-			) {
+	@RequestMapping(path = "signup", method = RequestMethod.POST)
+	public String insert(Model model, @Validated User user,@RequestParam String conf_email, @RequestParam String conf_password) {
 		System.out.println("insert user : " + user);
 		
-		return "user/insert_user"; // /WEB-INF/views/ + user/insert_user + .jsp
+		
+		return "home"; // /WEB-INF/views/ + user/insert_user + .jsp
 	}
-
+/*----------------------------------------------------------------------------------------------------*/
+	/*
 	@RequestMapping(path = "/user/list", method = RequestMethod.GET)
 	public String getListUsers(Model model) {
 		
@@ -78,7 +77,7 @@ public class UserController {
 		model.addAttribute("users", users);
 		
 		return "user/list";
-	}
-	
+	}*/
+	/*----------------------------------------------------------------------------------------------------*/
 
 }
