@@ -10,7 +10,7 @@
 	
 	<h1>${loginMessage }</h1>
 
-	<form action="log" method="post">
+	<form action="logIn" method="post">
 	EMAIL: <input type="email" name="email"><br>
 	PASSWORD: <input type="password" name="password"><br>
 	

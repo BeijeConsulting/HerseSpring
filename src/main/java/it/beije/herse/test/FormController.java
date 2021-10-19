@@ -16,7 +16,12 @@ public class FormController {
 		return "login";
 	}
 	
-	@RequestMapping(path="/log", method = RequestMethod.POST)
+	@PostMapping(path = "/index")
+	public String backToIndex() {
+		return "login";
+	}
+	
+	@RequestMapping(path="/logIn", method = RequestMethod.POST)
 	public String login(Model model, @RequestParam String email, @RequestParam String password) {
 		
 		System.out.println("EMAIL: "+email);
@@ -51,10 +56,5 @@ public class FormController {
 		}
 		
 		return "result";
-	}
-	
-	@PostMapping(path = "/index")
-	public String backToIndex() {
-		return "login";
 	}
 }
