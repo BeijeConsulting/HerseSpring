@@ -7,16 +7,17 @@
 <meta charset="ISO-8859-1">
 <title>Registrati</title>
 </head>
-<body>
-<p>${message}</p>
+<body style="background-color:lightgrey">
+
 <h2 align="center">Registrati</h2>
-<style> input{background-color:light-blue;}</style>
+<style> input{background-color:lightblue;}</style>
 	<form style="text-align: center;" action="../user/insert" method="post">
+	 <span style="color:orange"><c:if test="${not empty already}">${already}<br></c:if></span>
+	<p style="color:green">${message}</p>
 	  <label for="name">Nome:</label><br>
 	  <input type="text" name="name"><br>
 	  <label for="surname">Cognome:</label><br>
 	  <input type="text" name="surname"><br>
-	  <span style="text-color:orange;"><c:if test="${not empty already}">${already}</c:if></span>
 	  <label for="email">Email:</label><br>
 	  <input type="text" name="email"><br>
 	  <label for="password">Password:</label><br>

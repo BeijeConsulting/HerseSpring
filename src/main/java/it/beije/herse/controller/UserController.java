@@ -66,7 +66,7 @@ public class UserController {
 		
 	 	if(u!=null) {
 	 		
-	 		model.addAttribute("already", "already exists");
+	 		model.addAttribute("already", user.getEmail() + "</span> email <span style='color:orange'> already exists");
 	 		
 	 		return "user/insert_user";
 	 	} else {
