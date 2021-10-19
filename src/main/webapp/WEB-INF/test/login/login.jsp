@@ -8,10 +8,10 @@
 </head>
 <body bgcolor="black" text="white">
 	
-	<h1>${loginMessage }</h1>
+	<h1>${loginMessage}</h1>
 
-	<form action="logIn" method="post">
-	EMAIL: <input type="email" name="email"><br>
+	<form action="login/logIn" method="post">
+	EMAIL: <input type="email" name="username"><br>
 	PASSWORD: <input type="password" name="password"><br>
 	
 	<br><input type="submit" name="login" value="LOGIN">

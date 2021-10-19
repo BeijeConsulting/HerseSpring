@@ -8,9 +8,11 @@
 </head>
 <body bgcolor="black" text="white">
 
-	<form action="retry" method="post">
+	<form action="../login/retry" method="post">
 	<input type="radio" name="retryAction" value="back">BACK<br>
-	<input type="radio" name="retryAction" value="signIn">SIGN IN AS ${email}<br>
+	<input type="radio" name="retryAction" value="signIn">SIGN IN AS ${user.username}<br>
+	<input type="hidden" name="username" value="${user.username}">
+	<input type="hidden" name="password" value="${user.password}">
 	<br><input type="submit" name="retry" value="SUBMIT">
 	</form>
 </body>
