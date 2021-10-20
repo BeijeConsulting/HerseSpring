@@ -13,13 +13,13 @@
     
     <br>
       
-    <form action="UpdateProfileServlet" method="post">
+    <form action="../user/update" method="post">
     INSERT A NEW VALUE IN THE FIELDS TO UPDATE:<br> 
     <table>
-    	<tr><td>NAME: </td><td><input type="text" name="newName" ></td></tr>
-    	<tr><td>SURNAME: </td><td><input type="text" name="newSurname"></td></tr>
-    	<tr><td>EMAIL: </td><td><input type="email" name="newEmail" ></td></tr>
-    	<tr><td>PASSWORD: </td><td><input type="password" name="newPassword"></td></tr>
+    	<tr><td>NAME: </td><td><input type="text" name="name" ></td></tr>
+    	<tr><td>SURNAME: </td><td><input type="text" name="surname"></td></tr>
+    	<tr><td>EMAIL: </td><td><input type="email" name="email" ></td></tr>
+    	<tr><td>PASSWORD: </td><td><input type="password" name="password"></td></tr>
     </table>
     <br>
     <input type=submit name="submitUpdate" value="UPDATE">

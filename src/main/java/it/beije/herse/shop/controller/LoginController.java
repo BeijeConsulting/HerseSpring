@@ -35,11 +35,11 @@ public class LoginController {
 		User loginUser = null;
 		if(users.size()>0) loginUser = users.get(0);
 			
-		System.out.println("USER: "+loginUser);
+		System.out.println("LOGIN USER: "+loginUser);
 		
 		
 		if(loginUser!=null) {
-			session.setAttribute("loginUsed", loginUser);
+			session.setAttribute("loggedUser", loginUser);
 			return "user/usermenu";
 		}
 		else {

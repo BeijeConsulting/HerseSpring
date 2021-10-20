@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 
@@ -21,14 +22,17 @@
     <h1>HERSE SHOP</h1>
     
     <h2>WELCOME 
-    <% if(loggedUser.getName()!=null && loggedUser.getSurname()!=null){
-    	%><jsp:getProperty property="name" name="loggedUser"/> <jsp:getProperty property="surname" name="loggedUser"/><%
-    }
-    else{
-    	%><jsp:getProperty property="email" name="loggedUser"/><%
-    }%> </h2>
+    <c:choose>
+    	<c:when test="${not empty loggedUser.name && not empty loggedUser.surname}">
+    		 <jsp:getProperty property="name" name="loggedUser"/> <jsp:getProperty property="surname" name="loggedUser"/>
+    	</c:when>
+    	<c:otherwise>
+    		<jsp:getProperty property="email" name="loggedUser"/>
+    	</c:otherwise>
+    </c:choose>
+   	</h2>
     
-    <form action="UserMenuServlet" method="post">
+    <form action="../user/menu" method="post">
         CHOOSE AN OPTON:<br>
         <input type="radio" name="userAction" value="showProfile">SHOW MY PROFILE<br>
         <input type="radio" name="userAction" value="showOrderHistory">SHOW MY ORDER HISTORY<br>
