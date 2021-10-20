@@ -1,15 +1,10 @@
-package it.beije.herse.shop;
+package it.beije.herse.shop.entity;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import it.beije.herse.entity.Order;
-import it.beije.herse.entity.OrderItem;
-import it.beije.herse.shop.manager.OrderManager;
-import it.beije.herse.shop.manager.ProductManager;
 
 public class Cart {
 	private Order order;
@@ -37,24 +32,12 @@ public class Cart {
 	public void setOrderDateTime(LocalDateTime dateTime) {
 		order.setDateTime(dateTime);
 	}
-	public void confirmOrder() {
-		new OrderManager().insertOrder(order, items);
-	}
 
 	public List<OrderItem> getItems() {
 		return items;
 	}
 	public void setItems(List<OrderItem> items) {
 		this.items = items;
-	}
-	public Double getTotal() {
-		Double total = 0.0;
-		ProductManager prodManager = new ProductManager();
-		for(OrderItem i : items){
-			Product p = prodManager.selectProducts(i.getProductId()).get(0);
-			total += i.getQuantity()*p.getPrice();
-		}
-		return total;
 	}
 	public void addItem(OrderItem item) {
 		items.add(item);

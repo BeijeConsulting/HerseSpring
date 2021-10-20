@@ -10,14 +10,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import it.beije.herse.entity.User;
-import it.beije.herse.shop.repository.UserRepository;
+import it.beije.herse.shop.entity.User;
+import it.beije.herse.shop.service.NewOrderService;
+import it.beije.herse.shop.service.UserMenuService;
 
 @Controller
-public class UserController {
+public class UserMenuController {
 	
 	@Autowired
-	private UserRepository userRepository;
+	private UserMenuService userMenuService;
+	
+	@Autowired
+	private NewOrderService newOrderService;
 	
 	@RequestMapping(path = "/user/backToMenu", method = RequestMethod.POST)
 	public String backToMenu() {
@@ -25,15 +29,18 @@ public class UserController {
 	}
 	
 	@RequestMapping(path = "/user/menu", method = RequestMethod.POST)
-	public String menu(@RequestParam(required = false) String exit, 
-			@RequestParam(required = false) String userAction, Model model) {
+	public String menu(@RequestParam(required = false) String exit, @RequestParam(required = false) String userAction, 
+			Model model, HttpSession session) {
 		if(exit==null) {
 			switch(userAction) {
 			case "showProfile":
 				return "user/userprofile";
 			case "showOrderHistory":
+				User loggedUser = (User) session.getAttribute("loggedUser");
+				model.addAttribute("orderHistory", userMenuService.getOrderHistory(loggedUser));
 				return "user/orderhistory";
 			case "newOrder":
+				newOrderService.getProducts(model);
 				return "order/neworder";
 			case "updateProfile":
 				return "user/updateprofile";
@@ -46,16 +53,9 @@ public class UserController {
 	
 	@RequestMapping(path = "/user/update", method = RequestMethod.POST)
 	public String update(HttpSession session, @Validated User user) {
-		System.out.println("USER: "+user);
 		User loggedUser = (User) session.getAttribute("loggedUser");
 		
-		if(user.getName()!=null && user.getName().length()>0) loggedUser.setName(user.getName());
-		if(user.getSurname()!=null && user.getSurname().length()>0) loggedUser.setSurname(user.getSurname());
-		if(user.getEmail()!=null && user.getEmail().length()>0) loggedUser.setEmail(user.getEmail());
-		if(user.getPassword()!=null && user.getPassword().length()>0) loggedUser.setPassword(user.getPassword());
-		
-		userRepository.save(loggedUser);
-		session.setAttribute("loggedUser", loggedUser);
+		session.setAttribute("loggedUser", userMenuService.updateUser(loggedUser, user));
 		
 		return "user/usermenu";
 	}

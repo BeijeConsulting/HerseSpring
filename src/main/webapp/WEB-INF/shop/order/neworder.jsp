@@ -1,10 +1,6 @@
-<%@page import="java.util.Map"%>
-<%@page import="it.beije.herse.shop.beans.Cart"%>
-<%@page import="java.util.List"%>
-<%@page import="it.beije.herse.shop.manager.ProductManager"%>
-<%@page import="it.beije.herse.shop.beans.Product"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 
@@ -14,13 +10,6 @@
 
     
 <body bgcolor="black" text="white">
-
-	<jsp:useBean id="prodManager" class="it.beije.herse.shop.manager.ProductManager" scope="session"></jsp:useBean>
-	
-	<% //ProductManager prodManager = (ProductManager) session.getAttribute("prodManager");
-	List<Product> products = prodManager.selectProducts();
-	//session.removeAttribute("products");
-	//Cart cartAttribute = (Cart) session.getAttribute("cart");%>
 	
 	<jsp:useBean id="cart" class="it.beije.herse.shop.beans.Cart" scope="session"></jsp:useBean>
 	<jsp:setProperty property="quantities" name="cart" />
@@ -40,7 +29,7 @@
     <% session.removeAttribute("totalEqualsZero");
     } %> 
    
-    <form action="NewOrderServlet" method="post">
+    <form action="../order/menu" method="post">
         <h3>ADD PRODUCTS TO YOUR ORDER:</h3>
         <table>
             <tr>
@@ -50,27 +39,23 @@
                 <th>QUANTITY</th>
                 <th>DETAILS</th>
             </tr>
-            <%
-            for(Product p : products){
-            %>
+            <c:forEach items="${products}" var="p">
             <tr>
-                <td><input type="checkbox" name="check<%= p.getId()%>" <%if(quantities!=null && quantities.get(p.getId())!=null){ %>checked<%} %> ></td>
-                <td>"<%= p.getName()%>"</td>
-                <td><input type="text" name="price<%= p.getId()%>" style="width: 5em; background-color: black; color: white; border: none" 
-                	value="<%= p.getPrice() %> $" readonly></td>
-                <td><input type="number" name="quantity<%= p.getId()%>" min="0" style="width: 4em; background-color: black; 
+                <td><input type="checkbox" name="check${p.getId()}" <%if(quantities!=null && quantities.get(p.getId())!=null){ %>checked<%} %> ></td>
+                <td>"${p.getName()}"</td>
+                <td><input type="text" name="price${p.getId()}" style="width: 5em; background-color: black; color: white; border: none" 
+                	value="${p.getPrice()} $" readonly></td>
+                <td><input type="number" name="quantity${p.getId()}" min="0" style="width: 4em; background-color: black; 
                 	color: white; border: none" <%if(quantities!=null && quantities.get(p.getId())!=null){ 
                 	%>value="<%= quantities.get(p.getId()) %>"<%} else{%> value="0" <%}%>></td>
                 <td>
-                <input type=submit name="prodDetails<%= p.getId()%>" value="<%= p.getName()%>">
+                <input type="submit" name="prodDetails${p.getId()}" value="${p.getName()}">
                 </td>
             </tr>
-            <%
-            }
-            %>
+            </c:forEach>
         </table>
         <br>
-        <input type=submit name="submitOrder" value="ADD TO CART">
+        <input type="submit" name="submitOrder" value="ADD TO CART">
         <input type="submit" name="backToMenu" value="BACK TO MENU">
     </form>
        

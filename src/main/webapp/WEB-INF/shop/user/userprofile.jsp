@@ -9,7 +9,7 @@
 <body bgcolor="black" text="white">
 	<h1>HERSE SHOP</h1>
 	
-	<jsp:useBean id="loggedUser" class="it.beije.herse.entity.User" scope="session"></jsp:useBean>
+	 <jsp:useBean id="loggedUser" class="it.beije.herse.shop.entity.User" scope="session"></jsp:useBean>
 	
 	MY INFO: <br>
 	<table>

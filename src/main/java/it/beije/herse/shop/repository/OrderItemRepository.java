@@ -6,8 +6,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import it.beije.herse.entity.OrderItem;
-import it.beije.herse.entity.User;
+import it.beije.herse.shop.entity.OrderItem;
 
 
 @Repository
