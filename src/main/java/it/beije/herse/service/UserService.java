@@ -41,4 +41,14 @@ public class UserService {
 		return users;
 	}
 	
+	public int findByEmailAndPassword(String email, String password){
+		List<User> user = userRepository.findByEmailAndPassword(email, password);
+		int userId = 0;
+		for(User u: user) {
+			userId = u.getId();
+		}
+		return userId;
+		 
+	}
+	
 }

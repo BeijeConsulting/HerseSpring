@@ -1,4 +1,4 @@
-package it.beije.herse.Ecommerce;
+package it.beije.herse.controller;
 
 import java.util.List;
 
@@ -12,12 +12,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import it.beije.herse.entity.User;
 import it.beije.herse.repository.UserRepository;
+import it.beije.herse.service.UserService;
 
 @Controller
 public class RegistrazioneController {
 	
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private UserService userService;
 	
 	@GetMapping(path = "/user/registrazione")
 	public String getPageRegistrazione() {
@@ -27,13 +30,13 @@ public class RegistrazioneController {
 	@RequestMapping(path = "/user/registrazione", method = RequestMethod.POST)
 	public String ControlloRegistrazione(Model model, @Validated User user) {
 		
-		List<User> users = userRepository.findByEmailAndPassword(user.getEmail(), user.getPassword());
+//		List<User> users = userRepository.findByEmailAndPassword(user.getEmail(), user.getPassword());
 		
-		int userId = 0;
+		int userId = userService.findByEmailAndPassword(user.getEmail(), user.getPassword());
 		
-		for(User u: users) {
-			userId = u.getId();
-		}
+//		for(User u: users) {
+//			userId = u.getId();
+//		}
 		
 		if(!user.getEmail().contains("@")) {
 			model.addAttribute("emailSbagliata", "Email Sbagliata <br> inseriscine una corretta");

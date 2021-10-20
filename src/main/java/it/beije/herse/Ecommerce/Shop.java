@@ -91,9 +91,12 @@ public class Shop {
 	public HashMap<Integer, Object> addCart(HashMap<Integer, Object> map, int productId, int quantity) {
 		Set<Integer> keys = map.keySet();
             if(keys.contains(productId)) {
-            	Carrello carrello = new Carrello();
-            	carrello.setQuantity(quantity);
-            	map.replace(productId, quantity);
+            	Object obj  = map.get(productId);
+            	System.out.println("Ogetto mappa: " + obj + " chiave mappa: " + productId);
+            	int q = (int) obj;
+            	q += quantity;
+            	System.out.println(q);
+            	map.replace(productId, q);
             } else {
             	map.put(productId, quantity);
             }

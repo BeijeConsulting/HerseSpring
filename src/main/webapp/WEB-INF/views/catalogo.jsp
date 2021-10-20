@@ -18,6 +18,8 @@
 
 	<hr>
 
+	<p Style="color:red"><strong>${prodottoInesistente}</strong></p>
+
 	<div align="center">
 		<h3>I nostri Prodotti</h3>
 
@@ -57,13 +59,13 @@
 		</p>
 	</form>
 	
-	<form action='carello/riepilogo' method='post'>
+	<form action='carrello/riepilogo' method='get'>
 	
 		<p>
-			<input type="submit" value="Riepilogo Carrello">
+			Vai al carrello: <input type="submit" value="Vai">
 		</p>
 	
-	</form>
+</form>
 
 </body>
 </html>

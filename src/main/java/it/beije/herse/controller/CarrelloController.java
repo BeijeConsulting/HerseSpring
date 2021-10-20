@@ -1,4 +1,4 @@
-package it.beije.herse.Ecommerce;
+package it.beije.herse.controller;
 
 import java.util.HashMap;
 import java.util.List;
@@ -9,21 +9,30 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import it.beije.herse.Ecommerce.Shop;
 import it.beije.herse.entity.Product;
 import it.beije.herse.repository.ProductRepository;
 import it.beije.herse.repository.UserRepository;
+import it.beije.herse.service.ProductService;
 
 @Controller
 public class CarrelloController {
 	
 	@Autowired
-	private UserRepository userRepository;
-	@Autowired
 	private ProductRepository productRepository;
+	@Autowired
+	private ProductService productService;
+	
+	@GetMapping(path = "carrello/riepilogo")
+	public String catalogo() {
+		System.out.println("sono in catalogo get");
+		return "carrello/riepilogo"; 
+	}
 	
 	@RequestMapping(path = "carrello/crea", method = RequestMethod.POST)
 	public String addToCart(HttpSession session, Model model, @RequestParam String productId, @RequestParam String quantity) {
@@ -40,31 +49,30 @@ public class CarrelloController {
 		
 		Shop shop = new Shop();
 		
-		boolean prodExists = productRepository.existsById(prodId);
-		System.out.println("product Exists: " + prodExists);
-		
-		List<Product> product = productRepository.findById(prodId);
+		Product product = productService.findById(prodId);
 		System.out.println("product: " + product);
 		
-		int quantityP = 0;
-		
-		for(Product p: product) {
-			quantityP = p.getQuantity();
-		}
-		
-		if(prodExists) {
+		if(product == null) {
+			session.setAttribute("prodottoInesistente", "il prodotto selezionato non esiste");
+			return"redirect:/catalogo";
+		} else {
+			int quantityP = product.getQuantity();
 			if(quantityP >= quant ) {
 				map = shop.addCart(map, prodId, quant);
+				quantityP -= quant;
+				productService.removeQuantity(prodId, quantityP);
 			}
 		}
+		
 		session.setAttribute("map", map);
 		System.out.println("map: " + map);
 		
 		List<Product> products = productRepository.findAll();
 		
-		session.setAttribute("prodRiepilogo", products);
+		session.setAttribute("products", products);
 		
-		return "redirect:/catalogo";
+//		return "redirect:/catalogo";
+		return"carrello/riepilogo";
 	}
 	
 }

@@ -1,4 +1,4 @@
-package it.beije.herse.Ecommerce;
+package it.beije.herse.controller;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,14 +17,15 @@ import it.beije.herse.entity.Product;
 import it.beije.herse.entity.User;
 import it.beije.herse.repository.ProductRepository;
 import it.beije.herse.repository.UserRepository;
+import it.beije.herse.service.UserService;
 
 @Controller
 public class LoginController {
 	
 	@Autowired
-	private UserRepository userRepository;
-	@Autowired
 	private ProductRepository productRepository;
+	@Autowired
+	private UserService userService;
 	
 	@GetMapping(path = "/loginShop")
 	public String loginShop() {
@@ -42,17 +43,7 @@ public class LoginController {
 	public String login(HttpSession session, Model model, @RequestParam String email, @RequestParam String password) {
 		System.out.println("Credenziali: " + email + " " + password);
 		
-//		int userId = new Shop().checkCredential(email, password);
-		
-		List<User> users = userRepository.findByEmailAndPassword(email, password);
-		
-		System.out.println("users: " +users);
-		
-		int userId = 0;
-		
-		for(User u: users) {
-			userId = u.getId();
-		}
+		int userId = userService.findByEmailAndPassword(email, password);
 		
 		System.out.println("userId: " + userId);
 		
@@ -66,7 +57,6 @@ public class LoginController {
 			Integer cont = 1;
 			session.setAttribute("userId", userId);
 			session.setAttribute("products", products);
-//			model.addAttribute("products", products);
 			session.setAttribute("map", map);
 			session.setAttribute("cont", cont);
 			return "catalogo";
