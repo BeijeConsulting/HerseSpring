@@ -2,6 +2,12 @@ package it.beije.herse.controller;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.servlet.http.HttpSession;
+
+import it.beije.herse.JpaEntityManager;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,7 +35,7 @@ public class UserController {
 	@RequestMapping(path = "/login", method = RequestMethod.POST)
 
 
-	public String auth(Model model, @RequestParam(required = false) String user, @RequestParam String pass) {
+	public String auth(HttpSession session, Model model, @RequestParam(required = false) String user, @RequestParam String pass) {
 		System.out.println("sono in login post");
 
 		/* if (username.equals("Pippo")) {
@@ -39,7 +45,18 @@ public class UserController {
 			model.addAttribute("error", "Credenziali errate");
 			return "login";
 		} */
-
+        
+		User u = userRepository.findByEmail(user);
+		
+		if(u!=null) {
+			
+			if(pass.equals(u.getPassword())) {
+				
+				session.setAttribute("user", user);
+				
+			}
+		}
+		
 		if (user.equals("sam") && pass.equals("uele")) {
 			model.addAttribute("username", user);
 
@@ -61,7 +78,7 @@ public class UserController {
 //			@RequestParam String surname, @RequestParam String name
 			) {
 		
-		
+	
 	 	User u = userRepository.findByEmail(user.getEmail());
 		
 	 	if(u!=null) {
