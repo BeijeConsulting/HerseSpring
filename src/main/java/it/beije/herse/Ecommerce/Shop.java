@@ -2,6 +2,7 @@ package it.beije.herse.Ecommerce;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -87,8 +88,16 @@ public class Shop {
 		}
 	}
 	
-	public void addCart(HashMap<Integer, Object> map) {
-		
+	public HashMap<Integer, Object> addCart(HashMap<Integer, Object> map, int productId, int quantity) {
+		Set<Integer> keys = map.keySet();
+            if(keys.contains(productId)) {
+            	Carrello carrello = new Carrello();
+            	carrello.setQuantity(quantity);
+            	map.replace(productId, quantity);
+            } else {
+            	map.put(productId, quantity);
+            }
+        return map;
 	}
 
 }

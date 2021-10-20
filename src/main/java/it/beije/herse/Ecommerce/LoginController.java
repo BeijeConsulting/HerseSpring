@@ -65,7 +65,8 @@ public class LoginController {
 			HashMap<Integer, Object> map = new HashMap<Integer, Object>();
 			Integer cont = 1;
 			session.setAttribute("userId", userId);
-			model.addAttribute("products", products);
+			session.setAttribute("products", products);
+//			model.addAttribute("products", products);
 			session.setAttribute("map", map);
 			session.setAttribute("cont", cont);
 			return "catalogo";

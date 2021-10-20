@@ -10,5 +10,6 @@ import it.beije.herse.entity.Product;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 	
+	public List<Product> findById(int id);
 	
 }
