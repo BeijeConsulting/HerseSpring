@@ -18,17 +18,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
-
-
+import it.beije.herse.entity.OrderItem;
+import it.beije.herse.entity.Product;
 import it.beije.herse.entity.User;
+import it.beije.herse.repository.ProductRepository;
 import it.beije.herse.repository.UserRepository;
+import it.beije.herse.service.JoinService;
+import it.beije.herse.service.UserService;
 
 @Controller
-public class ShopController {
+public class LoginController {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private UserService userService;
+	
+	@Autowired
+	private ProductRepository productRepository;
+	
+	@Autowired
+	private ProductRepository productService;
+	
+	@Autowired
+	private JoinService joinService;
 	
 	
 	@RequestMapping(path="/shop/login",  method = RequestMethod.GET)
@@ -43,10 +57,16 @@ public class ShopController {
 		String email = user.getEmail();
 		String password = user.getPassword();
 		System.out.println("email: " + email);
-		User utente = userRepository.findByEmailAndPassword(email, password);
-		System.out.println(utente);
+		User utente = userService.findByEmailAndPAssword(email, password);
+//		System.out.println(utente);
+	
+		
+		
 		if(utente!=null) {
 			model.addAttribute("user", utente);
+			List<Product> prodotti = productService.findAll();
+	//		System.out.println(prodotti);
+			model.addAttribute("prodotti", prodotti);
 			return "./shop/catalogo";
 		}
 		
@@ -73,5 +93,13 @@ public class ShopController {
 		return "./shop/accesso_ecommerce";
 	}
 	
+	@RequestMapping(path="/shop/elenco",  method = RequestMethod.GET )
+	public String elenco(Model model) {
+		
+		List<OrderItem> oi = joinService.elencoOrderOrderItems();
+		System.out.println("oi " + oi);
+		model.addAttribute("elenco", oi);
+		return "./shop/elenco";
+	}
 
 }
