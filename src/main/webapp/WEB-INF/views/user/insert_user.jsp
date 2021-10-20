@@ -10,10 +10,10 @@
 <body style="background-color:lightgrey">
 
 <h2 align="center">Registrati</h2>
-<style> input{background-color:lightblue;}</style>
+<style> input{background-color:lightblue; border-radius:3em;}</style>
 	<form style="text-align: center;" action="../user/insert" method="post">
 	 <span style="color:orange"><c:if test="${not empty already}">${already}<br></c:if></span>
-	<p style="color:green">${message}</p>
+	<p style="color:green">${message} <a href="../login">Torna al login</a></p>
 	  <label for="name">Nome:</label><br>
 	  <input type="text" name="name"><br>
 	  <label for="surname">Cognome:</label><br>

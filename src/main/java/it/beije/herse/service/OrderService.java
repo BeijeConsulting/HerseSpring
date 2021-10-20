@@ -22,4 +22,9 @@ public class OrderService {
 		return orderRepository.searchByDateTimeGreaterThan(localDateTime);
 	}
 	
+	public List<Order> orderList(){
+		
+	    return orderRepository.findAll();
+	}
+	
 }

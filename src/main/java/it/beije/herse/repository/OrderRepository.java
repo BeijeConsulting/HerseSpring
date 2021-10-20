@@ -20,4 +20,6 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 	@Query(value = "SELECT o FROM Order as o WHERE o.dateTime > :dateTime")
 	public List<Order> searchByDateTimeGreaterThan(@Param("dateTime") LocalDateTime dateTime);
 	
+    public List<Order> findAll();
+	
 }

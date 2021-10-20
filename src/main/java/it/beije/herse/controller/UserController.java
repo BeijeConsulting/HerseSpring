@@ -2,11 +2,10 @@ package it.beije.herse.controller;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
+
 import javax.servlet.http.HttpSession;
 
-import it.beije.herse.JpaEntityManager;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import it.beije.herse.entity.User;
 import it.beije.herse.repository.UserRepository;
+
+import it.beije.herse.service.ProductService;
 import it.beije.herse.service.UserService;
 
 
@@ -30,10 +31,17 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	private ProductService productService;
+	
 	
 	@RequestMapping(path = "/login", method = RequestMethod.GET)
-	public String login() {
-		return "login"; // /WEB-INF/views/ + login + .jsp
+	public String login(HttpSession session) {
+		
+		if(session.getAttribute("user")==null)
+		return "home"; // /WEB-INF/views/ + login + .jsp
+		
+		else return "benvenuti";
 	}
 	
 	@RequestMapping(path = "/login", method = RequestMethod.POST)
@@ -42,33 +50,32 @@ public class UserController {
 	public String auth(HttpSession session, Model model, @RequestParam(required = false) String user, @RequestParam String pass) {
 		System.out.println("sono in login post");
 
-		/* if (username.equals("Pippo")) {
-			model.addAttribute("username", username);
-			return "benvenuti";
-		} else {
-			model.addAttribute("error", "Credenziali errate");
-			return "login";
-		} */
         
-		User u = (User) userRepository.findByEmail(user);
+		User u = userRepository.findByEmail(user);
+		String feedback = null;
 		
 		if(u!=null) {
-			
+		
 			if(pass.equals(u.getPassword())) {
 				
 				session.setAttribute("user", user);
+				model.addAttribute("products",productService.productList());
+				return "benvenuti";
 				
+			} else {
+				
+				feedback = "la password non corrisponde";
 			}
+		
+		} else {
+			
+			feedback = "questo nome utente non esiste";
+			
 		}
 		
-		if (user.equals("sam") && pass.equals("uele")) {
-			model.addAttribute("username", user);
-
-			return "benvenuti";
-		} else {
-			model.addAttribute("error", "credenziali errate!!");
-			return "home";
-		}
+		model.addAttribute("feedback", feedback);
+		return "home";
+		
 	}
 	
 	@RequestMapping(path = "/user/insert", method = RequestMethod.GET)
@@ -93,10 +100,10 @@ public class UserController {
 				
 	    System.out.println("insert user : " + user);
 		
-
-		System.out.println("insert user : " + user);
 		userRepository.save(user);
+		
 		System.out.println("after save : " + user);
+		
 		model.addAttribute("message", "User " + user.getEmail() + " added");
 		
 		return "user/insert_user"; // /WEB-INF/views/ + user/insert_user + .jsp
@@ -117,5 +124,11 @@ public class UserController {
 		return "user/list";
 	}
 	
+	@RequestMapping(path = "/logout", method = RequestMethod.GET)
+	public String logout(HttpSession session) {
+		
+	    session.removeAttribute("user");
+		return "home";
+	}
 
 }
