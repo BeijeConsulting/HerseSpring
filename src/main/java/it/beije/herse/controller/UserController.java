@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import it.beije.herse.entity.User;
 import it.beije.herse.repository.UserRepository;
+import it.beije.herse.service.UserService;
 
 
 @Controller
@@ -25,6 +26,9 @@ public class UserController {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private UserService userService;
 	
 	
 	@RequestMapping(path = "/login", method = RequestMethod.GET)
@@ -46,7 +50,7 @@ public class UserController {
 			return "login";
 		} */
         
-		User u = userRepository.findByEmail(user);
+		User u = (User) userRepository.findByEmail(user);
 		
 		if(u!=null) {
 			
@@ -77,9 +81,8 @@ public class UserController {
 //			@RequestParam String email, @RequestParam String password,
 //			@RequestParam String surname, @RequestParam String name
 			) {
-		
-	
-	 	User u = userRepository.findByEmail(user.getEmail());
+
+	 	User u = (User) userRepository.findByEmail(user.getEmail());
 		
 	 	if(u!=null) {
 	 		
@@ -90,10 +93,10 @@ public class UserController {
 				
 	    System.out.println("insert user : " + user);
 		
+
+		System.out.println("insert user : " + user);
 		userRepository.save(user);
-		
 		System.out.println("after save : " + user);
-		
 		model.addAttribute("message", "User " + user.getEmail() + " added");
 		
 		return "user/insert_user"; // /WEB-INF/views/ + user/insert_user + .jsp
@@ -103,32 +106,12 @@ public class UserController {
 	@RequestMapping(path = "/user/list", method = RequestMethod.GET)
 	public String getListUsers(Model model, @RequestParam(required = false) String name) {
 		
-//		User user1 = new User();
-//		user1.setFirstName("Pippo");
-//		user1.setLastName("Rossi");
-//		user1.setUsername("PippoRossi");
-//
-//		User user2 = new User();
-//		user2.setFirstName("Mauro");
-//		user2.setLastName("Bianchi");
-//		user2.setUsername("MauroBianchi");
-//		
-//		User user3 = new User();
-//		user3.setFirstName("Vincenzo");
-//		user3.setLastName("Verdi");
-//		user3.setUsername("VV");
-//		
-//		List<User> users = new ArrayList<User>();
-//		users.add(user1);
-//		users.add(user2);
-//		users.add(user3);
-
-		List<User> users;
-		if (name != null && name.length() > 0) {
-			users = userRepository.findByName(name);
-		} else {
-			users = userRepository.findAll();			
-		}
+		List<User> users = userService.searchByName(name);
+//		if (name != null && name.length() > 0) {
+//			users = userRepository.findByName(name);
+//		} else {
+//			users = userRepository.findAll();			
+//		}
 		model.addAttribute("users", users);
 		
 		return "user/list";

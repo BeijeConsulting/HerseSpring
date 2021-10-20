@@ -12,8 +12,10 @@ import it.beije.herse.entity.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
 	
+	
 	public List<User> findByName(String name);
 
 	public User findByEmail(String email);
 	
+		
 }
