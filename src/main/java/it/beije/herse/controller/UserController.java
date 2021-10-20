@@ -2,6 +2,8 @@ package it.beije.herse.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -14,9 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import it.beije.herse.entity.User;
 
-
-import javax.servlet.http.HttpSession;
-
 import it.beije.herse.repository.UserRepository;
 
 
@@ -28,6 +27,15 @@ public class UserController {
 	@Autowired
 	private UserRepository userRepository;
 	
+	@RequestMapping(path = "/logout", method = RequestMethod.GET)
+	public String logout(HttpSession session) {
+		
+		if(session.getAttribute("user") != null) {
+			session.removeAttribute("user");
+		}
+		
+		return "login"; // /WEB-INF/views/ + login + .jsp
+	}
 	
 	@RequestMapping(path = "/login", method = RequestMethod.GET)
 	public String login() {
@@ -35,17 +43,32 @@ public class UserController {
 	}
 	
 	@RequestMapping(path = "/login", method = RequestMethod.POST)
-	public String auth(Model model, @RequestParam String email, @RequestParam String password) {
+	public String auth(Model model, HttpSession session, @RequestParam String email, @RequestParam String password) {
 		
 		List<User> users = userRepository.findAll();
 		
-		for(User u : users)
-			if(u.getEmail().equals(email) && u.getPassword().equals(password))
+		for(User u : users)	{
+			if(u.getEmail().equals(email) && u.getPassword().equals(password)) {
 				model.addAttribute("user",u);
+				session.setAttribute("user", u);
+			}
+		}
 		
 		return "home";
 		
-	}	
+	}
+	
+	@RequestMapping(path = "/homePage", method = RequestMethod.GET)
+	public String home(HttpSession session) {
+		
+		String redirect = "home";
+		
+		if(session.getAttribute("user") == null) {
+			redirect = "login";
+		}
+		
+		return redirect; // /WEB-INF/views/ + login + .jsp
+	}
 
 	@RequestMapping(path = "/user/insert", method = RequestMethod.GET)
 	public String getInsertPage() {
@@ -78,6 +101,21 @@ public class UserController {
 		model.addAttribute("users", users);
 		
 		return "user/list";
+	}
+	
+	@RequestMapping(path = "/profile")
+	public String showUser(HttpSession session, Model model) {
+		
+		String redirect = "profile";
+		
+		if(session.getAttribute("user") != null) {
+			model.addAttribute("user", (User)session.getAttribute("user"));
+		} else {
+			redirect = "login";
+		}
+		
+		return redirect;
+		
 	}
 	
 }

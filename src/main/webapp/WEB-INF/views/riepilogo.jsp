@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Prodotti</title>
+<title>Riepilogo</title>
 
 <style>
 .shop ul {
@@ -31,44 +31,36 @@
 	float: right;
 	display: block;
 	color: white;
-	height: 46.4px;
 	text-decoration: none;
 	width: 100px;
+	height: 46.4px;
+	border-color: white;
 	background-color: red;
-	border: none;
 }
 
-.shop .input {
-	float: right;
-	width: 60px;
-	border-radius: 5px;
-}
-
-.shop input {
-	border: 2px solid black;
-}
-
-.shop .active {
-	background-color: red;
+.shop .right {
 	float: right;
 }
 </style>
+
 </head>
 <body>
 	<jsp:include page="navbar.jsp"></jsp:include>
-	<form action="carrello" method="post">
-		<c:forEach items="${products}" var="product">
+	<form action="confirmOrder" method="post">
+		<c:forEach items="${items}" var="item">
 			<div class="shop">
 				<ul>
-					<li>${product.name}</li>
-					<li>${product.description}</li>
-					<li>${product.price}</li>
-					<li>Quantità disponibile: ${product.quantity}</li>
-					<li class="input"><input type="number" name="${product.id}" placeholder="0" max="${product.quantity}" min="0"></li>
+					<li>${item.productName}</li>
+					<li>${item.productDescription}</li>
+					<li>${item.quantity}</li>
+					<li class="right">${item.amount}</li>
 				</ul>
 			</div>
 		</c:forEach>
-		<br><input class="sendButton" type="submit" value="COMPRA">
+		<br> <input class="sendButton" type="submit" value="CONFERMA">
+	</form>
+	<form action="deleteItems" method="post">
+		<input class="sendButton" type="submit" value="CANCELLA">
 	</form>
 </body>
 </html>
