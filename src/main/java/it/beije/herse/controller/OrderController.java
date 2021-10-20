@@ -30,5 +30,10 @@ public class OrderController {
 		
 		return "order/list";
 	}
-
+	
+	@RequestMapping(path = "/order/orders", method = RequestMethod.GET)
+	public String getOrdersAndOrderItems() {
+		
+		return "orer/order_order-items";
+	}
 }

@@ -19,11 +19,11 @@
 			%>
 			<h2 style="color:red">Utente non autenticato!</h2>
 			<br>
-			<a href="loginUser.jsp" style="text-decoration: none; color:blue;"><button type="button" class="btn btn-primary">Login</button></a>
+			<a href="../user/login_ecommerce" style="text-decoration: none; color:blue;"><button type="button" class="btn btn-primary">Login</button></a>
 			<%
 		} else {
 			%>
-			<h1>Benvenuto <%=user.getName() %> allo shop BFC!</h1>
+			<h1>Benvenuto ${user.name} allo shop BFC!</h1>
 			
 		<ul class="list-group list-group-flush">
 			<li class="list-group-item"><a href="../shop/ordine" style="text-decoration: none; color:black;">Effettua un nuovo ordine</a></li>

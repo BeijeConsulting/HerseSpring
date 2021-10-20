@@ -22,4 +22,8 @@ public class OrderService {
 		return orderRepository.searchByDateTimeGreaterThan(localDateTime);
 	}
 	
+	public List<Order> findAll() {
+		return orderRepository.findAll();
+	}
+	
 }

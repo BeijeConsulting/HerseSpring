@@ -11,23 +11,29 @@
 	
 </head>
 <body style="margin:1%">
-${error}
-${message }<br>
 	<h1>Benvenuto, inserisci le tue credenziali</h1>
+	<%
+	String error = (String) session.getAttribute("error");
+	if (error != null) {
+		%>
+		<span style="color:red"><%=error%></span><br><br>
+		<%
+		session.removeAttribute("error");
+	}
+	%>
 	<form action="../user/login" method="post">
 		<div>
 			
 			<label for="email">Email: </label>
 			<input type="text" name="email">
-			<br>
-			<br>
+			<br/><br/>
+			
 			
 			<label for="password">Password: </label>
 			<input type="password"  name ="password" required>
-			<br>
-			<br>
-			
-			<button type="submit" type="button" class="btn btn-primary">Login</button>
+			<br/><br/>
+		
+			<button type="submit" type="button" class="btn btn-primary">Login</button>${message }
 		</div>
 	</form>
 	<br>

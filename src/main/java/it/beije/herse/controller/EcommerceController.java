@@ -14,7 +14,7 @@ import it.beije.herse.repository.ProductRepository;
 
 @Controller
 public class EcommerceController {
-
+	
 	@Autowired
 	ProductRepository productRepository;
 	
@@ -28,22 +28,24 @@ public class EcommerceController {
 	public String catalogo(Model model, @RequestParam(required = false) Integer id) {
 		System.out.println("sono in list products get");
 		List<Product> listProducts = productRepository.findAll();
-		
 		model.addAttribute("listProducts", listProducts);
 		
 		return "shop/catalogo";
-	}
-	
-	@GetMapping(path= "/shop/ordine")
-	public String ordine()  {
-		System.out.println("sono in ordine get");
-		return "/shop/ordine";
 	}
 	
 	@GetMapping(path= "/shop/menu")
 	public String menu()  {
 		System.out.println("sono in menu get");
 		return "/shop/menu";
+	}
+	
+	//se salvo qualcosa nel model non lo posso riprendere in altre jsp, il model attribute si elimina al di fuori di quella jsp
+	@GetMapping(path= "/shop/ordine")
+	public String ordine(Model model)  {
+		System.out.println("sono in ordine get");
+		List<Product> listProducts = productRepository.findAll();
+		model.addAttribute("listProducts", listProducts);
+		return "/shop/ordine";
 	}
 
 }

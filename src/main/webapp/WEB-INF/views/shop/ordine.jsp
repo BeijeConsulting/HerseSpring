@@ -2,7 +2,7 @@
     pageEncoding="ISO-8859-1"%>
   <%@page import="java.util.List"%>
  <%@page import="it.beije.herse.entity.Product"%>
-<%@page import="it.beije.herse.model.RequestDb"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -68,21 +68,17 @@
 				</tr>
 			</thead>
 			<tbody>
-				<%List<Product> products = new RequestDb().selectProducts(); 
-						for(Product p : products) {
-							%>
-				<tr>
-					<td>
-						<span><%  out.print(p.getName()); %></span>
-						<a href="schedaProdotti">Dettaglio prodotti</a>
-					</td>
-					<td><%out.print(p.getQuantity()); %></td>
-					<td><%out.print(p.getId()); %></td>
-					<td name = "prezzo" value = "<%p.getPrice(); %>"><%out.print(p.getPrice()); %></td>
-				</tr>
-	
-						<%}%>
-
+				<c:forEach items="${listProducts}" var="product">
+					<tr>
+						<td>
+							<span>Prodotto : ${product.name}</span>
+							<a href="../shop/catalogo">Dettaglio prodotti</a>
+						</td>
+						<td>${product.quantity}</td>
+						<td>${product.id}</td>
+						<td>${product.price}</td>
+					</tr>	
+				</c:forEach>
 			</tbody>
 		</table>
 	
