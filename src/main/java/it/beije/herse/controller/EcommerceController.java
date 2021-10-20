@@ -24,21 +24,15 @@ public class EcommerceController {
 //		return "/shop/catalogo";
 //	}
 	
-//	@GetMapping(path = "/shop/catalogo")
-//	public String getListUsers(Model model, @RequestParam(required = false) Integer id) {
-//		System.out.println("sono in list products get");
-//		List<Product> listProducts;
-//		
-//		if(listProducts != null && listProducts.size() >0) {
-//			listProducts = productRepository.findAll();
-//		} else {
-//			Optional<Product> p = productRepository.findById(id);
-//			listProducts = p;
-//		}
-//		model.addAttribute("listProducts", listProducts);
-//		
-//		return "shop/catalogo";
-//	}
+	@GetMapping(path = "/shop/catalogo")
+	public String catalogo(Model model, @RequestParam(required = false) Integer id) {
+		System.out.println("sono in list products get");
+		List<Product> listProducts = productRepository.findAll();
+		
+		model.addAttribute("listProducts", listProducts);
+		
+		return "shop/catalogo";
+	}
 	
 	@GetMapping(path= "/shop/ordine")
 	public String ordine()  {

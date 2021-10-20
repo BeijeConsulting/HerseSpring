@@ -83,12 +83,12 @@
 	
 						<%}%>
 
-			</tbody>s
+			</tbody>
 		</table>
 	
 	<br><br>
 	<a href="../shop/menu" ><button type="button" class="btn btn-secondary">Torna al menu</button></a>
-	<br>
+	<br><br>
 	<a href="logout" style="text-decoration: none; color:blue;"><button type="button" class="btn btn-primary">Log out</button></a>
 </body>
 

@@ -7,12 +7,12 @@
 <html>
 <head>
 	<meta charset="ISO-8859-1">
-	<title>Lista prodotti</title>
+	<title>Catalogo</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
 	
 </head>
 <body style="margin:1%">
-	<h1>Lista prodotti</h1>
+	<h1>Catalogo</h1>
 	<%	List<Product> products = new RequestDb().selectProducts();
 		for(Product p : products) {
 			%><span>Prodotto: </span><%=p.getName()%>
