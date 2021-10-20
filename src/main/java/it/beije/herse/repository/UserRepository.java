@@ -13,8 +13,7 @@ import it.beije.herse.entity.User;
 public interface UserRepository extends JpaRepository<User, Integer> {
 	
 	public List<User> findByName(String email);
-	public List<User> findById(String email);
-	public List<User> findByEmail(String email);
-	public List<User> findByEmailAndPassword(String email, String password);
+
+	public User findByEmailAndPassword(String email, String password);
 	
 }

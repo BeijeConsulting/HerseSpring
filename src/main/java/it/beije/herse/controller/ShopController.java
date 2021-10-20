@@ -43,10 +43,10 @@ public class ShopController {
 		String email = user.getEmail();
 		String password = user.getPassword();
 		System.out.println("email: " + email);
-		List<User> utente = userRepository.findByEmailAndPassword(email, password);
+		User utente = userRepository.findByEmailAndPassword(email, password);
 		System.out.println(utente);
-		if(utente.size()==1) {
-			model.addAttribute("user", utente.get(0));
+		if(utente!=null) {
+			model.addAttribute("user", utente);
 			return "./shop/catalogo";
 		}
 		
@@ -67,6 +67,7 @@ public class ShopController {
 	
 	@RequestMapping(path="/shop/iscriviti",  method = RequestMethod.POST)
 	public String iscrivitiPost(Model model, @Validated User user) {
+		
 		
 		userRepository.save(user);
 		return "./shop/accesso_ecommerce";
