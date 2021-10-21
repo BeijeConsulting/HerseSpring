@@ -12,14 +12,13 @@
 	
 </head>
 <body style="margin:1%; text-align:center">
-
+	<jsp:useBean id="user" class="it.beije.herse.entity.User" scope="session"></jsp:useBean>
 		<% 
-		User user = (User)session.getAttribute("user");
 		if (user.getEmail() == null) {
 			%>
 			<h2 style="color:red">Utente non autenticato!</h2>
 			<br>
-			<a href="../user/login_ecommerce" style="text-decoration: none; color:blue;"><button type="button" class="btn btn-primary">Login</button></a>
+			<a href="../user/login" style="text-decoration: none; color:blue;"><button type="button" class="btn btn-primary">Login</button></a>
 			<%
 		} else {
 			%>
@@ -31,7 +30,7 @@
 		</ul>
 		
 		<br>
-		<a href="logout" style="text-decoration: none; color:blue;"><button type="button" class="btn btn-primary">Log out</button></a>
+		<a href="../user/logout" style="text-decoration: none; color:blue;"><button type="button" class="btn btn-primary">Log out</button></a>
 		<%} %>
 
 </body>

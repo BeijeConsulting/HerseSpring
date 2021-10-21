@@ -2,6 +2,7 @@
     pageEncoding="ISO-8859-1"%>
   <%@page import="java.util.List"%>
  <%@page import="it.beije.herse.entity.Product"%>
+ <%@page import="it.beije.herse.entity.User"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
@@ -12,47 +13,57 @@
 	
 </head>
 <body style="margin:1%">
-
-
+	<jsp:useBean id="user" class="it.beije.herse.entity.User" scope="session"></jsp:useBean>
+	
 	<%
-	String error = (String) session.getAttribute("error");
-	if (error != null) {
+	String errorInput = (String) session.getAttribute("errorInput");
+	if (errorInput != null) {
 		%>
-		<span style="color:red"><%=error%></span><br><br>
+		<span style="color:red"><%=errorInput%></span><br><br>
 		<%
 		session.removeAttribute("error");
 	}
 	%>
-	<% 
-	String errorInput = (String) session.getAttribute("quantity_input_error");
-	if (errorInput != null) {
+	
+	<%
+	String errorIdProduct = (String) session.getAttribute("errorIdProduct");
+	if (errorIdProduct != null) {
 		%>
-		<span style="color:red"><%=error%></span><br><br>
+		<span style="color:red"><%=errorIdProduct%></span><br><br>
 		<%
-		session.removeAttribute("quantity_input_error");
+		session.removeAttribute("error");
 	}
 	%>
 	
-	<% 
-	String errorQuantity = (String) session.getAttribute("quantita");
-	if (errorInput != null) {
-		%>
-		<span style="color:red"><%=error%></span><br><br>
 		<%
-		session.removeAttribute("quantita");
+	String errorQuantity = (String) session.getAttribute("errorQuantity");
+	if (errorQuantity != null) {
+		%>
+		<span style="color:red"><%=errorQuantity%></span><br><br>
+		<%
+		session.removeAttribute("error");
 	}
 	%>
 	
 	<h1>Nuovo ordine</h1>
+	<% 
+	if (user.getEmail() == null) {
+		%>
+		<h2 style="color:red">Utente non autenticato!</h2>
+		<br>
+		<a href="../user/login" style="text-decoration: none; color:blue;"><button type="button" class="btn btn-primary">Login</button></a>
+		<%
+	} else {
+		%>
 	<br>
 	<strong>Inserisci id e quantità dei prodotti che vuoi aggiungere al carrello</strong>
 	<br>
-	<form action="carrello" method="post">
+	<form action="../shop/ordine" method="post">
 		<label for="id">Id prodotto: </label>
-		<input type="text" name ="id">	
+		<input type="number" name ="id">	
 		<br>
 		<label for="quantita">Quantità prodotto: </label>
-		<input type="text" name ="quantita">
+		<input type="number" name ="quantita">
 		<br>
 		<br>
 		<button type ="submit" type="button" class="btn btn-success" name="btn_submit">Vai al carrello</button>
@@ -85,7 +96,8 @@
 	<br><br>
 	<a href="../shop/menu" ><button type="button" class="btn btn-secondary">Torna al menu</button></a>
 	<br><br>
-	<a href="logout" style="text-decoration: none; color:blue;"><button type="button" class="btn btn-primary">Log out</button></a>
+	<a href="../user/logout" style="text-decoration: none; color:blue;"><button type="button" class="btn btn-primary">Log out</button></a>
+	<%} %>
 </body>
 
 </html>

@@ -25,6 +25,7 @@
 	  
 	  <button type="submit" type="button" class="btn btn-primary">Register</button>
 	</form> 
-
+	<br>
+	<a href="../user/login" style="text-decoration: none; color:blue;"><button type="button" class="btn btn-primary">Ritorna al login</button></a>
 </body>
 </html>

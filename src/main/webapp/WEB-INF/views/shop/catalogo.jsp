@@ -12,18 +12,29 @@
 	
 </head>
 <body style="margin:1%">
+	<jsp:useBean id="user" class="it.beije.herse.entity.User" scope="session"></jsp:useBean>
 	<h1>Catalogo</h1>
-	
-	<c:forEach items="${listProducts}" var="product">
-		<p>
-		Prodotto : ${product.name}<br/>
-		Id : ${product.id}<br/>
-		Descrizione : ${product.description}<br/>
-		Prezzo : ${product.price}
-		Quantità : ${product.quantity}<br/>
-		</p>
-	</c:forEach>
-	<br>
-	<a href="../shop/menu" ><button type="button" class="btn btn-secondary">Torna al menu</button></a>
+	<% if (user.getEmail() == null) {
+			%>
+			<h2 style="color:red">Utente non autenticato!</h2>
+			<br>
+			<a href="../user/login" style="text-decoration: none; color:blue;"><button type="button" class="btn btn-primary">Login</button></a>
+			<%
+		} else {
+			%>
+			<c:forEach items="${listProducts}" var="product">
+				<p>
+				Prodotto : ${product.name}<br/>
+				Id : ${product.id}<br/>
+				Descrizione : ${product.description}<br/>
+				Prezzo : ${product.price}<br/>
+				Quantità : ${product.quantity}<br/>
+				</p>
+			</c:forEach>
+			<br>
+			<a href="../shop/menu" ><button type="button" class="btn btn-secondary">Torna al menu</button></a>
+			<br>
+			<a href="../user/logout" style="text-decoration: none; color:blue;"><button type="button" class="btn btn-primary">Log out</button></a>
+		<%} %>
 </body>
 </html>

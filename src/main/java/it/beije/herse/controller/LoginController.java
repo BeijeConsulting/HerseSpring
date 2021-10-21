@@ -86,4 +86,10 @@ public class LoginController {
 		
 		return "user/list_users_ecommerce";
 	}
+	
+	@GetMapping(path = "/user/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "/user/login_ecommerce";
+	}
 }
