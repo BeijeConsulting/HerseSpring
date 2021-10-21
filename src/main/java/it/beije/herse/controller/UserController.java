@@ -121,6 +121,8 @@ public class UserController {
 //		}
 		model.addAttribute("users", users);
 		
+		System.out.println(userRepository.listIds().size());
+		
 		return "user/list";
 	}
 	

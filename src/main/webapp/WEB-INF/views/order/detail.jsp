@@ -5,23 +5,19 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>LIST ORDERS</title>
+<title>ORDER DETAIL</title>
 </head>
 <body>
 
-<c:forEach items="${orders}" var="order">
 <p>
 id : ${order.id}<br/>
 user id : ${order.userId}<br/>
 amount : ${order.amount}<br/>
 date : ${order.dateTime}<br/>
-
 <c:forEach items="${order.items}" var="item">
 item id : ${item.id}<br/>
 </c:forEach>
-
 </p>
-</c:forEach>
 
 </body>
 </html>
