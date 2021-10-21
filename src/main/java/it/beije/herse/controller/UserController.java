@@ -43,6 +43,7 @@
 //			model.addAttribute("error", "Credenziali errate");
 //			return "login";
 //		}
+<<<<<<< HEAD
 //		
 //	}
 //	
@@ -81,3 +82,14 @@
 //
 //}
 //
+=======
+		model.addAttribute("users", users);
+		
+		System.out.println(userRepository.listIds().size());
+		
+		return "user/list";
+	}
+	
+
+}
+>>>>>>> refs/remotes/origin/main
