@@ -7,6 +7,9 @@
 <title>Confirmation Page</title>
 </head>
 <body>
-ORdine confermato
+Ordine confermato<br><br>
+<form action="backhome" method="post">
+	<input type="submit" value="home">
+</form>
 </body>
 </html>

@@ -15,9 +15,9 @@ Benvenuto: ${name} ${surname}
 	<input type="submit" value="Prodotti">
 </form><br>
 
-<form action="orders1" method="post">
-		<input type="submit" value="Vedi ordini">
-</form>
+<form action="goCarrello" method="post">
+		<input type="submit" value="Carrello">
+</form><br>
 	
 <c:if test = "${authUser == null}">
 
@@ -27,7 +27,7 @@ Benvenuto: ${name} ${surname}
 	
 	<form action="registration" method="post">
 		<input type="submit" value="Registrati">
-	</form>
+	</form><br>
 
 </c:if>
 
@@ -35,7 +35,7 @@ Benvenuto: ${name} ${surname}
 
 	<form action="logOut" method="post">
 			<input type="submit" value="Log out">
-	</form>
+	</form><br>
 
 </c:if>
 

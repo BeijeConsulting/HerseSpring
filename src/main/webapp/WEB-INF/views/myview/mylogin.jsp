@@ -16,7 +16,10 @@ ${authError}<br/>
 	  <input type="password" name="password"><br><br>
 	  <input type="submit" value="Log in">
 	</form> <br>
-	
+
+	<form action="registration" method="post">
+		<input type="submit" value="Registrati">
+	</form><br>
 	<form action="backhome" method="post">
 	<input type="submit" value="home">
 	</form>

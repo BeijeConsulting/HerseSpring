@@ -4,6 +4,8 @@ import java.net.http.HttpRequest;
 import java.util.List;
 
 import javax.persistence.Access;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,7 @@ import it.beije.herse.bean.OrderItems;
 import it.beije.herse.model.UserModel;
 import it.beije.herse.my.repository.MyUserRepository;
 import it.beije.herse.repository.UserRepository;
+import it.beije.herse.JpaEntityManager;
 import it.beije.herse.bean.CarrelloNew;
 
 @Controller
@@ -42,7 +45,8 @@ public class MyUserController {
 	}
 
 	@RequestMapping(path = "/acess", method = RequestMethod.POST)
-	public String acess(Model model, @RequestParam(required = true) String email, @RequestParam String password, HttpSession session) {
+	public String acess(Model model, @RequestParam(required = true) String email, @RequestParam String password,
+			HttpSession session) {
 		System.out.println("sono in login POST");
 
 //		Users user = myUserRepository.findByEmail(email);
@@ -106,43 +110,85 @@ public class MyUserController {
 	@RequestMapping(path = "/registrationConfirmation", method = RequestMethod.POST)
 	public String registrationConfirmation(Model model, @Validated Users user,
 			@RequestParam(required = true) String passwordCheck, HttpSession session) {
+		
+		//pulisco gli errori
+		model.addAttribute("error", "");
+		model.addAttribute("tmpUser", null);
 
 		if (user != null) {// controllare che i campi non siano vuoti) {
-
-			model.addAttribute("tmpUser", user);
-
-			UserModel userModel = new UserModel();
-			List<Users> users = userModel.getUsers();
-			for (Users u : users) {
-				if (u.getEmail().equalsIgnoreCase(user.getEmail())) {
-					// user gia registrato
-					String error = "L'utente e gia registrato";
+			
+			Users getUser = myUserRepository.findByEmail(user.getEmail());
+			if(getUser == null) {
+				model.addAttribute("tmpUser", user);
+				if(user.getPassword().equals(passwordCheck) && !passwordCheck.equals("")) {
+					model.addAttribute("tmpUser", user);
+					if(!user.getName().equals("") && !user.getSurname().equals("")) {
+						model.addAttribute("name", user.getName());
+						model.addAttribute("surname", user.getSurname());
+						session.setAttribute("authUser", user);
+						CarrelloNew carrello = new CarrelloNew(model);
+						session.setAttribute("carrello", carrello);
+						
+						//Aggiungo user al db
+						EntityManager entityManager = JpaEntityManager.getInstance().createEntityManager();
+						EntityTransaction transaction = entityManager.getTransaction();
+						transaction.begin();
+						entityManager.persist(user);
+						transaction.commit();
+						
+						return "myview/myhome";
+					}else {
+						String error = "Hai dimenticato dei i campi nome o cognome";
+						model.addAttribute("error", error);
+						return "myview/myregistration";
+					}
+				}else {
+					String error = "Inserita Password Sbagliata";
 					model.addAttribute("error", error);
-					model.addAttribute("name", "");
-					model.addAttribute("surname", "");
-					model.addAttribute("email", "");
-				} else if (!passwordCheck.equals(user.getPassword()) && passwordCheck.equals("")) {
-					// non registrato ma psw errata
-					String error = "Le password inserite non coincidono";
-					model.addAttribute("error", error);
-				} else {
-					// va tutto ok quindi aggiungo user al db
-					model.addAttribute("name", user.getName());
-					model.addAttribute("surname", user.getSurname());
-					session.setAttribute("authUser", user);
-					CarrelloNew carrello = new CarrelloNew(model);
-					session.setAttribute("carrello", carrello);
-					
-					//pulisco gli errori
-					model.addAttribute("error", "");
-					model.addAttribute("tmpUser", null);
-					
-					return "myview/myhome";
+					return "myview/myregistration";
 				}
+			}else {
+				//utente gia registrato
+				String error = "L'utente e gia registrato";
+				model.addAttribute("error", error);
+				model.addAttribute("tmpUser", null);
+				return "myview/myregistration";
 			}
-			return "myview/myregistration";
-		} else {
-			return "myview/myregistration";
+			
+//			UserModel userModel = new UserModel();
+//			List<Users> users = userModel.getUsers();
+//			for (Users u : users) {
+//				if (u.getEmail().equalsIgnoreCase(user.getEmail())) {
+//					// user gia registrato
+//					String error = "L'utente e gia registrato";
+//					model.addAttribute("error", error);
+//					model.addAttribute("name", "");
+//					model.addAttribute("surname", "");
+//					model.addAttribute("email", "");
+//				} else if (!passwordCheck.equals(user.getPassword()) && passwordCheck.equals("")) {
+//					// non registrato ma psw errata
+//					String error = "Le password inserite non coincidono";
+//					model.addAttribute("error", error);
+//				} else {
+//					// va tutto ok quindi aggiungo user al db
+//					model.addAttribute("name", user.getName());
+//					model.addAttribute("surname", user.getSurname());
+//					session.setAttribute("authUser", user);
+//					CarrelloNew carrello = new CarrelloNew(model);
+//					session.setAttribute("carrello", carrello);
+//					
+//					//pulisco gli errori
+//					model.addAttribute("error", "");
+//					model.addAttribute("tmpUser", null);
+//					
+//					return "myview/myhome";
+//				}
+//			}
+//			return "myview/myregistration";
+//		} else {
+//			return "myview/myregistration";
+//		}
 		}
+		return "myview/myregistration";
 	}
 }

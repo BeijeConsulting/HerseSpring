@@ -1,10 +1,16 @@
 package it.beije.herse.bean;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -27,6 +33,7 @@ public class OrderItems {
 	
 	@Column(name = "quantity")
 	private Integer quantity;
+	
 
 	// Getter & Setters
 	public Integer getQuantity() {
@@ -52,6 +59,7 @@ public class OrderItems {
 	public void setOrderId(Integer orderId) {
 		this.orderId = orderId;
 	}
+
 
 	public Integer getProductId() {
 		return product_id;

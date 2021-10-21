@@ -21,7 +21,7 @@ ${carrelloError}<br><br>
 	</c:choose>
 	<label for= "<c:out value = "${Products.getId()}"/>"><c:out value = "${Products}"/></label><br>
 </c:forEach>
-<br><input type="submit" value="Acquista">
+<br><input type="submit" value="Aggiungi al Carrello">
 </form><br>
 
 <c:if test="${authUser == null}">
