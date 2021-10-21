@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import it.beije.herse.entity.Order;
-import it.beije.herse.entity.User;
 import it.beije.herse.service.OrderService;
 
 
@@ -21,7 +20,6 @@ public class OrderController {
 	@Autowired
 	private OrderService orderService;
 	
-
 	@RequestMapping(path = "/order/list", method = RequestMethod.GET)
 	public String getOrderList(Model model, @RequestParam(required = false) String name) {
 		
@@ -30,10 +28,24 @@ public class OrderController {
 		
 		return "order/list";
 	}
+
 	
 	@RequestMapping(path = "/order/orders", method = RequestMethod.GET)
 	public String getOrdersAndOrderItems() {
 		
 		return "orer/order_order-items";
 	}
+
+
+	@RequestMapping(path = "/order/detail", method = RequestMethod.GET)
+	public String getOrderDetail(Model model, @RequestParam Integer id) {
+		
+		Order order = orderService.findById(id);
+		System.out.println(order);
+		model.addAttribute("order", order);
+		
+		return "order/detail";
+	}
+
+
 }
