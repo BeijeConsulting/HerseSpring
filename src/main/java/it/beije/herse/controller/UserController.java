@@ -15,24 +15,22 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import it.beije.herse.entity.User;
-
 import it.beije.herse.repository.UserRepository;
-
-
 
 @Controller
 public class UserController {
 	
-
 	@Autowired
 	private UserRepository userRepository;
 	
 	@RequestMapping(path = "/logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) {
 		
-		if(session.getAttribute("user") != null) {
+		if(session.getAttribute("user") != null )
 			session.removeAttribute("user");
-		}
+		
+		if(session.getAttribute("items") != null)
+			session.removeAttribute("items");
 		
 		return "login"; // /WEB-INF/views/ + login + .jsp
 	}
@@ -101,21 +99,6 @@ public class UserController {
 		model.addAttribute("users", users);
 		
 		return "user/list";
-	}
-	
-	@RequestMapping(path = "/profile")
-	public String showUser(HttpSession session, Model model) {
-		
-		String redirect = "profile";
-		
-		if(session.getAttribute("user") != null) {
-			model.addAttribute("user", (User)session.getAttribute("user"));
-		} else {
-			redirect = "login";
-		}
-		
-		return redirect;
-		
 	}
 	
 }

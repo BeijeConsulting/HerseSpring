@@ -18,6 +18,8 @@ import it.beije.herse.entity.Order;
 import it.beije.herse.entity.OrderItem;
 import it.beije.herse.entity.Product;
 import it.beije.herse.entity.User;
+import it.beije.herse.repository.OrderItemRepository;
+import it.beije.herse.repository.OrderRepository;
 import it.beije.herse.repository.ProductRepository;
 
 @Controller
@@ -25,6 +27,12 @@ public class ShopController {
 
 	@Autowired
 	private ProductRepository productRepository;
+
+	@Autowired
+	private OrderRepository orderRepository;
+	
+	@Autowired
+	private OrderItemRepository orderItemRepository;
 
 	@RequestMapping(path = "/showProduct")
 	public String showProduct(HttpSession session, Model model) {
@@ -40,6 +48,49 @@ public class ShopController {
 
 		return redirect;
 
+	}
+
+	@RequestMapping(path = "/profile")
+	public String profileOrder(HttpSession session, Model model) {
+
+		String redirect = "profile";
+
+		User user = (User)session.getAttribute("user");
+
+		if(user != null) {
+
+			List<Order> orders = orderRepository.findByUserId(user.getId());
+
+			List<Item> items = new ArrayList<>();
+
+			List<Product> products = productRepository.findAll();
+
+			for(Order o : orders) {
+				for(OrderItem orderItem : o.getItems()) {
+					Item item = new Item();
+					item.setQuantity(orderItem.getQuantity());
+					item.setUserId(user.getId());
+					item.setProductId(orderItem.getProductId());
+					item.setAmount(orderItem.getSellPrice() * Double.valueOf(item.getQuantity().toString()));
+
+					for(Product p : products) {
+						if(p.getId() == item.getProductId()) {
+							item.setProductDescription(p.getDescription());
+							item.setProductName(p.getName());
+						}
+					}
+					items.add(item);
+				}
+			}
+
+			if(!items.isEmpty())
+				model.addAttribute("items",items);
+			
+		} else {
+			redirect = "login";
+		}
+
+		return redirect;
 	}
 
 	@RequestMapping(path = "/carrello", method = RequestMethod.POST)
@@ -69,7 +120,7 @@ public class ShopController {
 			}
 
 		}
-		
+
 		if(items.size() > 0) {
 			model.addAttribute("items", items);
 			session.setAttribute("items", items);
@@ -95,7 +146,7 @@ public class ShopController {
 
 		return redirect;
 	}
-	
+
 	@RequestMapping(path = "/confirmOrder", method = RequestMethod.POST)
 	public String confirmOrder(HttpSession session, Model model) {
 
@@ -104,11 +155,13 @@ public class ShopController {
 		if(session.getAttribute("items") != null && !((List<Item>)session.getAttribute("items")).isEmpty()) {
 			List<Item> items = (List<Item>)session.getAttribute("items");
 			List<OrderItem> it = new ArrayList<>();
-			
+			List<Product> products = productRepository.findAll();
+
 			Order order = new Order();
 			order.setUserId(items.get(0).getUserId());
 			order.setDateTime(LocalDateTime.now());
-			
+
+			//creazione OrderItem
 			for(Item i : items) {
 				OrderItem item = new OrderItem();
 				item.setProductId(i.getProductId());
@@ -116,11 +169,32 @@ public class ShopController {
 				item.setSellPrice(i.getAmount() / Double.parseDouble(i.getQuantity().toString()));
 				item.setOrderId(order.getId());
 				it.add(item);
+				order.setAmount(order.getAmount() + i.getAmount());
+				
 			}
 			
+			orderRepository.save(order);
+			
+			//salvataggio degli OrderItem
+			for(OrderItem item : it) {
+				
+				item.setOrderId(order.getId());
+				orderItemRepository.save(item);
+				
+				//aggiornamento della quantià dei prodotti
+				for(Product p : products) {					
+					if(p.getId() == item.getProductId()) {
+						p.setQuantity(p.getQuantity()-item.getQuantity());
+						productRepository.save(p);
+					}						
+				}
+					
+			}
+			
+			session.removeAttribute("items");
+
 		} else {
 			model.addAttribute("voidCart", "Carrello vuoto");
-			redirect = "home";
 		}
 
 		return redirect;
