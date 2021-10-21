@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-    <%@ page import="it.beije.herse.Ecommerce.Carrello, it.beije.herse.entity.Product, it.beije.herse.entity.Order, java.util.*" %>
+    <%@ page import=" it.beije.herse.entity.Product, it.beije.herse.entity.Order, java.util.*" %>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
@@ -39,6 +39,14 @@
 	
 		<p>
 			Torna Agli acquisti: <input type="submit" value="Vai">
+		</p>
+	
+</form>
+
+<form action='../order/show' method='Post'>
+	
+		<p>
+			Vai all'ordine: <input type="submit" value="Vai">
 		</p>
 	
 </form>
