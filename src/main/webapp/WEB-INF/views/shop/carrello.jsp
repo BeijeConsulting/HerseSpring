@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+	
 <%@page import="it.beije.herse.entity.User"%>
-<%@page import="it.beije.herse.entity.Product"%>
 <%@page import="it.beije.herse.shop.Carrello"%>
-
+<%@page import="it.beije.herse.entity.Product"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 
 <!DOCTYPE html>
@@ -15,33 +15,28 @@
 </head>
 <body>
 
-	<a href='logout' ><input type='button' value='logout'></a>
+	<a href='../shop/logout' ><input type='button' value='logout'></a>
 	
-	<h2>
-		Il carrello di
-		<%=((User) session.getAttribute("user")).getName()%></h2>
+	<h2>Il carrello di ${user.name}</h2>
+		
 
 	<ul>
-
+<c:forEach items="${ prodottiCarrello}" var="prodotto">
 		<li>
-			<form action='delete' method='post'>
-				<label for='<%= p.getName() %>'> <%= p.getPrice() %> € (quantità: <%= quantita %>, totale parziale: <%= p.getPrice()*quantita %>)</label>
-				<input type='submit' value='rimuovi' /> <input type='hidden' name='idP' value='<%= p.getId() %>'> 
+		
+			<form action='../shop/rimuovi' method='post'>
+				<label for="${prodotto.name}"> ${prodotto.price } </label>
+				<input type='submit' value='rimuovi' /> <input type='hidden' name='idP' value='${prodotto.id }'> 
 			</form>
 		</li>
-
+</c:forEach>
 	</ul>
-	<br><p><strong>Il totale è <%= total %> €</strong></p>
-	<%
-	String disabled = "";
-//	int size = carrello.getMappa().size();
-//	if(size==0)
-//		disabled = "disabled";
-	%>
-	<form action='pay' method='post'>
+	<br><p><strong>Il totale è ${total } €</strong></p>
+
+	<form action='../shop/pay' method='post'>
 	  <br>
-	   <a href='catalogo.jsp'><input type='button' value='Torna al catalogo'/></a>
-	   <input type='submit' value="Completa l'acquisto" <%= disabled %>/>
+	   <a href='../shop/catalogo'><input type='button' value='Torna al catalogo'/></a>
+	   <input type='submit' value="Completa l'acquisto" ${disabled }/>
 	</form>
 	<%//session.setAttribute("amount", total); %>
 

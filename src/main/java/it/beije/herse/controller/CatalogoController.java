@@ -24,6 +24,7 @@ import it.beije.herse.repository.UserRepository;
 import it.beije.herse.service.JoinService;
 import it.beije.herse.service.ProductService;
 import it.beije.herse.service.UserService;
+import it.beije.herse.shop.Carrello;
 
 
 @Controller
@@ -31,7 +32,7 @@ public class CatalogoController {
 
 	@Autowired
 	private ProductService productService;
-	
+
 
 
 
@@ -42,23 +43,30 @@ public class CatalogoController {
 	}
 
 	@RequestMapping (path="/shop/carrellos", method = RequestMethod.POST)
-	public String carrellosPost(Model model, @RequestParam String idP) {
+	public String carrellosPost(Model model, @RequestParam String idP, @RequestParam String quantita, HttpSession session) {
 		System.out.println("sono in carrellosPost");
+		List<Product> prodotti = (List<Product>) session.getAttribute("prodotti");
+		model.addAttribute("prodotti", prodotti);
+		Carrello carrello = null;
 
-		if(model.getAttribute("prodotti")==null) {
-			System.out.println("nuovo attributo di model");
-			List<Product> prodotti = productService.findAll();
-			model.addAttribute("prodotti", prodotti);
+		if(session.getAttribute("carrello")!=null) {
+			System.out.println("if");
+			carrello = (Carrello)session.getAttribute("carrello");
 		}
 		else {
-			System.out.println("l'attributo c'è già");
+			System.out.println("else");
+			carrello = new Carrello();
+			session.setAttribute("carrello",carrello);
 		}
-		
-		
+		Integer id = Integer.valueOf(idP);
+		Integer quantity = Integer.valueOf(quantita);
+		carrello.addProduct(id, quantity);
+
+
 		return "./shop/catalogo";
 	}
-	
-	
+
+
 
 
 }

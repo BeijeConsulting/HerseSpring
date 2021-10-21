@@ -25,7 +25,17 @@ public class OrderItem {
 	@Column(name="sell_price")
 	private Double sellPrice;
 
+	@Column(name="quantity")
+	private Integer quantity;
 	
+	public Integer getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
+	}
+
 	public Integer getId() {
 		return id;
 	}

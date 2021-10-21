@@ -28,74 +28,103 @@ import it.beije.herse.service.UserService;
 
 @Controller
 public class LoginController {
-	
+
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private ProductRepository productRepository;
-	
+
 	@Autowired
 	private ProductRepository productService;
-	
+
 	@Autowired
 	private JoinService joinService;
-	
-	
+
+
 	@RequestMapping(path="/shop/login",  method = RequestMethod.GET)
 	public String accessoGet() {
 		System.out.println("Sono in accessoGet");
 		return "shop/accesso_ecommerce";
 	}
-	
+
 	@RequestMapping(path="/shop/login",  method = RequestMethod.POST)
-	public String accesso(Model model, @Validated User user) {
+	public String accesso(Model model, @Validated User user, HttpSession session) {
 		System.out.println("Sono in accessoPost");
 		String email = user.getEmail();
 		String password = user.getPassword();
 		System.out.println("email: " + email);
 		User utente = userService.findByEmailAndPAssword(email, password);
-//		System.out.println(utente);
-	
-		
-		
+		//		System.out.println(utente);
+
+
+
 		if(utente!=null) {
 			model.addAttribute("user", utente);
 			List<Product> prodotti = productService.findAll();
-	//		System.out.println(prodotti);
+			//		System.out.println(prodotti);
+			session.setAttribute("prodotti", prodotti);
+			session.setAttribute("user", utente);
 			model.addAttribute("prodotti", prodotti);
+			if(session.getAttribute("carrello")==null)
+				model.addAttribute("disabled", "disabled");
 			return "./shop/catalogo";
 		}
-		
+
 		else {
 			model.addAttribute("error", "Credenziali errate");
 			return "./shop/accesso_ecommerce";
 		}
-		
-		
+
+
 	}	
+
+
+
 	
+	@RequestMapping(path="/shop/logout",  method = RequestMethod.GET)
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "shop/accesso_ecommerce";
+	}
+
+
+
+
+
+
 	@RequestMapping(path="/shop/iscriviti",  method = RequestMethod.GET)
 	public String iscrivitiGet() {
 		System.out.println("sono in iscrivitiGet");
 		return "./shop/iscriviti";
 	}
-	
-	
+
+
 	@RequestMapping(path="/shop/iscriviti",  method = RequestMethod.POST)
 	public String iscrivitiPost(Model model, @Validated User user) {
-		
-		
+
+
 		userRepository.save(user);
 		return "./shop/accesso_ecommerce";
 	}
-	
+
+
+
+
+
+
+
+
+
+
+
+
 	@RequestMapping(path="/shop/elenco",  method = RequestMethod.GET )
 	public String elenco(Model model) {
-		
+
 		List<OrderItem> oi = joinService.elencoOrderOrderItems();
 		System.out.println("oi " + oi);
 		model.addAttribute("elenco", oi);

@@ -18,7 +18,7 @@
 <title>BFC</title>
 </head>
 <body>
-	<a href='logout'><input type='button' value='logout'></a>
+	<a href='../shop/logout'><input type='button' value='logout'></a>
 
 	<h1>Catalogo BFC</h1>
 
@@ -35,20 +35,14 @@
 				<label for='${prodotto.name }'>${prodotto.name },prezzo : ${prodotto.price}</label> 
 				<input type='submit' value='aggiungi' /> 
 				<input type='hidden' name='idP'value='${prodotto.id }'> 
-				<a href='description.jsp?id=${prodotto.id}'><input type='button' value='Dettaglio prodotto'></a>
-				 <input type='number' name='quantita' step='1' min='1' value='1' max='${prodotto.quantity -1 }'>
+				 <input type='number' name='quantita' step='1' min='1' value='1' max='${prodotto.quantity}'>
 			</form>
 		</li>
 
 </c:forEach>
 
 	</ul>
-	<%
-	String disabled = "";
-	if (session.getAttribute("carrello") == null)
-		disabled = "disabled";
-	%>
-	<a href='carrello.jsp'><input type='submit' value='Vai al carrello' <%=disabled%> /></a>
+	<a href='../shop/carrello'><input type='submit' value='Vai al carrello' ${disabled} /></a>
 
 </body>
 </html>

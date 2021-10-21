@@ -143,12 +143,11 @@ public class UserController {
 
 		model.addAttribute("users", users);
 		
-<<<<<<< HEAD
 
-=======
+
 		System.out.println(userRepository.listIds().size());
 		
->>>>>>> refs/remotes/origin/main
+
 		return "user/list";
 	}
 
