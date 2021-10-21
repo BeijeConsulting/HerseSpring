@@ -71,7 +71,7 @@ public class Products {
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
-	
+
 	public String getImagePath() {
 		return imagePath;
 	}
@@ -83,8 +83,12 @@ public class Products {
 	// ToString using Fields
 	@Override
 	public String toString() {
-		return "Products [id=" + id + ", description=" + description + ", name=" + name + ", price=" + price
-				+ ", quantity=" + quantity + ", imagePath+" + imagePath + "]";
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("Name: ").append(name).append(" | ");
+		stringBuilder.append("Description: ").append(description).append(" | ");
+		stringBuilder.append("Price: ").append(price).append(" | ");
+		stringBuilder.append("Quantity: ").append(quantity);
+		return stringBuilder.toString();
 	}
 
 }

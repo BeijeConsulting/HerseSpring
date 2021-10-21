@@ -3,19 +3,17 @@ package it.beije.herse.bean;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import org.springframework.ui.Model;
 
-//import it.beije.model.ProductsModel;
 
 public class CarrelloNew {
 
 	List<OrderItems> orderItems = new ArrayList<OrderItems>();
 	Users user;
 
-	public CarrelloNew(HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		this.user = (Users) session.getAttribute("authUser");
+	
+	public CarrelloNew(Model model) {
+		this.user =  (Users) model.getAttribute("authUser");
 	}
 
 	public List<OrderItems> getOrderItems() {

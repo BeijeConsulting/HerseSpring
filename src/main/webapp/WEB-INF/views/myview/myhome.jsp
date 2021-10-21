@@ -11,9 +11,14 @@
 <body>
 Benvenuto: ${name} ${surname}
 <br><br>
-<form action="prodotti" method="post">
+<form action="goProdotti" method="post">
 	<input type="submit" value="Prodotti">
 </form><br>
+
+<form action="orders1" method="post">
+		<input type="submit" value="Vedi ordini">
+</form>
+	
 <c:if test = "${authUser == null}">
 
 	<form action="redirectLogIn" method="post">

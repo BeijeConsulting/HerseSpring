@@ -8,10 +8,10 @@
 </head>
 <body>
 
-${error}<br/>
+${authError}<br/>
 	<form action="acess" method="post">
 	  <label for="email">email:</label><br>
-	  <input type="text" name="email"><br>
+	  <input type="text" name="email" value="${tmpUser.getEmail()}"><br>
 	  <label for="password">password:</label><br>
 	  <input type="password" name="password"><br><br>
 	  <input type="submit" value="Log in">
