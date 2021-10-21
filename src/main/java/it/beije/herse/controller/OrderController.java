@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import it.beije.herse.entity.Order;
-import it.beije.herse.entity.User;
 import it.beije.herse.service.OrderService;
 
 
@@ -25,11 +24,13 @@ public class OrderController {
 	@Autowired
 	private OrderService orderService;
 	
+
 	@GetMapping(path = "/order/show")
 	public String catalogo() {
 		System.out.println("sono in order/show get");
 		return "order/show"; 
 	}
+
 
 	@RequestMapping(path = "/order/list", method = RequestMethod.GET)
 	public String getOrderList(Model model, @RequestParam(required = false) String name) {
@@ -55,4 +56,14 @@ public class OrderController {
 		
 	}
 	
+	@RequestMapping(path = "/order/detail", method = RequestMethod.GET)
+	public String getOrderDetail(Model model, @RequestParam Integer id) {
+		
+		Order order = orderService.findById(id);
+		System.out.println(order);
+		model.addAttribute("order", order);
+		
+		return "order/detail";
+	}
+
 }
