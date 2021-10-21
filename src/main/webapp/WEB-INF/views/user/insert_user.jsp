@@ -10,7 +10,6 @@
 <body style="background-color:lightgrey">
 
 <h2 align="center">Registrati</h2>
-<style> input{background-color:lightblue; border-radius:3em;}</style>
 	<form style="text-align: center;" action="../user/insert" method="post">
 	 <span style="color:orange"><c:if test="${not empty already}">${already}<br></c:if></span>
 	<p style="color:green">${message} <a href="../login">Torna al login</a></p>
@@ -25,4 +24,5 @@
 	  <input type="submit" value="Submit">
 	</form> 
 </body>
+<style> input{background-color:lightblue; border-radius:3em;}</style>
 </html>
