@@ -58,12 +58,33 @@ public class UserService {
 		}
 		return userId;
 	}
+	
+	public List<User> findByEmailPassword(String email, String password){
+		List<User> user = userRepository.findByEmailAndPassword(email, password);
+		int userId = 0;
+		for(User u: user) {
+			userId = u.getId();
+		}
+		return user;
+	}
 		 
 	public User updateUser(User user, User newData) {
 		
 		BeanUtils.copyProperties(newData, user, new String[]{"id"});
 		
 		return user;
+	}
+	
+	public boolean delete(User userToDelete) {
+		if (userToDelete != null) {
+			userRepository.delete(userToDelete);
+			return true;
+		} else {
+			return false;
+		}
+		
+		
+		
 	}
 	
 }

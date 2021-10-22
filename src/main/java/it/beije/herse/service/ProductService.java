@@ -3,6 +3,7 @@ package it.beije.herse.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,5 +35,28 @@ public class ProductService {
 		}
 		System.out.println("POST: " + p);
 	}
+	
+	public List<Product> findAll(){
+		return productRepository.findAll();
+	}
+	
+	public Product save(Product product) {
+		return productRepository.save(product);
+	}
+	
+	public Product updateProduct(Product product, Product newProduct) {
+		BeanUtils.copyProperties(newProduct, product, new String[] {"id"});
+		return product;
+	}
+	
+	public boolean delete(Product prodToDelete) {
+		if(prodToDelete != null) {
+			productRepository.delete(prodToDelete);
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	
 }
