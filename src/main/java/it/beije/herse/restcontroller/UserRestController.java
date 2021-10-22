@@ -5,10 +5,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.beije.herse.entity.User;
+import it.beije.herse.repository.UserRepository;
 import it.beije.herse.service.UserService;
 
 
@@ -38,4 +42,26 @@ public class UserRestController {
 		return userService.findById(id);
 		
 	}
+	
+	@PostMapping("/user/insert")
+	public User insert(@RequestBody User user) {
+		System.out.println("user : " + user);
+		userService.save(user);
+		
+		return user;
+	}
+
+	@PutMapping("/user/update/{id}")
+	public User update(@PathVariable("id") Integer id, @RequestBody User newUser) {
+		
+		if (newUser.getId() != null && newUser.getId().compareTo(id) != 0) 
+			throw new RuntimeException("id non corrispondente");
+		
+		User user = userService.findById(id);
+		userService.updateUser(user, newUser);
+		userService.save(user);
+		
+		return user;
+	}
+
 }
