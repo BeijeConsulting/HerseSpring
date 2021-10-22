@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "order_item")
-public class OrderItem {
+public class ShopOrderItem {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

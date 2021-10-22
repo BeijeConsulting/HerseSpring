@@ -1,18 +1,23 @@
 package it.beije.herse.shop.entity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
 @Entity
 @Table(name = "`order`")
-public class Order {
+public class ShopOrder {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -28,6 +33,9 @@ public class Order {
 	@Column(name="creation_datetime")
 	private LocalDateTime dateTime;
 
+	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)//, fetch = FetchType.LAZY
+	@JoinColumn(name="order_id")
+	private List<ShopOrderItem> items;
 	
 	public Integer getId() {
 		return id;
@@ -64,6 +72,14 @@ public class Order {
 		this.dateTime = dateTime;
 	}
 	
+
+	public List<ShopOrderItem> getItems() {
+		return items;
+	}
+
+	public void setItems(List<ShopOrderItem> items) {
+		this.items = items;
+	}
 
 	public String toString() {
 		StringBuilder builder = new StringBuilder("{id: ").append(id)

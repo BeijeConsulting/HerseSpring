@@ -12,7 +12,7 @@
     
 <body bgcolor="black" text="white">
     
-    <jsp:useBean id="loggedUser" class="it.beije.herse.shop.entity.User" scope="session"></jsp:useBean>
+    <jsp:useBean id="loggedUser" class="it.beije.herse.shop.entity.ShopUser" scope="session"></jsp:useBean>
     <jsp:setProperty property="email" name="loggedUser"/>
     <jsp:setProperty property="password" name="loggedUser"/>
     <jsp:setProperty property="name" name="loggedUser"/>

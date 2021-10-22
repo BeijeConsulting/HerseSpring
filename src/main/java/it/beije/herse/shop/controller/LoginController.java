@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import it.beije.herse.shop.entity.User;
+import it.beije.herse.shop.entity.ShopUser;
 import it.beije.herse.shop.service.LoginService;
 
 @Controller
@@ -25,9 +25,9 @@ public class LoginController {
 	}
 	
 	@RequestMapping(path = "/login/login", method = RequestMethod.POST)
-	public String login(HttpSession session, @Validated User user) {
+	public String login(HttpSession session, @Validated ShopUser user) {
 		if(loginService.login(user)) {
-			User loginUser = loginService.findByEmailAndPassword(user);
+			ShopUser loginUser = loginService.findByEmailAndPassword(user);
 			session.setAttribute("loggedUser", loginUser);
 			return "user/usermenu";
 		}
@@ -40,7 +40,7 @@ public class LoginController {
 	@RequestMapping(path = "/login/fail", method = RequestMethod.POST)
 	public String fail(HttpSession session, Model model, @RequestParam String failedLoginAction) {
 		if(failedLoginAction.equalsIgnoreCase("signIn")) {
-			User user = (User) session.getAttribute("signinUser");
+			ShopUser user = (ShopUser) session.getAttribute("signinUser");
 			loginService.save(user);
 			model.addAttribute("loginMessage", "SIGNED IN");
 		}

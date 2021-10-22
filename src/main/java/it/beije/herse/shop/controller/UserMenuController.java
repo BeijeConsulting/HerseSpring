@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import it.beije.herse.shop.entity.User;
+import it.beije.herse.shop.entity.ShopUser;
 import it.beije.herse.shop.service.NewOrderService;
 import it.beije.herse.shop.service.UserMenuService;
 
@@ -36,7 +36,7 @@ public class UserMenuController {
 			case "showProfile":
 				return "user/userprofile";
 			case "showOrderHistory":
-				User loggedUser = (User) session.getAttribute("loggedUser");
+				ShopUser loggedUser = (ShopUser) session.getAttribute("loggedUser");
 				model.addAttribute("orderHistory", userMenuService.getOrderHistory(loggedUser));
 				return "user/orderhistory";
 			case "newOrder":
@@ -52,8 +52,8 @@ public class UserMenuController {
 	}
 	
 	@RequestMapping(path = "/user/update", method = RequestMethod.POST)
-	public String update(HttpSession session, @Validated User user) {
-		User loggedUser = (User) session.getAttribute("loggedUser");
+	public String update(HttpSession session, @Validated ShopUser user) {
+		ShopUser loggedUser = (ShopUser) session.getAttribute("loggedUser");
 		
 		session.setAttribute("loggedUser", userMenuService.updateUser(loggedUser, user));
 		

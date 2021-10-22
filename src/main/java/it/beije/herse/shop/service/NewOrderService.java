@@ -10,16 +10,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import it.beije.herse.shop.entity.Cart;
-import it.beije.herse.shop.entity.Product;
-import it.beije.herse.shop.repository.ProductRepository;
+import it.beije.herse.shop.entity.ShopProduct;
+import it.beije.herse.shop.repository.ShopProductRepository;
 
 @Service
 public class NewOrderService {
 
 	@Autowired
-	private ProductRepository productRepository;
+	private ShopProductRepository productRepository;
 	
-	public List<Product> findAllProducts(){
+	public List<ShopProduct> findAllProducts(){
 		return productRepository.findAll();
 	}
 
@@ -29,9 +29,9 @@ public class NewOrderService {
 
 	public Cart createCart(HttpServletRequest request) {
 		Cart cart = new Cart();
-		List<Product> products = findAllProducts();
+		List<ShopProduct> products = findAllProducts();
 		
-		for(Product p : products) {
+		for(ShopProduct p : products) {
 			String check = (String) request.getParameter("check"+p.getId());
 			if(check!=null && check.equalsIgnoreCase("on")) {
 				Integer quantity = Integer.valueOf(request.getParameter("quantity"+p.getId()));

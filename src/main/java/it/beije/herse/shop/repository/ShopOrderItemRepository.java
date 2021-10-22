@@ -6,11 +6,11 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import it.beije.herse.shop.entity.OrderItem;
+import it.beije.herse.shop.entity.ShopOrderItem;
 
 
 @Repository
-public interface OrderItemRepository extends JpaRepository<OrderItem, Integer> {
+public interface ShopOrderItemRepository extends JpaRepository<ShopOrderItem, Integer> {
 	
-	List<OrderItem> findByOrderId(Integer orderId);
+	List<ShopOrderItem> findByOrderId(Integer orderId);
 }

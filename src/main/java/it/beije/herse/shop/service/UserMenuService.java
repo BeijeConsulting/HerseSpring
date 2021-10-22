@@ -10,26 +10,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
-import it.beije.herse.shop.entity.Order;
-import it.beije.herse.shop.entity.OrderItem;
-import it.beije.herse.shop.entity.User;
-import it.beije.herse.shop.repository.OrderItemRepository;
-import it.beije.herse.shop.repository.OrderRepository;
-import it.beije.herse.shop.repository.UserRepository;
+import it.beije.herse.shop.entity.ShopOrder;
+import it.beije.herse.shop.entity.ShopOrderItem;
+import it.beije.herse.shop.entity.ShopUser;
+import it.beije.herse.shop.repository.ShopOrderItemRepository;
+import it.beije.herse.shop.repository.ShopOrderRepository;
+import it.beije.herse.shop.repository.ShopUserRepository;
 
 @Service
 public class UserMenuService {
 	
 	@Autowired
-	private UserRepository userRepository;
+	private ShopUserRepository userRepository;
 	
 	@Autowired
-	private OrderRepository orderRepository;
+	private ShopOrderRepository orderRepository;
 	
 	@Autowired
-	private OrderItemRepository orderItemRepository;
+	private ShopOrderItemRepository orderItemRepository;
 	
-	public User updateUser(User loggedUser, User updatedUser) {
+	public ShopUser updateUser(ShopUser loggedUser, ShopUser updatedUser) {
 		if(updatedUser.getName()!=null && updatedUser.getName().length()>0) loggedUser.setName(updatedUser.getName());
 		if(updatedUser.getSurname()!=null && updatedUser.getSurname().length()>0) loggedUser.setSurname(updatedUser.getSurname());
 		if(updatedUser.getEmail()!=null && updatedUser.getEmail().length()>0) loggedUser.setEmail(updatedUser.getEmail());
@@ -38,28 +38,28 @@ public class UserMenuService {
 		return userRepository.save(loggedUser);
 	}
 	
-	public Map<Order, List<OrderItem>> getOrderHistory(User loggedUser) {
+	public Map<ShopOrder, List<ShopOrderItem>> getOrderHistory(ShopUser loggedUser) {
 		Integer userId = loggedUser.getId();
 		
-		List<Order> orders = orderRepository.findByUserId(userId);
-		Map<Order, List<OrderItem>> orderHistory = new HashMap<Order, List<OrderItem>>();
-		for(Order o : orders) {
+		List<ShopOrder> orders = orderRepository.findByUserId(userId);
+		Map<ShopOrder, List<ShopOrderItem>> orderHistory = new HashMap<ShopOrder, List<ShopOrderItem>>();
+		for(ShopOrder o : orders) {
 			Integer orderId = o.getId();
-			List<OrderItem> items = orderItemRepository.findByOrderId(orderId);
+			List<ShopOrderItem> items = orderItemRepository.findByOrderId(orderId);
 			orderHistory.put(o, items);
 		}
 		
 		return orderHistory;
 	}
 	
-	public Map<Order, List<OrderItem>> getOrderHistoryJoin(User loggedUser) {
+	public Map<ShopOrder, List<ShopOrderItem>> getOrderHistoryJoin(ShopUser loggedUser) {
 		Integer userId = loggedUser.getId();
-		Map<Order, List<OrderItem>> orderHistory = new HashMap<Order, List<OrderItem>>();
+		Map<ShopOrder, List<ShopOrderItem>> orderHistory = new HashMap<ShopOrder, List<ShopOrderItem>>();
 		
-//		List<Order> orders = orderRepository.findByUserId(userId);
-//		for(Order o : orders) {
+//		List<ShopOrder> orders = orderRepository.findByUserId(userId);
+//		for(ShopOrder o : orders) {
 //			Integer orderId = o.getId();
-//			List<OrderItem> items = orderItemRepository.findByOrderId(orderId);
+//			List<ShopOrderItem> items = orderItemRepository.findByOrderId(orderId);
 //			orderHistory.put(o, items);
 //		}
 		

@@ -7,23 +7,23 @@ import java.util.List;
 import java.util.Map;
 
 public class Cart {
-	private Order order;
-	private List<OrderItem> items;
+	private ShopOrder order;
+	private List<ShopOrderItem> items;
 	private Map<Integer,Integer> quantities;
 //	private Integer quantities[];
 	
 	public Cart() {
-		order = new Order();
-		items = new ArrayList<OrderItem>();
+		order = new ShopOrder();
+		items = new ArrayList<ShopOrderItem>();
 		quantities = new HashMap<Integer, Integer>();
-//		List<Product> p = ProductManager.selectProducts();
+//		List<ShopProduct> p = ProductManager.selectProducts();
 //		quantities = new Integer[p.size()+1];
 	}
 
-	public Order getOrder() {
+	public ShopOrder getOrder() {
 		return order;
 	}
-	public void setOrder(Order order) {
+	public void setOrder(ShopOrder order) {
 		this.order = order;
 	}
 	public void setOrderUserId(Integer userId) {
@@ -33,16 +33,16 @@ public class Cart {
 		order.setDateTime(dateTime);
 	}
 
-	public List<OrderItem> getItems() {
+	public List<ShopOrderItem> getItems() {
 		return items;
 	}
-	public void setItems(List<OrderItem> items) {
+	public void setItems(List<ShopOrderItem> items) {
 		this.items = items;
 	}
-	public void addItem(OrderItem item) {
+	public void addItem(ShopOrderItem item) {
 		items.add(item);
 	}
-	public void removeItem(OrderItem item) {
+	public void removeItem(ShopOrderItem item) {
 		items.remove(item);
 	}
 

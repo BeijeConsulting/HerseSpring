@@ -4,10 +4,10 @@ package it.beije.herse.shop.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import it.beije.herse.shop.entity.Product;
+import it.beije.herse.shop.entity.ShopProduct;
 
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product, Integer> {
+public interface ShopProductRepository extends JpaRepository<ShopProduct, Integer> {
 	
 }

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import it.beije.herse.shop.entity.Cart;
-import it.beije.herse.shop.entity.Product;
+import it.beije.herse.shop.entity.ShopProduct;
 import it.beije.herse.shop.service.NewOrderService;
 
 @Controller
@@ -34,8 +34,8 @@ public class NewOrderController {
 		String back = (String) request.getParameter("backToMenu");
 		if(back!=null && back.equalsIgnoreCase("BACK TO MENU")) return "/user/usermenu";
 		
-		List<Product> products = newOrderService.findAllProducts();
-		for(Product p : products) {
+		List<ShopProduct> products = newOrderService.findAllProducts();
+		for(ShopProduct p : products) {
 			String details = (String) request.getParameter("prodDetails"+p.getId());
 			if(details!=null && details.equalsIgnoreCase(p.getName())) {
 				model.addAttribute("product", p);
