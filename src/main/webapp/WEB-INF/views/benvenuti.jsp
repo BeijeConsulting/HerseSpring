@@ -22,16 +22,17 @@
 <li> ${p.name}, ${p.price} &#128;</li>
 
 <c:set var="contains" value="false" />
-<% // <c:forEach var="item" items="${carrello.prodotti}">    ${carrello.getProdotti().containsKey(p)}%>
- <% // <c:if test="${item eq p}"> %>
+<c:forEach var="item" items="${lista}">
+
+ <c:if test="${lista eq p}">
  
- <c:if test="${carrello.getProdotti().containsKey(p)}">
     <p>funziona</p>
     <c:set var="contains" value="true" />
   </c:if>
   
-<% //</c:forEach> %>
-<% // <c:choose> <c:when test="${contains}"> %>
+</c:forEach> 
+ <c:choose> 
+ <c:when test="${contains}">
     
         <form action="carrello/edit" method="post">
          <input type="hidden" name="to_edit" value="${p.id}">
@@ -45,23 +46,21 @@
         </form>
         
         <br />
- <% /*    </c:when>    
-    <c:otherwise> */ %>
+  </c:when>    
+    <c:otherwise>
        <form action="carrello/add_product" method="post">
        <input type="hidden" name="to_add" value="${p.id}">
        <input type="submit" value="Aggiungi al carrello">
        <input type="number" name="how_many" min="1" max="${p.quantity}" value="1"> quanti ne vuoi?
         <br />
         
-        <% /* 
+     
     </c:otherwise>
 </c:choose>
-
-*/ %>
-
-
 </form>
 </c:forEach>
+
+
 </ul>
 </body>
 </html>
