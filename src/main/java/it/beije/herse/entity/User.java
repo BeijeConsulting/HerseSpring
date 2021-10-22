@@ -1,4 +1,4 @@
-package it.beije.herse;
+package it.beije.herse.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

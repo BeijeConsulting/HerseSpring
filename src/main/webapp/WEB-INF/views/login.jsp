@@ -10,7 +10,7 @@
 ${error}<br/>
 	<form action='login' method='post' >
 		<label for="username">Username:</label><br>
-		<input type='text' name='username'><br>
+		<input type='text' name='email'><br>
 		<label for="password">Password:</label><br>
 		<input type='text' name='password'><br>
 		<button type='submit'>Login</button>

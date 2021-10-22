@@ -1,4 +1,4 @@
-package it.beije.herse;
+package it.beije.herse.entity;
 import java.time.LocalDateTime;
 
 import javax.persistence.*;

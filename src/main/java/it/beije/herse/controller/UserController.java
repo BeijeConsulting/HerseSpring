@@ -1,8 +1,6 @@
 package it.beije.herse.controller;
-
-import java.util.ArrayList;
 import java.util.List;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -10,26 +8,38 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import it.beije.herse.User;
+import it.beije.herse.Carrello;
+import it.beije.herse.entity.Product;
+import it.beije.herse.entity.User;
+import it.beije.herse.service.ProductService;
+import it.beije.herse.service.UserService;
 
 
 @Controller
 public class UserController {
-	
+/*-----------------------------------------------------------------------------*/
+	@Autowired
+	private UserService userService;
+	@Autowired
+	private ProductService productService;
+/*-----------------------------------------------------------------------------*/
 	@RequestMapping(path = "/login", method = RequestMethod.GET)
 	public String login() {
 		return "login"; // /WEB-INF/views/ + login + .jsp
 	}
 	
 	@RequestMapping(path = "/login", method = RequestMethod.POST)
-	public String auth(Model model, @RequestParam(required = false) String username, @RequestParam String password) {
-		System.out.println("sono in auth(...)");
-		System.out.println("username : " + username);
-		System.out.println("password : " + password);
-		
-		if (username.equals("Pippo")) {
-			model.addAttribute("username", username);
-			return "benvenuti";
+	public String auth(Model model, @RequestParam String email, @RequestParam String password) {
+		User user;
+		List<Carrello> carrello=null;
+		List<Product> products;
+		user=userService.findByEmail(email);
+		if (user!=null&&user.getEmail().equals(email)) {
+			model.addAttribute("user", user);
+			products=productService.findAll();
+			model.addAttribute("products", products);
+			model.addAttribute("carrello", carrello);
+			return "product/catalogo";
 		} else {
 			model.addAttribute("error", "Credenziali errate");
 			return "login";
@@ -39,45 +49,30 @@ public class UserController {
 /*----------------------------------------------------------------------------------------------------*/
 	@RequestMapping(path = "signup", method = RequestMethod.GET)
 	public String getInsertPage() {
-		return "signup";
+		return "user/signup";
 	}
 	
 	@RequestMapping(path = "signup", method = RequestMethod.POST)
 	public String insert(Model model, @Validated User user,@RequestParam String conf_email, @RequestParam String conf_password) {
+		List<User> users;
+		List<Product> products;
+		users=userService.findAll();
 		System.out.println("insert user : " + user);
+		if(user.getEmail().equalsIgnoreCase(conf_email)&&user.getPassword().equals(conf_password)) {
+			for(User u:users)
+				if(u.getEmail().equals(user.getEmail()))
+					return "user/signup"; // /WEB-INF/views/ + user/insert_user + .jsp
+			model.addAttribute("user", user);
+			userService.save(user);
+			products=productService.findAll();
+			model.addAttribute("products", products);
+			return "product/catalogo"; // /WEB-INF/views/ + product/insert_user + .jsp
+		}else {
+			return "user/signup"; // /WEB-INF/views/ + user/insert_user + .jsp
+		}
 		
-		
-		return "home"; // /WEB-INF/views/ + user/insert_user + .jsp
 	}
 /*----------------------------------------------------------------------------------------------------*/
-	/*
-	@RequestMapping(path = "/user/list", method = RequestMethod.GET)
-	public String getListUsers(Model model) {
-		
-		User user1 = new User();
-		user1.setFirstName("Pippo");
-		user1.setLastName("Rossi");
-		user1.setUsername("PippoRossi");
+	}
+	
 
-		User user2 = new User();
-		user2.setFirstName("Mauro");
-		user2.setLastName("Bianchi");
-		user2.setUsername("MauroBianchi");
-		
-		User user3 = new User();
-		user3.setFirstName("Vincenzo");
-		user3.setLastName("Verdi");
-		user3.setUsername("VV");
-		
-		List<User> users = new ArrayList<User>();
-		users.add(user1);
-		users.add(user2);
-		users.add(user3);
-		
-		model.addAttribute("users", users);
-		
-		return "user/list";
-	}*/
-	/*----------------------------------------------------------------------------------------------------*/
-
-}
