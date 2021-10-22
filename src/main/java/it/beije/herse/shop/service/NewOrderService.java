@@ -23,10 +23,6 @@ public class NewOrderService {
 		return productRepository.findAll();
 	}
 
-	public void getProducts(Model model) {
-		model.addAttribute("products", findAllProducts());
-	}
-
 	public Cart createCart(HttpServletRequest request) {
 		Cart cart = new Cart();
 		List<ShopProduct> products = findAllProducts();

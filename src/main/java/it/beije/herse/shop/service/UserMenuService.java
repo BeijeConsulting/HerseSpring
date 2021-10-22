@@ -3,6 +3,7 @@ package it.beije.herse.shop.service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
@@ -12,9 +13,11 @@ import org.springframework.ui.Model;
 
 import it.beije.herse.shop.entity.ShopOrder;
 import it.beije.herse.shop.entity.ShopOrderItem;
+import it.beije.herse.shop.entity.ShopProduct;
 import it.beije.herse.shop.entity.ShopUser;
 import it.beije.herse.shop.repository.ShopOrderItemRepository;
 import it.beije.herse.shop.repository.ShopOrderRepository;
+import it.beije.herse.shop.repository.ShopProductRepository;
 import it.beije.herse.shop.repository.ShopUserRepository;
 
 @Service
@@ -28,6 +31,9 @@ public class UserMenuService {
 	
 	@Autowired
 	private ShopOrderItemRepository orderItemRepository;
+	
+	@Autowired
+	private ShopProductRepository productRepository;
 	
 	public ShopUser updateUser(ShopUser loggedUser, ShopUser updatedUser) {
 		if(updatedUser.getName()!=null && updatedUser.getName().length()>0) loggedUser.setName(updatedUser.getName());
@@ -52,17 +58,40 @@ public class UserMenuService {
 		return orderHistory;
 	}
 	
-	public Map<ShopOrder, List<ShopOrderItem>> getOrderHistoryJoin(ShopUser loggedUser) {
-		Integer userId = loggedUser.getId();
-		Map<ShopOrder, List<ShopOrderItem>> orderHistory = new HashMap<ShopOrder, List<ShopOrderItem>>();
+	public ShopUser deleteUser(ShopUser loggedUser) {
+		if(loggedUser!=null) userRepository.delete(loggedUser);
+		return loggedUser;
+	}
+	
+	public ShopProduct sellProduct(ShopProduct userProduct) {
+		if(userProduct!=null) return productRepository.save(userProduct);
+		else return null;
+	}
+	
+	public ShopProduct updateProduct(Integer productId, ShopProduct updates) {
+		ShopProduct userProduct = null;
 		
-//		List<ShopOrder> orders = orderRepository.findByUserId(userId);
-//		for(ShopOrder o : orders) {
-//			Integer orderId = o.getId();
-//			List<ShopOrderItem> items = orderItemRepository.findByOrderId(orderId);
-//			orderHistory.put(o, items);
-//		}
+		Optional<ShopProduct> p = productRepository.findById(productId);
+		if(p!=null && p.isPresent()) userProduct = p.get();
+		else return null;
 		
-		return orderHistory;
+		if(updates.getName()!=null && updates.getName().length()>0) userProduct.setName(updates.getName());
+		if(updates.getDescription()!=null && updates.getDescription().length()>0) userProduct.setDescription(updates.getDescription());
+		if(updates.getPrice()!=null && updates.getPrice()>0) userProduct.setPrice(updates.getPrice());
+		if(updates.getQuantity()!=null && updates.getQuantity()>0) userProduct.setQuantity(updates.getQuantity());
+		
+		return productRepository.save(userProduct);
+	}
+	
+	public ShopProduct deleteProduct(Integer productId) {
+		ShopProduct userProduct = null;
+		
+		Optional<ShopProduct> p = productRepository.findById(productId);
+		if(p!=null && p.isPresent()) {
+			userProduct = p.get();
+			productRepository.delete(userProduct);
+		}
+		
+		return userProduct;
 	}
 }

@@ -1,4 +1,4 @@
-package it.beije.herse.shop;
+package it.beije.herse;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +17,7 @@ public class ShopConfigClass {
     @Bean(name="shopTransactionManager")
     public PlatformTransactionManager dbTransactionManager() {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
-        transactionManager.setEntityManagerFactory(ShopJpaEntityManager.getInstance());
+        transactionManager.setEntityManagerFactory(JpaEntityManager.getInstance());
         return transactionManager;
     }
 	
