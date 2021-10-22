@@ -55,12 +55,17 @@ public class UserService {
 		Optional<User> u = userRepository.findByEmailAndPassword(email, password);
 		return u.isPresent() ? u.get() : null;
 	}
+	
 	public User updateUser(User user, User newData) {
 		
 		BeanUtils.copyProperties(newData, user, new String[]{"id"});
 		
 		return user;
 
+	}
+	
+	public void deleteUser(User user) {
+		userRepository.delete(user);
 	}
 	
 }

@@ -3,6 +3,7 @@ package it.beije.herse.restcontroller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -62,6 +63,17 @@ public class UserRestController {
 		userService.save(user);
 		
 		return user;
+	}
+	
+	@DeleteMapping("/user/delete/{id}")
+	public boolean deleteUser(@PathVariable("id") Integer id) {
+		User u = userService.findById(id);
+		if(u==null)
+			return false;
+		else {
+			userService.deleteUser(u);
+			return true;
+		}
 	}
 
 }

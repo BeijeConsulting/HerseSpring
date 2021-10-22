@@ -11,17 +11,6 @@
 <h1 style="color:green">Benvenuto in <strong>BFC</strong>, il primo e-commerce d'Italia</h1>
 
 
-	<%
-	String error = (String) session.getAttribute("error");
-	if (error != null) {
-	%>
-	<span style="color: red"><%=error%></span>
-	<br>
-	<br>
-	<%
-	session.removeAttribute("error");
-	}
-	%>
 
 
 	<form action="../shop/login" method="post">
