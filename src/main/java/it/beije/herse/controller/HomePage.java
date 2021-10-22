@@ -18,6 +18,6 @@ public class HomePage {
 	@RequestMapping(path = "/benvenuti", method = RequestMethod.GET)
 	public String benvenuti() {
 		System.out.println("sono in benvenuti");
-		return "benvenuti";
+		return "prodotti";
 	}
 }
