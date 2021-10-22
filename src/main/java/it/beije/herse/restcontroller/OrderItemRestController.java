@@ -19,7 +19,7 @@ public class OrderItemRestController {
 	
 	@GetMapping("/orderItem/list")
 	public List<OrderItem> getListOrderItem() {
-		List<OrderItem> orderItems = orderItemService.findAll();
+		List<OrderItem> orderItems = orderItemService.findAllOrderItems();
 		return orderItems;
 	}
 	

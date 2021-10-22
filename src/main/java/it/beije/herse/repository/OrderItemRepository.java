@@ -10,5 +10,6 @@ import it.beije.herse.entity.OrderItem;
 @Repository
 public interface OrderItemRepository extends JpaRepository<OrderItem, Integer>{
 	
-	public List<OrderItem> findByOrderId(Integer id); 
+	public List<OrderItem> findByOrderId(Integer id);
+	public List<OrderItem> findByProductId(Integer id);
 }

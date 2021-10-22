@@ -24,8 +24,28 @@ public class OrderItem {
 
 	@Column(name="sell_price")
 	private Double sellPrice;
-
 	
+	@Column
+	private Integer quantity;
+
+	public OrderItem() {}
+	
+	public OrderItem(Integer orderId, Integer productId, Double sellPrice, Integer quantity) {
+		super();
+		this.orderId = orderId;
+		this.productId = productId;
+		this.sellPrice = sellPrice;
+		this.quantity = quantity;
+	}
+
+	public Integer getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
+	}
+
 	public Integer getId() {
 		return id;
 	}

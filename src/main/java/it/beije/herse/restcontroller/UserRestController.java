@@ -3,12 +3,19 @@ package it.beije.herse.restcontroller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import it.beije.herse.entity.Order;
 import it.beije.herse.entity.User;
+import it.beije.herse.repository.UserRepository;
+import it.beije.herse.service.OrderService;
 import it.beije.herse.service.UserService;
 
 
@@ -20,12 +27,15 @@ public class UserRestController {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	private OrderService orderService;
+	
 //	@RequestMapping(path = "/user/list", method = RequestMethod.GET)
 //	public @ResponseBody List<User> getListUsers() {
 	@GetMapping(path = "/user/list")
 	public List<User> getListUsers() {
 		
-		List<User> users = userService.findAll();
+		List<User> users = userService.findAllUsers();
 		
 		System.out.println("users size : " + users.size());
 		
@@ -38,8 +48,37 @@ public class UserRestController {
 		return userService.findById(id);
 		
 	}
+
+	@PostMapping("/user/insert")
+	public User insert(@RequestBody User user) {
+		System.out.println("user : " + user);
+		userService.saveUser(user);
+		
+		return user;
+	}
+
+	@PutMapping("/user/update/{id}")
+	public User update(@PathVariable("id") Integer id, @RequestBody User newUser) {
+		
+		if (newUser.getId() != null && newUser.getId().compareTo(id) != 0) 
+			throw new RuntimeException("id non corrispondente");
+		
+		User user = userService.findById(id);
+		userService.updateUser(user, newUser);
+		userService.saveUser(user);
+		
+		return user;
+	}
 	
-	
-	
-	
+	@DeleteMapping("/user/delete/{id}") 
+	public void delete(@PathVariable("id") Integer id) {
+		List<Order> ordersUser = orderService.findByUserId(id);
+		for (Order o : ordersUser) {
+			orderService.deleteOrder(o.getId());
+		}
+		userService.deleteUser(id);
+		System.out.println("user deleted : " + id);
+	}
+
+
 }

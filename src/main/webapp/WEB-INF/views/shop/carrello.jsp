@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@page import="java.util.*"%>
+<%@page import="it.beije.herse.entity.Product"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,6 +11,61 @@
 	
 </head>
 <body style="margin:1%">
-	<h1>Carrello</h1>
+
+	<jsp:useBean id="user" class="it.beije.herse.entity.User" scope="session"></jsp:useBean>
+	<jsp:useBean id="carrello" class="it.beije.herse.entity.Carrello" scope="session"></jsp:useBean>
+	
+	<%
+	String error = (String) session.getAttribute("error");
+	if (error != null) {
+		%>
+		<span style="color:red"><%=error%></span><br><br>
+		<%
+		session.removeAttribute("error");
+	}
+	%>
+	
+	<% 
+		if (user.getEmail() == null) {
+			%>
+			<h2 style="color:red">Utente non autenticato!</h2>
+			<br>
+			<a href="../user/login" style="text-decoration: none; color:blue;"><button type="button" class="btn btn-primary">Login</button></a>
+			<%
+		} else {
+			%>
+		<h1>Carrello</h1>
+		<p>
+		<% 	
+		Double total = new Double(0);
+		for ( Map.Entry<Product, Integer> entry : carrello.getCarrello().entrySet()) {
+		    Product product = entry.getKey();
+		    Integer quantity = entry.getValue();
+		    
+		    out.print("Id Prodotto: "+product.getId() + " ");
+		    out.print("Tipo: " + product.getName() + " ");
+			out.print("Quantità: " + quantity  + " "); 
+			out.print("Prezzo: " + product.getPrice()  + " ");
+			%>
+			<br>
+			<% 
+			total += product.getPrice() * quantity;		
+		}%>
+		<br>
+		<% out.print("Totale: "+total);
+		session.setAttribute("total", total);
+		%>
+		
+	</p>
+	<a href = "../shop/acquista" style="text-decoration: none;"><button type="button" class="btn btn-success" style="margin:5px;">Paga</button></a>
+	
+	<!-- MODIFICA -->
+	<a href = "../shop/ordine" style="text-decoration: none;"><button type="button" class="btn btn-primary" style="margin:5px;">Aggiungi un altro prodotto al carrello</button></a>
+	
+	<!-- MODIFICA -->
+	<a href = "../shop/ordine" style="text-decoration: none;"><button type="button" class="btn btn-danger" style="margin:5px;">Elimina un prodotto dal carrello</button></a>
+	
+	<a href="../user/logout" style="text-decoration: none; "><button type="button" class="btn btn-primary" style="margin:5px;">Log out</button></a>
+	<%} %>
 </body>
 </html>

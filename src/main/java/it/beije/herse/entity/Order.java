@@ -37,7 +37,15 @@ public class Order {
 	@JoinColumn(name="order_id")
 	private List<OrderItem> items;
 		
+	public Order() {}
 	
+	public Order(Integer userId, Double amount, LocalDateTime dateTime) {
+		super();
+		this.userId = userId;
+		this.amount = amount;
+		this.dateTime = dateTime;
+	}
+
 	public Integer getId() {
 		return id;
 	}
