@@ -1,6 +1,7 @@
 package it.beije.herse.entity;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -81,11 +82,15 @@ public class Order {
 		this.items = items;
 	}
 
+	@Override
 	public String toString() {
+		
+		String data = dateTime.getDayOfMonth() + " " + dateTime.getMonth() + " " + dateTime.getYear() + " ore " + dateTime.getHour() + ":" + dateTime.getMinute();
+		
 		StringBuilder builder = new StringBuilder("{id: ").append(id)
 				.append(", userId: ").append(userId)
 				.append(", amount: ").append(amount)
-				.append(", dateTime: ").append(dateTime)
+				.append(" €, dateTime: ").append(data)
 				.append(", items: ").append(items)
 				.append("}");
 		

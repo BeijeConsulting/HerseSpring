@@ -22,7 +22,7 @@ public class OrderRestController {
 	@GetMapping(path = "/order/list")
 	public List<Order> getOrderList() {
 		
-		List<Order> orders = orderService.searchOrder(LocalDateTime.of(2021, 10, 1, 0, 0));
+		List<Order> orders = orderService.searchOrder(LocalDateTime.of(2020, 10, 1, 0, 0));
 		System.out.println("orders : " + orders.size());
 		
 		return orders;
