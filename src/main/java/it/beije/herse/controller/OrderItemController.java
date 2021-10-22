@@ -17,10 +17,5 @@ public class OrderItemController {
 	@Autowired
 	OrderItemService orderItemService;
 	
-	@GetMapping(path = "order/info")
-	public String getOrderInfo(Model model, @RequestParam(required = false) Integer id) {
-		List<OrderItem> list = orderItemService.searchAllOrderItemsByOrder(id);
-		
-		return "order/order_order-items";
-	}
+
 }
