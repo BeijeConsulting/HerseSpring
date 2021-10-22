@@ -23,6 +23,10 @@ public class UserService {
 	private UserRepository userRepository;
 	
 
+	public List<User> findAll() {
+		return userRepository.findAll();
+	}
+	
 	public User findById(Integer id) {
 		Optional<User> u = userRepository.findById(id);
 		return u.isPresent() ? u.get() : null;

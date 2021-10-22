@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import it.beije.herse.entity.Order;
-import it.beije.herse.entity.User;
 import it.beije.herse.repository.OrderRepository;
 
 
