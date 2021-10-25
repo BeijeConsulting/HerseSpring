@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import it.beije.herse.service.ProductService;
 import it.beije.herse.entity.Product;
@@ -23,6 +24,14 @@ public class ProductRestController {
 	
 	@GetMapping("/product/list")
 	public List<Product> getListProduct() {
+		
+		List<Product> products = productService.findAllProducts();
+		System.out.println("products size : " + products.size());
+		return products;
+	}
+	
+	@GetMapping("/product/catalogo")
+	public List<Product> catalogoEcommerce() {
 		
 		List<Product> products = productService.findAllProducts();
 		System.out.println("products size : " + products.size());
@@ -51,5 +60,13 @@ public class ProductRestController {
 	@DeleteMapping("/product/delete/{id}")
 	public void delete(@PathVariable("id") Integer id) {
 		productService.deleteProduct(id);
+	}
+	
+	@GetMapping("/product/search/price") 
+	public List<Product> searchByPriceGreaterThan(@RequestParam Double price) {
+		List<Product> products = productService.findByPriceGreaterThan(price);
+		if(products.size() >0) {
+			return products;
+		} else return null;
 	}
 }

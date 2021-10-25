@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.beije.herse.entity.User;
@@ -77,7 +78,23 @@ public class UserRestController {
 		userService.deleteUser(id);
 	}
 	
+	@GetMapping("/user/search/name")
+	public List<User> findByName(@RequestParam("name") String name) {
+		List<User> users = userService.findByName(name);
+		if(users.size() > 0) {
+			return users;
+		} else return null;
+		
+	}
 	
+	@GetMapping("/user/search/name_surname")
+	public List<User> findByNameAndSurname(@RequestParam("name") String name, @RequestParam String surname) {
+		List<User> users = userService.findByNameAndSurname(name, surname);
+		if(users.size() > 0) {
+			return users;
+		} else return null;
+		
+	}
 
 
 }

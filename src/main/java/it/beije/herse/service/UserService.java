@@ -44,6 +44,10 @@ public class UserService {
 	public List<User> findByName(String name) {
 		return userRepository.findByName(name);
 	}
+	
+	public List<User> findByNameAndSurname(String name, String surname) {
+		return userRepository.findByNameAndSurname(name, surname);
+	}
 
 	public List<User> searchByName(String name) {
 		List<User> users;

@@ -46,4 +46,8 @@ public class ProductService {
 		System.out.println("product deleted : " + id);
 		productRepository.deleteById(id);
 	}
+	
+	public List<Product> findByPriceGreaterThan(Double price) {
+		return productRepository.findByPriceGreaterThan(price);
+	}
 }
