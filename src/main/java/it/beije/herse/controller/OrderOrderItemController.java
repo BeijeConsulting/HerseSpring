@@ -39,7 +39,7 @@ public class OrderOrderItemController {
 	@RequestMapping(path = "/orderitem", method = RequestMethod.POST)
 	public String showOrderItem(HttpSession session, Model model, @RequestParam String id) {
 		int userId = Integer.parseInt(id);
-		List<OrderItem> o = orderItemService.search(userId);
+		List<OrderItem> o = orderItemService.searchByUser(userId);
 		System.out.println(o);
 		model.addAttribute("utente", id);
 		model.addAttribute("o", o);

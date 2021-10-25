@@ -24,4 +24,6 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 	@Query(value = "SELECT o FROM Order as o JOIN FETCH o.items")
 	public List<Order> listOrdersWithItems();
 
+	public List<Order> findByUserIdAndAmount(Integer userId, Double amount);
+
 }

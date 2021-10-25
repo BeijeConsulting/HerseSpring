@@ -14,4 +14,7 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Integer> {
 
 	@Query(value = "SELECT oi FROM OrderItem AS oi LEFT OUTER JOIN Order AS o ON o.id = oi.orderId WHERE o.userId = :user_id AND oi.orderId <> NULL ORDER BY oi.orderId")
 	public List<OrderItem> search(@Param("user_id") Integer user_id);
+	
+	@Query(value = "SELECT o FROM OrderItem AS o WHERE o.sellPrice > :sellToFind ")
+	public List<OrderItem> searchByPriceGreaterThan(@Param("sellToFind") Double sellToFind);
 }

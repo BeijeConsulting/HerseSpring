@@ -9,6 +9,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @Entity
@@ -73,11 +74,12 @@ public class User {
 		return password;
 	}
 
+	@JsonProperty("password")
 	public void setPassword(String password) {
 		this.password = password;
 	}
 	
-	@JsonGetter("xxx")
+	@JsonGetter("Full Name")
 	public String getFullName() {
 		return name + " " + surname;
 	}

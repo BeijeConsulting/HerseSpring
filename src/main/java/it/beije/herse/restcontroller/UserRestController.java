@@ -83,6 +83,11 @@ public class UserRestController {
 		return userService.findByEmailPassword(email, password);
 
 	}
+	
+	@GetMapping("user/search/email/{email}")
+	public List<User> findByEmail(@PathVariable("email") String email){
+		return userService.findByEmail(email);
+	}
 
 
 }

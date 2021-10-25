@@ -50,5 +50,22 @@ public class ProductRestController {
 		Product prodToDelete = productService.findById(id);
 		return productService.delete(prodToDelete);
 	}
+	
+	@PutMapping("product/remove/quantity/{id}/{quantity}")
+	public Product removeQuantity(@PathVariable("id") Integer id, @PathVariable("quantity") Integer quantity) {
+		Product p = productService.findById(id);
+		Integer newquantity = p.getQuantity() - quantity;
+		productService.removeQuantity(id, newquantity);
+		return productService.findById(id);
+	}
 
+	@GetMapping("product/detail/{id}")
+	public Product findById(@PathVariable("id") Integer id) {
+		return productService.findById(id);
+	}
+	
+	@GetMapping("product/search/{description}/{name}")
+	public List<Product> findByDescriptionAndName(@PathVariable("description") String description, @PathVariable("name") String name) {
+		return productService.searchByNameAndDescription(name, description);
+	}
 }

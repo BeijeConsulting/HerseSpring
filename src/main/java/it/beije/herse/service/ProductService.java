@@ -57,6 +57,11 @@ public class ProductService {
 			return false;
 		}
 	}
+
+	public List<Product> searchByNameAndDescription(String name, String description) {
+		List<Product> products = productRepository.findByNameAndDescription(name, description);
+		return products;
+	}
 	
 	
 }

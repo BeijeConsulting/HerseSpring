@@ -20,4 +20,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	@Modifying
 	@Query("update Product p set p.quantity = :newQuantity where p.id = :prodId")
 	public List<Product> updateProduct(@Param(value = "newQuantity") Integer newQuantity, @Param(value = "prodId") Integer prodId);
+	
+	public List<Product> findByNameAndDescription(String name, String description);
 }
