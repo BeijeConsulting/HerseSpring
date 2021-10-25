@@ -58,6 +58,17 @@ public class UserService {
 		return users;
 	}
 	
+	public boolean removeUser(Integer id) {
+		
+		if(userRepository.findById(id)!= null) {
+		
+		  User u = userRepository.findById(id).get();
+		  userRepository.delete(u);
+		  
+			return true;
+			
+		} else return false;
+	}
 
 	public String[] loginService(HttpSession session, String user, String pass) {
 		

@@ -71,7 +71,7 @@ public class Order {
 	}
 
 	public void setDateTime(LocalDateTime dateTime) {
-		this.dateTime = dateTime;
+		this.dateTime = dateTime.now();
 	}
 	
 	public List<OrderItem> getItems() {
