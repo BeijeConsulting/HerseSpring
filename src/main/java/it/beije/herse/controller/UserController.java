@@ -16,12 +16,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import it.beije.herse.entity.User;
 import it.beije.herse.repository.UserRepository;
+import it.beije.herse.service.UserService;
 
 @Controller
 public class UserController {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private UserService userService;
 	
 	@RequestMapping(path = "/logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) {
@@ -77,11 +81,8 @@ public class UserController {
 	public String insert(Model model, @Validated User user) {
 		
 		System.out.println("insert user : " + user);
-		
 		userRepository.save(user);
-		
 		System.out.println("after save : " + user);
-		
 		model.addAttribute("message", "User " + user.getEmail() + " added");
 		
 		return "home"; // /WEB-INF/views/ + user/insert_user + .jsp
@@ -90,13 +91,22 @@ public class UserController {
 	@RequestMapping(path = "/user/list", method = RequestMethod.GET)
 	public String getListUsers(Model model, @RequestParam(required = false) String name) {
 
-		List<User> users;
+		/*List<User> users;
 		if (name != null && name.length() > 0) {
 			users = userRepository.findByName(name);
 		} else {
 			users = userRepository.findAll();			
-		}
+		}*/
+		
+		List<User> users = userService.searchByName(name);
+//		if (name != null && name.length() > 0) {
+//			users = userRepository.findByName(name);
+//		} else {
+//			users = userRepository.findAll();			
+//		}
 		model.addAttribute("users", users);
+		
+		System.out.println(userRepository.listIds().size());
 		
 		return "user/list";
 	}

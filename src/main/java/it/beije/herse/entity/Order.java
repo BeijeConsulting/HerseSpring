@@ -78,12 +78,13 @@ public class Order {
 	public void setDateTime(LocalDateTime dateTime) {
 		this.dateTime = dateTime;
 	}
-	
+
 	public String toString() {
 		StringBuilder builder = new StringBuilder("{id: ").append(id)
 				.append(", userId: ").append(userId)
 				.append(", amount: ").append(amount)
 				.append(", dateTime: ").append(dateTime)
+				.append(", items: ").append(items)
 				.append("}");
 		
 		return builder.toString();
