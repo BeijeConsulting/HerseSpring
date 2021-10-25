@@ -73,7 +73,8 @@ public class User {
 	public String getPassword() {
 		return password;
 	}
-	@JsonProperty("password") 
+
+	@JsonProperty("password")
 	public void setPassword(String password) {
 		this.password = password;
 	}
