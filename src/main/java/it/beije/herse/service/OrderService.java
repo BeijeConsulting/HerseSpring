@@ -42,5 +42,9 @@ BeanUtils.copyProperties(newOrder, order, new String[]{"id"});
 		return order;
 	}
 	
+	public void deleteOrder(Order order) {
+		orderRepository.delete(order);
+	}
+	
 	
 }

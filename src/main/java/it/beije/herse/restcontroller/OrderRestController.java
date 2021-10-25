@@ -61,7 +61,16 @@ public class OrderRestController {
 		return order;
 	}
 
-//	@DeleteMapping("/user/delete/{id}")
+	@DeleteMapping("/order/delete/{id}")
+	public boolean deleteOrder(@PathVariable("id") Integer id) {
+		Order o = orderService.findById(id);
+		if(o==null)
+			return false;
+		else {
+			orderService.deleteOrder(o);
+			return true;
+		}
+	}
 }
 
 
