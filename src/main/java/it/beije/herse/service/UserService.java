@@ -81,7 +81,7 @@ public class UserService {
 		
 			if(pass.equals(u.getPassword())) {
 				
-				session.setAttribute("user", user);
+				session.setAttribute("user", u);
 				
 				login[0]="benvenuti";
 				login[1]="";
@@ -112,6 +112,10 @@ public class UserService {
 		
 		return user;
 
+	}
+	
+	public List<User> findByNameAndSurname(String name,String surname) {
+		return userRepository.findByNameAndSurname(name,surname);
 	}
 	
 }

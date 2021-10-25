@@ -20,9 +20,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import it.beije.herse.entity.Carrello;
 import it.beije.herse.entity.Product;
+import it.beije.herse.repository.OrderItemRepository;
 import it.beije.herse.repository.OrderRepository;
 import it.beije.herse.repository.UserRepository;
 import it.beije.herse.repository.ProductRepository;
+import it.beije.herse.service.OrderItemService;
 import it.beije.herse.service.OrderService;
 import it.beije.herse.service.ProductService;
 import it.beije.herse.service.UserService;
@@ -34,20 +36,13 @@ import it.beije.herse.entity.User;
 @Controller
 public class CarrelloController {
 
-	@Autowired
-	private UserRepository userRepository;
 	
-	@Autowired
-	private OrderRepository orderRepository;
-	
-	@Autowired
-	private ProductRepository productRepository;
-	
-	@Autowired
-	private UserService userService;
 	
 	@Autowired
 	private OrderService orderService;
+	
+	@Autowired
+	private OrderItemService orderItemService;
 
 	@Autowired
 	private ProductService productService;
@@ -61,6 +56,8 @@ public class CarrelloController {
 		Carrello carrello = (Carrello) session.getAttribute("carrello");
 
 		carrello.addProduct(to_add, how_many);
+		System.out.println(how_many * productService.findById(to_add).getPrice());
+		carrello.setAmount(how_many * productService.findById(to_add).getPrice());
 
 		System.out.println(carrello.toString());
 
@@ -93,8 +90,9 @@ public class CarrelloController {
 
 		Carrello carrello = (Carrello) session.getAttribute("carrello");
 
-		carrello.editProduct(to_edit, how_many);
-
+		double price = productService.findById(to_edit).getPrice();
+		carrello.editProduct(to_edit, how_many, price);
+		
 
 		System.out.println(carrello.toString());
 
@@ -127,8 +125,9 @@ public class CarrelloController {
 
 		Carrello carrello = (Carrello) session.getAttribute("carrello");
 
+		Integer howMany = (Integer) carrello.getProdotti().get(to_del);
 		carrello.removeProduct(to_del);
-
+        carrello.setAmount(carrello.getAmount()- (howMany * productService.findById(to_del).getPrice()));
 
 		System.out.println(carrello.toString());
 
@@ -154,9 +153,7 @@ public class CarrelloController {
 
 	}
 	
-	@RequestMapping(path = "/pay", method = RequestMethod.POST)
-
-
+	@RequestMapping(path = "pay", method = RequestMethod.POST)
 	public String pay(HttpSession session) {
 
 		Carrello carrello = (Carrello) session.getAttribute("carrello");
@@ -164,16 +161,16 @@ public class CarrelloController {
 
 		Set<Integer> set = carrello.getProdotti().keySet();
 		Iterator<Integer> indice = set.iterator();
-		Double amount = new Double(0);
 
 		// Creo ordine
 		Order order = new Order();
-		order.setAmount(amount);
-		User u = (User)session.getAttribute("user");
+		order.setAmount(carrello.getAmount());
+		User u = (User) session.getAttribute("user");
+		
+		
 		order.setUserId(u.getId());
 		order.setDateTime(LocalDateTime.now());
-		
-		// orderRepository.save(order);
+		orderService.save(order);
 
 
 		while (indice.hasNext()) {
@@ -189,16 +186,14 @@ public class CarrelloController {
 			oi.setProductId(p.getId());
 			oi.setSellPrice(p.getPrice());
 			oi.setQuantity(quantita);
-		
+		    orderItemService.save(oi);
 	
 		}
-
+        
 		
 		session.removeAttribute("carrello");
 
 		return "congrats";
-
-
 
 	}
 

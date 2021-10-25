@@ -33,7 +33,10 @@ public class OrderItemService {
 	}
 
 	public OrderItem save(OrderItem orderItem) {
-		return orderItemRepository.save(orderItem);
+		
+		OrderItem o = orderItemRepository.save(orderItem);
+		System.out.println(o);
+		return o;
 	}
 
 	public OrderItem updateOrderItem(OrderItem orderItem, OrderItem newOrderItem) {

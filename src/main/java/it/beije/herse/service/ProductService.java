@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import it.beije.herse.entity.Product;
-import it.beije.herse.entity.User;
 import it.beije.herse.repository.ProductRepository;
 
 @Service
@@ -27,29 +26,41 @@ public class ProductService {
 		Optional<Product> p = productRepository.findById(id);
 		return p.isPresent() ? p.get() : null;
 	}
+	public Product findByName(String name) {
+
+		return productRepository.findByName(name);
+
+	}
+
+	public List<Product> findBy_LIKE_Name(String name) {
+
+		return productRepository.findBy_LIKE_Name(name);
+		
+
+	}
 
 	public Product save(Product product) {
 		return productRepository.save(product);
 	}
 
-public Product updateProduct(Product product, Product newProduct) {
-		
+	public Product updateProduct(Product product, Product newProduct) {
+
 		BeanUtils.copyProperties(newProduct, product, new String[]{"id"});
-		
+
 		return product;
 
 	}
 
-public boolean removeProduct(Integer id) {
-	
-	if(productRepository.findById(id)!= null) {
-	
-	  Product p = productRepository.findById(id).get();
-	  productRepository.delete(p);
-	  
-		return true;
-		
-	} else return false;
-}
+	public boolean removeProduct(Integer id) {
+
+		if(productRepository.findById(id)!= null) {
+
+			Product p = productRepository.findById(id).get();
+			productRepository.delete(p);
+
+			return true;
+
+		} else return false;
+	}
 
 }
