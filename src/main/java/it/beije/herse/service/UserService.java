@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import it.beije.herse.entity.User;
 import it.beije.herse.repository.UserRepository;
@@ -48,6 +49,30 @@ public class UserService {
 		}
 		
 		return users;
+	}
+	
+	public List<User> searchUser (@RequestParam(required=false) String name, @RequestParam(required=false) String surname,
+			@RequestParam(required=false) String email) {
+		
+		List<User> users;
+		
+		if(name != null && surname != null && email != null)
+			users = userRepository.searchUser(name, surname, email);
+		else if (name != null && surname != null && email == null)
+			users = userRepository.findByNameAndSurname(name, surname);
+		else if (name != null && surname == null && email == null)
+			users = userRepository.findByName(name);
+		else if (name == null && surname != null && email != null)
+			users = userRepository.findBySurnameAndEmail(surname, email);
+		else if (name != null && surname == null && email != null)
+			users = userRepository.findByNameAndEmail(name, email);
+		else if (name == null && surname != null && email == null)
+			users = userRepository.findBySurname(surname);
+		else
+			users = userRepository.findByEmail(email);
+			
+		return users;
+		
 	}
 	
 	public User updateUser(User user, User newData) {

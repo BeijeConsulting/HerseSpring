@@ -10,14 +10,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.beije.herse.entity.User;
-import it.beije.herse.repository.UserRepository;
 import it.beije.herse.service.UserService;
 
-
-//@Controller
 @RestController
 @RequestMapping("api")
 public class UserRestController {
@@ -35,6 +33,12 @@ public class UserRestController {
 		System.out.println("users size : " + users.size());
 		
 		return users;
+	}
+	
+	@GetMapping("/user/search")
+	public List<User> search (@RequestParam(required=false) String name, @RequestParam(required=false) String surname,
+			@RequestParam(required=false) String email) {
+		return userService.searchUser(name, surname, email);
 	}
 	
 	@GetMapping("/user/detail/{id}")
