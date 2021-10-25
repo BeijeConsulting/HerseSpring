@@ -1,3 +1,4 @@
+<%@page import="java.util.Map"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -11,7 +12,7 @@
     
 <body bgcolor="black" text="white">
 	
-	<jsp:useBean id="cart" class="it.beije.herse.shop.beans.Cart" scope="session"></jsp:useBean>
+	<jsp:useBean id="cart" class="it.beije.herse.shop.entity.Cart" scope="session"></jsp:useBean>
 	<jsp:setProperty property="quantities" name="cart" />
 	<jsp:setProperty property="order" name="cart" />
 	<jsp:setProperty property="items" name="cart" />
@@ -55,7 +56,7 @@
             </c:forEach>
         </table>
         <br>
-        <input type="submit" name="submitOrder" value="ADD TO CART">
+        <input type="submit" name="addToCart" value="ADD TO CART">
         <input type="submit" name="backToMenu" value="BACK TO MENU">
     </form>
        

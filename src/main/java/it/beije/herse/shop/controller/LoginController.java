@@ -42,7 +42,7 @@ public class LoginController {
 	public String fail(HttpSession session, Model model, @RequestParam String failedLoginAction) {
 		if(failedLoginAction.equalsIgnoreCase("signIn")) {
 			ShopUser user = (ShopUser) session.getAttribute("signinUser");
-			loginService.save(user);
+			loginService.signin(user);
 			model.addAttribute("loginMessage", "SIGNED IN");
 		}
 		else model.addAttribute("loginMessage", "RETRY");

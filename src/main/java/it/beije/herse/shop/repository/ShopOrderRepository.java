@@ -14,7 +14,4 @@ import it.beije.herse.shop.entity.ShopOrder;
 public interface ShopOrderRepository extends JpaRepository<ShopOrder, Integer> {
 	List<ShopOrder> findByUserId(Integer userId);
 	
-//	@Query(nativeQuery = true, 
-//			value = "Select o.id, i.id From `order` o Join order_item i On o.id=i.order_id where user_id=:userId")
-//	"ReturnType" orderHistory(@Param("userId") Integer userId);
 }

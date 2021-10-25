@@ -45,6 +45,13 @@ public class Cart {
 	public void removeItem(ShopOrderItem item) {
 		items.remove(item);
 	}
+	public Double getTotal() {
+		Double total = 0.0;
+		
+		for(ShopOrderItem i : items) total += i.getSellPrice()*i.getQuantity();
+		
+		return total;
+	}
 
 	public Map<Integer,Integer> getQuantities() {
 		return quantities;

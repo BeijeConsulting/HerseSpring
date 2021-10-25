@@ -5,12 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
-
 import it.beije.herse.shop.entity.ShopOrder;
 import it.beije.herse.shop.entity.ShopOrderItem;
 import it.beije.herse.shop.entity.ShopProduct;
@@ -35,6 +31,7 @@ public class UserMenuService {
 	@Autowired
 	private ShopProductRepository productRepository;
 	
+	// UPDATE USER
 	public ShopUser updateUser(ShopUser loggedUser, ShopUser updatedUser) {
 		if(updatedUser.getName()!=null && updatedUser.getName().length()>0) loggedUser.setName(updatedUser.getName());
 		if(updatedUser.getSurname()!=null && updatedUser.getSurname().length()>0) loggedUser.setSurname(updatedUser.getSurname());
@@ -43,7 +40,14 @@ public class UserMenuService {
 		
 		return userRepository.save(loggedUser);
 	}
+
+	// DELETE USER
+	public ShopUser deleteUser(ShopUser loggedUser) {
+		if(loggedUser!=null) userRepository.delete(loggedUser);
+		return loggedUser;
+	}
 	
+	// READ ORDER (find by userId)
 	public Map<ShopOrder, List<ShopOrderItem>> getOrderHistory(ShopUser loggedUser) {
 		Integer userId = loggedUser.getId();
 		
@@ -58,16 +62,13 @@ public class UserMenuService {
 		return orderHistory;
 	}
 	
-	public ShopUser deleteUser(ShopUser loggedUser) {
-		if(loggedUser!=null) userRepository.delete(loggedUser);
-		return loggedUser;
-	}
-	
+	// CREATE PRODUCT
 	public ShopProduct sellProduct(ShopProduct userProduct) {
 		if(userProduct!=null) return productRepository.save(userProduct);
 		else return null;
 	}
 	
+	// UPDATE PRODUCT
 	public ShopProduct updateProduct(Integer productId, ShopProduct updates) {
 		ShopProduct userProduct = null;
 		
@@ -83,6 +84,7 @@ public class UserMenuService {
 		return productRepository.save(userProduct);
 	}
 	
+	// DELETE PRODUCT
 	public ShopProduct deleteProduct(Integer productId) {
 		ShopProduct userProduct = null;
 		

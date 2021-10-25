@@ -14,6 +14,7 @@ public class LoginService {
 	@Autowired
 	private ShopUserRepository userRepository;
 	
+	// READ USER
 	public ShopUser findByEmailAndPassword(ShopUser user) {
 		String email = user.getEmail();
 		String password = user.getPassword();
@@ -28,7 +29,8 @@ public class LoginService {
 		else return false;
 	}
 	
-	public ShopUser save(ShopUser user) {
+	// CREATE USER
+	public ShopUser signin(ShopUser user) {
 		return userRepository.save(user);
 	}
 }
