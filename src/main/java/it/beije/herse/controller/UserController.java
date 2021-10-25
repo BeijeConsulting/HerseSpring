@@ -53,6 +53,8 @@ public class UserController {
 			if(u.getEmail().equals(email) && u.getPassword().equals(password)) {
 				model.addAttribute("user",u);
 				session.setAttribute("user", u);
+			} else {
+				return "login";
 			}
 		}
 		

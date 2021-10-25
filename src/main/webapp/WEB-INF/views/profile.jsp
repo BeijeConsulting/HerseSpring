@@ -27,10 +27,21 @@
 	width: 200px;
 }
 
+.sendButton {
+	float: right;
+	display: block;
+	color: white;
+	text-decoration: none;
+	height: 46.4px;
+	border-color: white;
+	background-color: red;
+}
+
 .items .right {
 	float: right;
 }
 </style>
+
 </head>
 <body>
 	<jsp:include page="navbar.jsp"></jsp:include>
@@ -39,6 +50,7 @@
 			<li>${user.name}</li>
 			<li>${user.surname}</li>
 			<li>${user.email}</li>
+			<li style="float:right"><a href="api/user/delete/${user.id}"><input class="sendButton" type="button" value="Elimina Account"></a></li>
 		</ul>
 		<h2>I miei ordini</h2>
 		<ul>

@@ -19,6 +19,5 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	
 	@Query(value = "SELECT u.id FROM User u")
 	public List<Integer> listIds();
-	
 		
 }
