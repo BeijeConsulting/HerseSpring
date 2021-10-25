@@ -16,10 +16,10 @@
 	<jsp:useBean id="carrello" class="it.beije.herse.entity.Carrello" scope="session"></jsp:useBean>
 	
 	<%
-	String error = (String) session.getAttribute("error");
-	if (error != null) {
+	String errorSql = (String) session.getAttribute("errorSql");
+	if (errorSql != null) {
 		%>
-		<span style="color:red"><%=error%></span><br><br>
+		<span style="color:red"><%=errorSql%></span><br><br>
 		<%
 		session.removeAttribute("error");
 	}

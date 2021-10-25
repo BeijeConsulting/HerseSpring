@@ -11,16 +11,6 @@
 <body style="margin:1%">
 	<jsp:useBean id="user" class="it.beije.herse.entity.User" scope="session"></jsp:useBean>
 	
-	<%
-	String errorSql = (String) session.getAttribute("errorSql");
-	if (errorSql != null) {
-		%>
-		<span style="color:red"><%=errorSql%></span><br><br>
-		<%
-		session.removeAttribute("error");
-	}
-	%>
-	
 	<% 
 	if (user.getEmail() == null) {
 		%>

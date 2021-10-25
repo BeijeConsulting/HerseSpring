@@ -50,6 +50,14 @@ public class UserRestController {
 		
 		return user;
 	}
+	
+	@PostMapping("/user/register")
+	public User register(@RequestBody User user) {
+		System.out.println("user : " + user);
+		userService.saveUser(user);
+		
+		return user;
+	}
 
 	@PutMapping("/user/update/{id}")
 	public User update(@PathVariable("id") Integer id, @RequestBody User newUser) {

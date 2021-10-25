@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import it.beije.herse.service.ProductService;
 import it.beije.herse.entity.Product;
-import it.beije.herse.entity.User;
 
 @RestController
 @RequestMapping("api")

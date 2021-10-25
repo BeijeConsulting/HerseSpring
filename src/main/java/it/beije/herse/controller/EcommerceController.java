@@ -72,6 +72,7 @@ public class EcommerceController {
 		System.out.println(quantita);
 
 		if (id != null || quantita != null) {
+			
 			Carrello carrelloContenitore = new Carrello();
 			HashMap<Product, Integer> cart = new HashMap<>();
 			Product resultProduct = productService.findById(id);
@@ -102,7 +103,7 @@ public class EcommerceController {
 
 	}
 	
-	@PostMapping(path="/shop/acquista")
+	@GetMapping(path="/shop/acquista")
 	public String pay(HttpSession session) {
 		System.out.println("sono in acquista");
 		

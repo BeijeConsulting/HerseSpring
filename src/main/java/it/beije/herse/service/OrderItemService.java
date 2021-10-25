@@ -1,6 +1,7 @@
 package it.beije.herse.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import it.beije.herse.repository.OrderItemRepository;
 import it.beije.herse.entity.OrderItem;
+import it.beije.herse.entity.User;
 
 @Service
 public class OrderItemService {
@@ -18,6 +20,11 @@ public class OrderItemService {
 	public List<OrderItem> findAllOrderItems() {
 		List<OrderItem> list = orderItemRepository.findAll();
 		return list;
+	}
+	
+	public OrderItem findById(Integer id) {
+		Optional<OrderItem> o = orderItemRepository.findById(id);
+		return o.isPresent() ? o.get() : null;
 	}
 	
 	public List<OrderItem> findByOrderId(Integer id) {
