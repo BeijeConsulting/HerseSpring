@@ -82,9 +82,11 @@ public class UserService {
 		} else {
 			return false;
 		}
-		
-		
-		
+	}
+
+	public List<User> findByNameAndSurname(String name, String surname) {
+		List<User> users = userRepository.findByNameAndSurname(name, surname);
+		return users;
 	}
 	
 }

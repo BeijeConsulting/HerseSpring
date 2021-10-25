@@ -88,6 +88,11 @@ public class UserRestController {
 	public List<User> findByEmail(@PathVariable("email") String email){
 		return userService.findByEmail(email);
 	}
+	
+	@GetMapping("user/search/name/surname/{name}/{surname}")
+	public List<User> findByNameAndSurname(@PathVariable("name") String name, @PathVariable("surname") String surname){
+		return userService.findByNameAndSurname(name, surname);
+	}
 
 
 }
