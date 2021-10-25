@@ -42,7 +42,7 @@
 			<li><a href="showProduct">Shop</a></li>
 			<li><a href="carrello">Carrello</a></li>
 			<li><a href="profile">Profilo</a></li>
-			<li class="active"><a href="login">Esci</a></li>
+			<li class="active"><a href="logout">Esci</a></li>
 		</ul>
 	</div>
 </body>
