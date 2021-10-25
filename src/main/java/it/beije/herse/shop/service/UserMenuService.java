@@ -70,6 +70,7 @@ public class UserMenuService {
 		return orderHistory;
 	}
 	
+	// READ ORDER (& ORDER ITEMS)
 	public List<ShopOrder> getOrderHistory(Integer userId) {
 		return orderRepository.findByUserId(userId);
 	}

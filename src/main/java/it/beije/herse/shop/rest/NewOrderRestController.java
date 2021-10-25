@@ -3,9 +3,11 @@ package it.beije.herse.shop.rest;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,11 +35,34 @@ public class NewOrderRestController {
 		return newOrderService.findProductById(prodId);
 	}
 	
-	@PostMapping("order/additems/{userId}")
+	@PostMapping("order/addorder/{userId}")
 	public ShopOrder addToCart(@RequestBody List<ShopOrderItem> items, 
 			@PathVariable("userId") Integer userId) {
 		
 		return newOrderService.createOrder(items, userId);
 	}
 	
+	@DeleteMapping("order/deleteorder/{orderid}")
+	public ShopOrder removeOrder(@PathVariable("orderid") Integer orderid) {
+		return newOrderService.deletOrder(orderid);
+	}
+	
+	@DeleteMapping("order/removeitem/{itemId}")
+	public ShopOrder removeItem(@PathVariable("itemId") Integer itemId) {
+		return newOrderService.removeItem(itemId);
+	}
+	
+	@PutMapping("order/updateorder/{orderid}")
+	public ShopOrder removeItems(@RequestBody ShopOrder updates, 
+			@PathVariable("orderid") Integer orderid) {
+		
+		return newOrderService.updateOrder(orderid, updates);
+	}
+	
+	@PutMapping("order/updateitem/{itemId}")
+	public ShopOrder removeItems(@RequestBody ShopOrderItem updates, 
+			@PathVariable("itemId") Integer itemId) {
+		
+		return newOrderService.updateItem(itemId, updates);
+	}
 }

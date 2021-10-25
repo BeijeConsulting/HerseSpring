@@ -2,22 +2,18 @@ package it.beije.herse.shop.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import it.beije.herse.entity.OrderItem;
-import it.beije.herse.shop.entity.Cart;
 import it.beije.herse.shop.entity.ShopOrder;
 import it.beije.herse.shop.entity.ShopOrderItem;
 import it.beije.herse.shop.entity.ShopProduct;
-import it.beije.herse.shop.entity.ShopUser;
+import it.beije.herse.shop.repository.ShopOrderItemRepository;
 import it.beije.herse.shop.repository.ShopOrderRepository;
 import it.beije.herse.shop.repository.ShopProductRepository;
-import it.beije.herse.shop.repository.ShopUserRepository;
 
 @Service
 public class NewOrderService {
@@ -29,7 +25,7 @@ public class NewOrderService {
 	private ShopOrderRepository orderRepository;
 	
 	@Autowired
-	private ShopUserRepository userRepository;
+	private ShopOrderItemRepository orderItemRepository;
 	
 	// READ PRODUCT (find all)
 	public List<ShopProduct> findAllProducts(){
@@ -53,28 +49,30 @@ public class NewOrderService {
 	}
 	
 	// CREATE ORDER
-	public ShopOrder confirmOrder(Cart cart) {
-		ShopOrder order = cart.getOrder();
-		order.setItems(cart.getItems());
-		order.setAmount(cart.getTotal());
-		order.setDateTime(LocalDateTime.now());
-		
-		orderRepository.save(order);
-		
-		return order;
-	}
+//	public ShopOrder confirmOrder(Cart cart) {
+//		ShopOrder order = cart.getOrder();
+//		order.setItems(cart.getItems());
+//		order.setAmount(cart.getTotal());
+//		order.setDateTime(LocalDateTime.now());
+//		
+//		orderRepository.save(order);
+//		
+//		return order;
+//	}
 	
+	// CREATE ORDER (CREATE ORDER ITEM)
 	public ShopOrder createOrder(List<ShopOrderItem> items, Integer userId) {
 		ShopOrder order = new ShopOrder();
+			
+		order.setUserId(userId);
+//		order.setItems(items);
+		order.setAmount(0.0);
+		order.setDateTime(LocalDateTime.now());
+		orderRepository.save(order);
 		
-		Optional<ShopUser> u = userRepository.findById(userId);
-		ShopUser user = (u!=null && u.isPresent()) ? u.get() : null;
-		if(user==null) throw new IllegalArgumentException("Not Valid User");
-		
-		order.setId(userId);
+		for(ShopOrderItem i : items) i.setOrderId(order.getId());
 		order.setItems(items);
 		order.setAmount();
-		order.setDateTime(LocalDateTime.now());
 		
 		return orderRepository.save(order);
 	}
@@ -95,6 +93,42 @@ public class NewOrderService {
 		return order;
 	}
 	
+	// UDATE ORDER (DELETE ORDER ITEM)
+	public ShopOrder removeItem(Integer remove) {
+		Optional<ShopOrderItem> i = orderItemRepository.findById(remove);
+		ShopOrderItem item = null;
+		if(i!=null && i.isPresent()) item = i.get();
+		else throw new IllegalArgumentException("Not Valid OrderItem");
+		
+		ShopOrder order = orderRepository.findById(item.getOrderId()).get();
+		List<ShopOrderItem> orderItems = order.getItems();
+		
+		orderItems.remove(item);
+		order.setAmount();
+		orderItemRepository.delete(item);
+		
+		return orderRepository.save(order);
+	}
+	
+	// UDATE ORDER (UPDATE ORDER ITEM)
+	public ShopOrder updateItem(Integer itemId, ShopOrderItem updates) {
+		Optional<ShopOrderItem> i = orderItemRepository.findById(itemId);
+		ShopOrderItem item = null;
+		if(i!=null && i.isPresent()) item = i.get();
+		else throw new IllegalArgumentException("Not Valid OrderItem");
+		
+		ShopOrder order = orderRepository.findById(item.getOrderId()).get();
+		List<ShopOrderItem> orderItems = order.getItems();
+		Integer itemIndex = orderItems.indexOf(item);
+		
+		BeanUtils.copyProperties(updates, item, "id");
+		orderItems.set(itemIndex, item);
+		order.setAmount();
+		orderItemRepository.save(item);
+		
+		return orderRepository.save(order);
+	}
+	
 	// DELETE ORDER 
 	public ShopOrder deletOrder(Integer orderId) {
 		Optional<ShopOrder> o = orderRepository.findById(orderId);
@@ -105,30 +139,31 @@ public class NewOrderService {
 		
 		return order;
 	}
-
-	// CREATE CART
-	public Cart createCart(Map<Integer, Integer> quantities, Integer userId) {
-		Cart cart = new Cart();
-		
-		cart.getOrder().setId(userId);
-		cart.setQuantities(quantities);
-		
-		return cart;
-	}
 	
-	// ADD ITEMS
-	public Cart addToCart(Cart cart) {
-		
-		Map<Integer,Integer> quantities = cart.getQuantities();
-		for(Integer prodId : quantities.keySet()) {
-			ShopOrderItem item = new ShopOrderItem();
-			item.setProductId(prodId);
-			item.setQuantity(quantities.get(prodId));
-			item.setSellPrice(getProductPrice(prodId));
-			
-			cart.addItem(item);
-		}
-		
-		return cart;
-	}
+	
+//	// CREATE CART
+//	public Cart createCart(Map<Integer, Integer> quantities, Integer userId) {
+//		Cart cart = new Cart();
+//		
+//		cart.getOrder().setId(userId);
+//		cart.setQuantities(quantities);
+//		
+//		return cart;
+//	}
+//	
+//	// ADD ITEMS
+//	public Cart addToCart(Cart cart) {
+//		
+//		Map<Integer,Integer> quantities = cart.getQuantities();
+//		for(Integer prodId : quantities.keySet()) {
+//			ShopOrderItem item = new ShopOrderItem();
+//			item.setProductId(prodId);
+//			item.setQuantity(quantities.get(prodId));
+//			item.setSellPrice(getProductPrice(prodId));
+//			
+//			cart.addItem(item);
+//		}
+//		
+//		return cart;
+//	}
 }
