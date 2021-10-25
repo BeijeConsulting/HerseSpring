@@ -57,4 +57,9 @@ public class ProductRestController {
 		}
 	}
 	
+	@GetMapping("product/price/{price}")
+	public List<Product> getProductPrice(@PathVariable("price") int price){
+		return productService.searchByProductsMoreExpensive((double)price);
+	}
+	
 }

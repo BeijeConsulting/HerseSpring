@@ -61,13 +61,20 @@ public class UserService {
 	public User updateUser(User user, User newData) {
 		
 		BeanUtils.copyProperties(newData, user, new String[]{"id"});
-		
+
 		return user;
+		
+		
 
 	}
 	
 	public void deleteUser(User user) {
 		userRepository.delete(user);
+	}
+	
+	public List<User> findUserByNameSurnname(String name, String surname){
+		List<User> u = userRepository.findByNameAndSurname(name, surname);
+		return u;
 	}
 	
 }

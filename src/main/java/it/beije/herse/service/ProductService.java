@@ -42,5 +42,9 @@ public class ProductService {
 	public void deleteProduct(Product product) {
 		productRepository.delete(product);
 	}
+	
+	public List<Product> searchByProductsMoreExpensive(Double price){
+		return productRepository.searchByProductsMoreExpensive(price);
+	}
 
 }

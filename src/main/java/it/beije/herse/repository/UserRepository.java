@@ -21,6 +21,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	public List<User> findByEmail(String email);
 	
 	public List<User> findByName(String name);
+	
+	public List<User> findByNameAndSurname(String name, String surname);
 
 	
 	@Query(value = "SELECT u.id FROM User u")
