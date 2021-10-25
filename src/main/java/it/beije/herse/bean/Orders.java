@@ -1,6 +1,7 @@
 package it.beije.herse.bean;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +9,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonSetter;
 
 @Entity
 @Table(name = "`order`")
@@ -58,6 +62,21 @@ public class Orders {
 
 	public void setUserId(Integer userId) {
 		this.userId = userId;
+	}
+	
+	@JsonGetter("dateTime")
+	public String getDateTimeAsString() {
+		if(this.dateTime != null) {
+			return this.dateTime.format(DateTimeFormatter.ISO_DATE_TIME);
+		}else {
+			return null;
+		}
+		
+	}
+
+	@JsonSetter("dateTime")
+	public void setDateTime(String dateTime) {
+		this.dateTime = LocalDateTime.parse(dateTime, DateTimeFormatter.ISO_DATE_TIME);
 	}
 
 	// ToString using Fields
