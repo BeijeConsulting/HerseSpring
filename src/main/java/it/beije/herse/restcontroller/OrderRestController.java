@@ -61,7 +61,7 @@ public class OrderRestController {
 		return order;
 	}
 
-	@DeleteMapping("/user/delete/{id}")
+//	@DeleteMapping("/user/delete/{id}")
 }
 
 
