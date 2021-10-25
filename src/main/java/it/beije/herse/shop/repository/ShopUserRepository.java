@@ -12,4 +12,10 @@ import it.beije.herse.shop.entity.ShopUser;
 @Repository
 public interface ShopUserRepository extends JpaRepository<ShopUser, Integer> {
 	List<ShopUser> findByEmailAndPassword(String email, String passsword);
+	
+	List<ShopUser> findByName(String name);
+	List<ShopUser> findBySurname(String surname);
+	List<ShopUser> findByEmail(String email);
+	List<ShopUser> findByPassword(String password);
+
 }
