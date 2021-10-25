@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import it.beije.herse.entity.Product;
 import it.beije.herse.repository.ProductRepository;
@@ -47,6 +48,23 @@ public class ProductService {
 	public void deleteProduct(Product product) {
 		
 		productRepository.delete(product);	
+		
+	}
+	
+	public List<Product> searchProduct (@RequestParam(required = false) String name, @RequestParam(required = false) String description) {
+		
+		List<Product> products;
+		
+		if(name != null && description != null)
+			products = productRepository.findByNameAndDescription(name, description);
+		else if (name != null && description == null)
+			products = productRepository.findByName(name);
+		else if (name == null && description != null)
+			products = productRepository.findByDescription(description);
+		else
+			products = null;
+		
+		return products;
 		
 	}
 	

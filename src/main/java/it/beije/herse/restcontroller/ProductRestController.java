@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.beije.herse.entity.Product;
@@ -50,4 +51,8 @@ public class ProductRestController {
 		productService.deleteProduct(productService.findById(id));
 	}
 	
+	@GetMapping("/product/search")
+	public List<Product> search (@RequestParam(required = false) String name, @RequestParam(required = false) String description) {
+		return productService.searchProduct(name,description);
+	}
 }
