@@ -60,10 +60,10 @@
 	<br>
 	<form action="../shop/ordine" method="post">
 		<label for="id">Id prodotto: </label>
-		<input type="number" name ="id">	
+		<input type="text" name ="id">	
 		<br>
 		<label for="quantita">Quantità prodotto: </label>
-		<input type="number" name ="quantita">
+		<input type="text" name ="quantita">
 		<br>
 		<br>
 		<button type ="submit" type="button" class="btn btn-success" name="btn_submit">Vai al carrello</button>
@@ -79,17 +79,22 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${listProducts}" var="product">
-					<tr>
-						<td>
-							<span>Prodotto : ${product.name}</span>
-							<a href="../shop/catalogo">Dettaglio prodotti</a>
-						</td>
-						<td>${product.quantity}</td>
-						<td>${product.id}</td>
-						<td>${product.price}</td>
-					</tr>	
-				</c:forEach>
+			
+			<% List<Product> listProducts =  (List<Product>)session.getAttribute("listProducts");
+						for(Product p : listProducts) {
+							%>
+				<tr>
+					<td>
+						<span><%  out.print(p.getName()); %></span>
+						<a href="../shop/catalogo">Dettaglio prodotti</a>
+					</td>
+					<td><%out.print(p.getQuantity()); %></td>
+					<td><%out.print(p.getId()); %></td>
+					<td name = "prezzo" value = "<%p.getPrice(); %>"><%out.print(p.getPrice()); %></td>
+				</tr>
+	
+						<%}%>
+				
 			</tbody>
 		</table>
 	

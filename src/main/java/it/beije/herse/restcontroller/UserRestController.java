@@ -76,6 +76,8 @@ public class UserRestController {
 	public void delete(@PathVariable("id") Integer id) {
 		userService.deleteUser(id);
 	}
+	
+	
 
 
 }

@@ -57,50 +57,48 @@ public class EcommerceController {
 	// se salvo qualcosa nel model non lo posso riprendere in altre jsp, il model
 	// attribute si elimina al di fuori di quella jsp
 	@GetMapping(path = "/shop/ordine")
-	public String ordine(Model model) {
+	public String ordine(HttpSession session) {
 		System.out.println("sono in ordine get");
 		List<Product> listProducts = productRepository.findAll();
-		model.addAttribute("listProducts", listProducts);
+		session.setAttribute("listProducts", listProducts);
 		return "/shop/ordine";
 	}
 
 	@PostMapping(path = "/shop/ordine")
-	public String getCarrello(HttpSession session, Model model, @RequestParam(required = false) Integer id,
-			@RequestParam(required = false) Integer quantita) {
+	public String getCarrello(HttpSession session, Model model, @RequestParam(required = false) String id,
+			@RequestParam(required = false) String quantita) {
 		System.out.println("sono in carrello post");
-		System.out.println(id);
-		System.out.println(quantita);
-
-		if (id != null || quantita != null) {
+		Carrello carrelloContenitore = new Carrello();
+		HashMap<Product, Integer> cart = new HashMap<>();
+		
+		String[] idProd = id.split(",");
+		String[] quantitaProd = quantita.split(",");
+		
+		if (idProd != null && idProd.length == quantitaProd.length) {
 			
-			Carrello carrelloContenitore = new Carrello();
-			HashMap<Product, Integer> cart = new HashMap<>();
-			Product resultProduct = productService.findById(id);
-			if (resultProduct != null) {
-				if (resultProduct.getQuantity() >= quantita) {
-					cart.put(resultProduct, quantita);
-					carrelloContenitore.setCarrello(cart);
-					if (session.getAttribute("carrello") == null) {
-						session.setAttribute("carrello", carrelloContenitore);
-						return "shop/carrello";
+			for (int i = 0; i < idProd.length; i++) {
+				Product resultProduct = productService.findById(Integer.valueOf(idProd[i].trim()));
+				if (resultProduct != null) {
+					if (resultProduct.getQuantity() >= Integer.valueOf(quantitaProd[i].trim())) {
+						cart.put(resultProduct, Integer.valueOf(quantitaProd[i].trim()));
+						
 					} else {
-						return "shop/carrello";
+						session.setAttribute("errorQuantity", "Quantità prodotto insufficiente");
+						return "/shop/ordine";
 					}
-
 				} else {
-					session.setAttribute("errorQuantity", "Quantità prodotto insufficiente");
+					session.setAttribute("errorIdProduct", "Prodotto non presente");
 					return "/shop/ordine";
 				}
-
-			} else {
-				session.setAttribute("errorIdProduct", "Prodotto non presente");
-				return "/shop/ordine";
 			}
+			carrelloContenitore.setCarrello(cart);
+			session.setAttribute("carrello", carrelloContenitore);
+			return "shop/carrello";
+			
 		} else {
 			session.setAttribute("errorInput", "Inserisci id e quantità");
 			return "/shop/ordine";
 		}
-
 	}
 	
 	@GetMapping(path="/shop/acquista")
