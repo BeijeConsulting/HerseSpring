@@ -59,4 +59,9 @@ public class OrderItemService {
 	public List<OrderItem> searchByPriceGreaterThan(Double sellPrice) {
 		return orderItemRepository.searchByPriceGreaterThan(sellPrice);
 	}
+
+
+	public List<OrderItem> searchByOrderId(Integer orderId) {
+		return orderItemRepository.searchByOrderId(orderId);
+	}
 }

@@ -61,4 +61,9 @@ public class OrderItemRestController {
 	public List<OrderItem> searchByPriceGreaterThan(@PathVariable("sellPrice") Double sellPrice ){
 		return orderItemService.searchByPriceGreaterThan(sellPrice);
 	}
+	
+	@GetMapping("orderitem/order/{orderId}")
+	public List<OrderItem> searchUser(@PathVariable("orderId") Integer orderId){
+		return orderItemService.searchByOrderId(orderId);
+	}
 }
