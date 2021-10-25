@@ -7,6 +7,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 @Table(name = "user")
@@ -65,7 +68,7 @@ public class User {
 		this.email = email;
 	}
 
-	
+	@JsonIgnore
 	public String getPassword() {
 		return password;
 	}
@@ -74,7 +77,11 @@ public class User {
 		this.password = password;
 	}
 	
-	
+	@JsonGetter("xxx")
+	public String getFullName() {
+		return name + " " + surname;
+	}
+
 	public String toString() {
 		StringBuilder builder = new StringBuilder("{id: ").append(id)
 				.append(", name: ").append(name)
