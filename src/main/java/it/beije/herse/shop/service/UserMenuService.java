@@ -31,6 +31,14 @@ public class UserMenuService {
 	@Autowired
 	private ShopProductRepository productRepository;
 	
+	// READ USER (find by id)
+	public ShopUser findUserById(Integer userId) {
+		ShopUser user = null;
+		Optional<ShopUser> u = userRepository.findById(userId);
+		if(u!=null & u.isPresent()) user = u.get();
+		return user;
+	}
+	
 	// UPDATE USER
 	public ShopUser updateUser(ShopUser loggedUser, ShopUser updatedUser) {
 		if(updatedUser.getName()!=null && updatedUser.getName().length()>0) loggedUser.setName(updatedUser.getName());
@@ -60,6 +68,10 @@ public class UserMenuService {
 		}
 		
 		return orderHistory;
+	}
+	
+	public List<ShopOrder> getOrderHistory(Integer userId) {
+		return orderRepository.findByUserId(userId);
 	}
 	
 	// CREATE PRODUCT

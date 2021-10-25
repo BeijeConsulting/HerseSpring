@@ -1,6 +1,8 @@
 package it.beije.herse.shop.entity;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -13,6 +15,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonSetter;
 
 
 @Entity
@@ -62,6 +67,13 @@ public class ShopOrder {
 	public void setAmount(Double amount) {
 		this.amount = amount;
 	}
+	public void setAmount() {
+		if(items!=null && items.size()>0) {
+			Double amount = 0.0;
+			for(ShopOrderItem i : items) amount += i.getSellPrice()*i.getQuantity();
+			this.amount = amount;
+		}
+	}
 
 	
 	public LocalDateTime getDateTime() {
@@ -70,6 +82,17 @@ public class ShopOrder {
 
 	public void setDateTime(LocalDateTime dateTime) {
 		this.dateTime = dateTime;
+	}
+	
+	@JsonGetter("dateTime")
+	public String getDateTimeAsString() {
+		return dateTime.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT))+" "
+				+dateTime.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT));
+	}
+
+	@JsonSetter("dateTime")
+	public void setDateTime(String dateTime) {
+		this.dateTime = LocalDateTime.parse(dateTime, DateTimeFormatter.ISO_DATE_TIME);
 	}
 	
 

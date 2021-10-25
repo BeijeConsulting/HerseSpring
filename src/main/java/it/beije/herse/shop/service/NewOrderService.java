@@ -8,12 +8,16 @@ import java.util.Optional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import it.beije.herse.entity.OrderItem;
 import it.beije.herse.shop.entity.Cart;
 import it.beije.herse.shop.entity.ShopOrder;
 import it.beije.herse.shop.entity.ShopOrderItem;
 import it.beije.herse.shop.entity.ShopProduct;
+import it.beije.herse.shop.entity.ShopUser;
 import it.beije.herse.shop.repository.ShopOrderRepository;
 import it.beije.herse.shop.repository.ShopProductRepository;
+import it.beije.herse.shop.repository.ShopUserRepository;
 
 @Service
 public class NewOrderService {
@@ -24,9 +28,18 @@ public class NewOrderService {
 	@Autowired
 	private ShopOrderRepository orderRepository;
 	
+	@Autowired
+	private ShopUserRepository userRepository;
+	
 	// READ PRODUCT (find all)
 	public List<ShopProduct> findAllProducts(){
 		return productRepository.findAll();
+	}
+	
+	// READ PRODUCT (find by id)
+	public ShopProduct findProductById(Integer prodId) {
+		Optional<ShopProduct> p = productRepository.findById(prodId);
+		return (p!=null && p.isPresent()) ? p.get() : null;
 	}
 	
 	public Double getProductPrice(Integer prodId) {
@@ -49,6 +62,21 @@ public class NewOrderService {
 		orderRepository.save(order);
 		
 		return order;
+	}
+	
+	public ShopOrder createOrder(List<ShopOrderItem> items, Integer userId) {
+		ShopOrder order = new ShopOrder();
+		
+		Optional<ShopUser> u = userRepository.findById(userId);
+		ShopUser user = (u!=null && u.isPresent()) ? u.get() : null;
+		if(user==null) throw new IllegalArgumentException("Not Valid User");
+		
+		order.setId(userId);
+		order.setItems(items);
+		order.setAmount();
+		order.setDateTime(LocalDateTime.now());
+		
+		return orderRepository.save(order);
 	}
 	
 	// READ ORDER(find all)
