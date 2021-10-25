@@ -12,10 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import it.beije.herse.entity.Order;
 import it.beije.herse.entity.User;
-import it.beije.herse.repository.UserRepository;
-import it.beije.herse.service.OrderService;
 import it.beije.herse.service.UserService;
 
 
@@ -26,9 +23,6 @@ public class UserRestController {
 
 	@Autowired
 	private UserService userService;
-	
-	@Autowired
-	private OrderService orderService;
 	
 //	@RequestMapping(path = "/user/list", method = RequestMethod.GET)
 //	public @ResponseBody List<User> getListUsers() {
@@ -72,12 +66,7 @@ public class UserRestController {
 	
 	@DeleteMapping("/user/delete/{id}") 
 	public void delete(@PathVariable("id") Integer id) {
-		List<Order> ordersUser = orderService.findByUserId(id);
-		for (Order o : ordersUser) {
-			orderService.deleteOrder(o.getId());
-		}
 		userService.deleteUser(id);
-		System.out.println("user deleted : " + id);
 	}
 
 

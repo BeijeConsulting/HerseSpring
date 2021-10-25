@@ -43,7 +43,7 @@ public class ProductService {
 		for (OrderItem o : listOI) {
 			orderItemService.deleteOrderItem(o.getId());
 		}
-		
+		System.out.println("product deleted : " + id);
 		productRepository.deleteById(id);
 	}
 }

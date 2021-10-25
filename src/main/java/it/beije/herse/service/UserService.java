@@ -7,6 +7,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import it.beije.herse.entity.Order;
+import it.beije.herse.entity.OrderItem;
 import it.beije.herse.entity.User;
 import it.beije.herse.repository.UserRepository;
 
@@ -15,6 +17,12 @@ public class UserService {
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private OrderService orderService;
+	
+	@Autowired
+	private OrderItemService orderItemService;
 
 	public User saveUser(User user) {
 		return userRepository.save(user);
@@ -59,7 +67,17 @@ public class UserService {
 	}
 	
 	public void deleteUser(Integer id) {
+		List<Order> ordersUser = orderService.findByUserId(id);
+		for (Order o : ordersUser) {
+			Integer orderId = o.getId();
+			List<OrderItem> listOI = orderItemService.findByOrderId(orderId);
+			for (OrderItem oi : listOI) {
+				orderItemService.deleteOrderItem(oi.getId());
+			}
+			orderService.deleteOrder(o.getId());
+		}
 		userRepository.deleteById(id);
+		System.out.println("user deleted : " + id);
 	}
 
 }

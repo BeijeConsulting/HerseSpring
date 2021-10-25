@@ -46,7 +46,7 @@ public class OrderService {
 		return orderRepository.save(order);
 	}
 	
-	public Order updateOrderItem(Order order, Order newData) {
+	public Order updateOrder(Order order, Order newData) {
 		BeanUtils.copyProperties(newData, order, new String[] { "id" });
 		return order;
 	}
