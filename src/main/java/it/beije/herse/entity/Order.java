@@ -1,6 +1,7 @@
 package it.beije.herse.entity;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -13,6 +14,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonSetter;
 
 
 @Entity
@@ -53,14 +57,6 @@ public class Order {
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
-	
-	public List<OrderItem> getItems() {
-		return items;
-	}
-
-	public void setItems(List<OrderItem> items) {
-		this.items = items;
-	}
 
 	public Double getAmount() {
 		return amount;
@@ -78,7 +74,26 @@ public class Order {
 	public void setDateTime(LocalDateTime dateTime) {
 		this.dateTime = dateTime;
 	}
+	
+	@JsonGetter("dateTime")
+	public String getDateTimeAsString() {
+		return dateTime.format(DateTimeFormatter.ISO_DATE_TIME);
+	}
 
+	@JsonSetter("dateTime")
+	public void setDateTime(String dateTime) {
+		this.dateTime = LocalDateTime.parse(dateTime, DateTimeFormatter.ISO_DATE_TIME);
+	}
+	
+	
+	public List<OrderItem> getItems() {
+		return items;
+	}
+
+	public void setItems(List<OrderItem> items) {
+		this.items = items;
+	}
+	
 	public String toString() {
 		StringBuilder builder = new StringBuilder("{id: ").append(id)
 				.append(", userId: ").append(userId)
