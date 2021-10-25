@@ -2,6 +2,7 @@ package it.beije.herse.repository;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -18,8 +19,9 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
 	public User findByEmail(String email);
 	
+	public Optional<User> findById(Integer id);
+	
 	@Query(value = "SELECT u.id FROM User u")
 	public List<Integer> listIds();
 	
-	public User save(User u);
 }

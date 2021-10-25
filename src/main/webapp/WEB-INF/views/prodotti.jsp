@@ -12,7 +12,7 @@
 <style>input{background-color:lightblue;}</style>
 <body style="background-color:lightgrey;">
 
-<a href="logout"><p align="right"> Logout </p></a>
+<a href="../logout"><p align="right"> Logout </p></a>
 <h3>BENVENUT* ${user}</h3>
 
 <ul>
@@ -62,6 +62,6 @@
 
 
 </ul>
-<form action="pay" method="post"></form><input type="submit" value="Procedi con il pagamento"></form>
+<form action="../carrello/pay" method="post"></form><input type="submit" value="Procedi con il pagamento"></form>
 </body>
 </html>
